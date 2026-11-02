@@ -1,0 +1,71 @@
+@import '../../styles/mixin';
+
+@media (max-width: 750px) {
+  section {
+    height: calc(100dvh - 150px - 100px);
+  }
+
+  .loginContainer {
+    margin: 10px;
+  }
+
+  .signupContainer {
+    display: none;
+  }
+
+  .signupContainerMobile {
+    @include setFlex();
+    padding-bottom: 128px;
+    gap: 35px;
+    display: flex;
+  }
+}
+
+@media (max-width: 500px) {
+  header {
+    > img {
+      width: 80px;
+    }
+  }
+
+  .titleContainer {
+    > h1 {
+      font-size: 48px;
+    }
+  }
+
+  .emailInputContainer {
+    width: 80vw;
+  }
+
+  .emailInput {
+    width: 100%;
+  }
+
+  .passwordInputContainer {
+    width: 80vw;
+  }
+
+  .passwordInput {
+    width: 100%;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .loginBtn {
+    width: 177px;
+  }
+
+  footer {
+    > a {
+      font-size: 16px;
+
+      &:hover {
+        transform: scale(1);
+      }
+    }
+  }
+}

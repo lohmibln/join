@@ -1,0 +1,269 @@
+@import '../../styles/variables';
+@import '../../styles/mixin';
+
+section {
+  @include setFlex();
+  width: calc(100vw - 16px);
+  min-height: 500px;
+  height: calc(100dvh - 200px - 100px);
+  background-color: $clrBackground;
+}
+
+header {
+  @include setFlex($jc: flex-end, $ai: flex-start);
+  padding: 24px;
+  height: 150px;
+}
+
+footer {
+  @include setFlex();
+  height: 100px;
+  gap: 35px;
+
+  > a {
+    color: rgb(190, 189, 189);
+    padding: 0;
+    transition:
+      transform 125ms ease-in-out,
+      color 125ms ease-in-out;
+
+    &:hover {
+      color: $clrHighlight2;
+      border-color: $clrHighlight2;
+      transform: scale(1.05);
+    }
+  }
+}
+
+.loginContainer {
+  @include setFlex();
+  flex-direction: column;
+  background-color: white;
+  width: 650px;
+  height: 450px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+}
+
+.horizontalSeperator {
+  width: 120px;
+  border-top: 3px solid $clrHighlight2;
+  margin-bottom: 30px;
+}
+
+.titleContainer {
+  @include setFlex();
+  flex-direction: column;
+}
+
+.signupContainer {
+  @include setFlex();
+  gap: 35px;
+}
+
+.signupContainerMobile {
+  @include setFlex();
+  gap: 35px;
+  display: none;
+}
+
+.signupBtn {
+  color: white;
+  background-color: $clrHighlight1;
+  border: unset;
+  border-radius: 10px;
+  height: 48px;
+  width: 110px;
+  font-size: 16px;
+  font-weight: 700;
+  @include setFlex();
+
+  &:hover {
+    background-color: $clrHighlight2;
+    color: $clrBaseBright;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.buttonContainer {
+  @include setFlex();
+  gap: 35px;
+}
+
+.loginBtn {
+  color: white;
+  background-color: $clrHighlight1;
+  border: unset;
+  border-radius: 10px;
+  height: 48px;
+  width: 110px;
+  font-weight: 700;
+  @include setFlex();
+
+  &:hover {
+    background-color: $clrHighlight2;
+    color: $clrBaseBright;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.guestLoginBtn {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 48px;
+  width: 177px;
+  @include setFlex();
+  font-weight: 700;
+
+  &:hover {
+    color: $clrHighlight2;
+    border-color: $clrHighlight2;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.inputContainer {
+  @include setFlex();
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 48px;
+}
+
+.emailInputContainer {
+  position: relative;
+  width: 422px;
+  height: 48px;
+}
+
+.emailInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 422px;
+  height: 48px;
+}
+
+input::placeholder {
+  color: rgb(200, 198, 198);
+  opacity: 1;
+}
+
+.emailIcon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.passwordInputContainer {
+  position: relative;
+  width: 422px;
+  height: 48px;
+}
+
+.passwordInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 422px;
+  height: 48px;
+}
+
+.inputAndErrorContainer {
+  @include setFlex($fd: column, $jc: flex-start, $ai: stretch);
+}
+
+.serverError {
+  @include setFlex($jc: flex-start);
+  align-self: stretch;
+  border-radius: 10px;
+  padding: 8px;
+  background-color: $clrErrorMessageBackground;
+  margin-bottom: 8px;
+
+  svg {
+    path {
+      fill: $clrErrorMessageText;
+    }
+  }
+}
+
+.errorMessageContainer {
+  @include setFlex($jc: flex-start);
+  height: 16px;
+}
+
+.inputIconContainer {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 21px;
+  @include setFlex();
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.inputIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.logoAnimationContainer {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1001;
+}
+
+.logoAnimation {
+  transform: translate(-50%, -50%);
+  animation: shrinkAndMove 2s ease-in-out forwards;
+}
+
+.logoAnimationOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: $clrBaseBright;
+  animation: opacityAnimation 2s forwards ease-in-out;
+}
+
+.animatedLogo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.passwordIcon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+@keyframes shrinkAndMove {
+  0% {
+    transform: translate(50vw, 50vh) scale(3.6);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes opacityAnimation {
+  0% {
+    background-color: $clrBaseBright;
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
