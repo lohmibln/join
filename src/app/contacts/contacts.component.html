@@ -4,15 +4,25 @@
     [groups]="groups()"
     [selectedId]="selectedContact()?.id ?? null"
     [errorMessage]="contactsService.errorMessage()"
+    (addContact)="isAddContactDialogOpen.set(true)"
   />
 
   <div class="detailArea" [class.hiddenOnMobile]="!selectedContact()">
     <div class="pageTitle">
       <h1>Contacts</h1>
       <span class="tagline">Better with a team</span>
-      <button class="backButton" type="button" aria-label="Back to list" (click)="selectedContact.set(null)">
+      <button
+        class="backButton"
+        type="button"
+        aria-label="Back to list"
+        (click)="selectedContact.set(null)"
+      >
         <img src="assets/icons/arrow-left.svg" alt="" />
       </button>
     </div>
   </div>
+
+  @if (isAddContactDialogOpen()) {
+    <app-add-contact-dialog (closed)="isAddContactDialogOpen.set(false)" />
+  }
 </section>
