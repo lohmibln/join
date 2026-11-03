@@ -27,7 +27,7 @@
             [value]="values().name"
             (input)="onInput('name', $event)"
           />
-          <img src="assets/icons/person.svg" alt="" />
+          <span class="fieldIcon personIcon"></span>
         </div>
         @if (errors().name) {
           <span class="errorMessage" role="alert">{{ errors().name }}</span>
@@ -44,7 +44,7 @@
             [value]="values().email"
             (input)="onInput('email', $event)"
           />
-          <img src="assets/icons/mail.svg" alt="" />
+          <span class="fieldIcon mailIcon"></span>
         </div>
         @if (errors().email) {
           <span class="errorMessage" role="alert">{{ errors().email }}</span>
@@ -61,7 +61,7 @@
             [value]="values().phone"
             (input)="onInput('phone', $event)"
           />
-          <img src="assets/icons/call.svg" alt="" />
+          <span class="fieldIcon callIcon"></span>
         </div>
         @if (errors().phone) {
           <span class="errorMessage" role="alert">{{ errors().phone }}</span>

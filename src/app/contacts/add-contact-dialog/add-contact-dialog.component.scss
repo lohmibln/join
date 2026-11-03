@@ -175,10 +175,29 @@ $clrLightBlue: #124658; // Figma name: "Ligth blue"
     }
   }
 
-  img {
+  // The svg files are only used as a shape (mask), the color is Figma's #6B6B6B.
+  .fieldIcon {
     flex: none;
     width: 24px;
     height: 24px;
+    background-color: #6b6b6b;
+    -webkit-mask: center / 24px 24px no-repeat;
+    mask: center / 24px 24px no-repeat;
+  }
+
+  .personIcon {
+    -webkit-mask-image: url('/assets/icons/person.svg');
+    mask-image: url('/assets/icons/person.svg');
+  }
+
+  .mailIcon {
+    -webkit-mask-image: url('/assets/icons/mail.svg');
+    mask-image: url('/assets/icons/mail.svg');
+  }
+
+  .callIcon {
+    -webkit-mask-image: url('/assets/icons/call.svg');
+    mask-image: url('/assets/icons/call.svg');
   }
 }
 
