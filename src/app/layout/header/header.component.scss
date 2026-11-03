@@ -1,0 +1,55 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 232px;
+  right: 0;
+  height: 96px;
+  z-index: 5;
+  padding: 0 40px 0 96px;
+  background-color: $clrBaseBright;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  @include setFlex(row, space-between, center);
+}
+
+.title {
+  font-size: 20px;
+  color: $clrBaseDark;
+}
+
+.mobileLogo {
+  display: none;
+}
+
+.actions {
+  @include setFlex(row, flex-end, center, 24px);
+}
+
+.help {
+  padding: 0;
+  @include setFlex();
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.userBadge {
+  @include setFlex();
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 3px solid $clrHighlight1;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #29445c;
+  font-size: $fSSec;
+  font-weight: 700;
+
+  &:hover {
+    background-color: #eef0f3;
+  }
+}
