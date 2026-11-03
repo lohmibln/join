@@ -181,3 +181,92 @@ $clrLightBlue: #124658; // Figma name: "Ligth blue"
     height: 24px;
   }
 }
+
+// Buttons
+
+// Collapses with the 8px bottom margin of the last form group: 375px + 25px = Figma's top: 400px.
+.buttons {
+  @include setFlex(row, center, center, 24px);
+  width: 364px;
+  margin-top: 25px;
+}
+
+.secondaryButton,
+.primaryButton {
+  @include setFlex(row, center, center, 4px);
+  box-sizing: border-box;
+  padding: 16px;
+  line-height: 120%;
+}
+
+.secondaryButton {
+  width: 126px;
+  height: 56px;
+  border: 1px solid $clrHighlight1;
+  background-color: transparent;
+  color: $clrHighlight1;
+
+  .cancelIcon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    background: url('/assets/icons/cancel.svg') center / 24px 24px no-repeat;
+  }
+
+  &:hover:not(:disabled) {
+    border: 2px solid $clrLightBlue;
+    color: $clrLightBlue;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+    .cancelIcon {
+      background-image: url('/assets/icons/cancel-hover.svg');
+    }
+  }
+
+  &:active:not(:disabled) {
+    border: 1px solid $clrHighlight1Darker;
+    color: $clrHighlight1Darker;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+    .cancelIcon {
+      background-image: url('/assets/icons/cancel-active.svg');
+    }
+  }
+}
+
+.primaryButton {
+  width: 214px;
+  height: 57px;
+  border: unset;
+  background-color: $clrHighlight1;
+  font-size: 21px;
+  font-weight: 700;
+  color: $clrBaseBright;
+
+  img {
+    flex: none;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: $clrLightBlue;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active:not(:disabled) {
+    background-color: $clrHighlight1Darker;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  // Not in Figma: uses the project's disabled look (see global button:disabled).
+  &:disabled {
+    border: 1px solid $clrDisabled;
+    color: $clrDisabled;
+  }
+}
+
+// Not in Figma: spacing under the buttons, using the project's 8px gap.
+.formError {
+  margin: 8px 0 0;
+}
