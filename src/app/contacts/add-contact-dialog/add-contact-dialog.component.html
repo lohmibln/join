@@ -69,6 +69,21 @@
           <span class="errorMessage" role="alert">{{ errors().phone }}</span>
         }
       </div>
+
+      <div class="buttons">
+        <button class="secondaryButton" type="button" (click)="close()">
+          Cancel
+          <img src="assets/icons/cancel.svg" alt="" />
+        </button>
+        <button class="primaryButton" type="submit" [disabled]="isSaving()">
+          Create contact
+          <img src="assets/icons/check-white.svg" alt="" />
+        </button>
+      </div>
+
+      @if (formError()) {
+        <p class="errorMessage formError" role="alert">{{ formError() }}</p>
+      }
     </form>
   </section>
 </div>
