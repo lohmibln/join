@@ -23,6 +23,9 @@
   </div>
 
   @if (isAddContactDialogOpen()) {
-    <app-add-contact-dialog (closed)="isAddContactDialogOpen.set(false)" />
+    <app-add-contact-dialog
+      (closed)="isAddContactDialogOpen.set(false)"
+      (created)="selectedContact.set($event)"
+    />
   }
 </section>
