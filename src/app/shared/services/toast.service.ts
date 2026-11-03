@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
-const TOAST_DURATION = 2500;
+// Figma prototype: "After delay 800ms -> Close overlay".
+const TOAST_DURATION = 800;
 
 /**
  * Shared toast message ("saved", "changed", "deleted" feedback).
