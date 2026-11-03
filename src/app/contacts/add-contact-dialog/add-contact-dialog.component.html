@@ -16,5 +16,25 @@
     </button>
 
     <img class="avatar" src="assets/icons/contacts/avatar-placeholder.svg" alt="" />
+
+    <form class="form" novalidate (submit)="submit($event)">
+      <div class="formGroup">
+        <div class="formField" [class.errorInput]="errors().name !== ''">
+          <input
+            #nameInput
+            name="name"
+            type="text"
+            placeholder="Name"
+            autocomplete="off"
+            [value]="values().name"
+            (input)="onInput('name', $event)"
+          />
+          <img src="assets/icons/person.svg" alt="" />
+        </div>
+        @if (errors().name) {
+          <span class="errorMessage" role="alert">{{ errors().name }}</span>
+        }
+      </div>
+    </form>
   </section>
 </div>
