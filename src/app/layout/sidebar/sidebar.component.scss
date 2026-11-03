@@ -1,0 +1,78 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 232px;
+  z-index: 10;
+  background-color: $clrHighlight1;
+  @include setFlex(column, flex-start, stretch);
+}
+
+.logo {
+  @include setFlex();
+  padding: 66px 0 0;
+
+  img {
+    width: 100px;
+  }
+}
+
+.menu {
+  @include setFlex(column, flex-start, stretch);
+  margin-top: 100px;
+}
+
+.menuLink {
+  @include setFlex(row, flex-start, center, 8px);
+  height: 46px;
+  padding: 0 0 0 56px;
+  border-radius: 0;
+  color: #cdcdcd;
+  font-size: $fSSec;
+  font-family: $font-family-base;
+
+  &:link,
+  &:visited {
+    color: #cdcdcd;
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover {
+    color: $clrBaseBright;
+    background-color: $clrHighlight1Darker;
+  }
+
+  &.active {
+    color: $clrBaseBright;
+    background-color: $clrHighlight1Darker;
+  }
+}
+
+.legal {
+  @include setFlex(column, flex-start, flex-start, 10px);
+  margin-top: auto;
+  padding: 0 0 48px 60px;
+
+  a {
+    padding: 4px 0;
+    font-size: $fSTer;
+
+    &:link,
+    &:visited {
+      color: #a8a8a8;
+    }
+
+    &:hover {
+      color: $clrHighlight2;
+    }
+  }
+}
