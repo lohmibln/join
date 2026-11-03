@@ -1,6 +1,8 @@
 import { afterNextRender, Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
-import { Contact } from '../../shared/models/contact.model';
+import { Contact, NewContact } from '../../shared/models/contact.model';
 import { ContactsService } from '../../shared/services/contacts.service';
+import { ToastService } from '../../shared/services/toast.service';
+import { buildNewContact } from '../../shared/utils/contact.utils';
 import {
   ContactFormErrors,
   ContactFormValues,
@@ -10,6 +12,7 @@ import {
 
 const EMPTY_ERRORS: ContactFormErrors = { name: '', email: '', phone: '' };
 const DUPLICATE_EMAIL_MESSAGE = 'This email address already exists.';
+const SUCCESS_MESSAGE = 'Contact successfully created';
 
 @Component({
   selector: 'app-add-contact-dialog',
@@ -20,6 +23,7 @@ const DUPLICATE_EMAIL_MESSAGE = 'This email address already exists.';
 })
 export class AddContactDialogComponent {
   private readonly contactsService = inject(ContactsService);
+  private readonly toastService = inject(ToastService);
   private readonly nameInput = viewChild.required<ElementRef<HTMLInputElement>>('nameInput');
 
   readonly closed = output<void>();
@@ -56,6 +60,7 @@ export class AddContactDialogComponent {
     const errors = this.collectErrors();
     this.errors.set(errors);
     if (hasErrors(errors)) return;
+    await this.save();
   }
 
   /**
@@ -84,5 +89,32 @@ export class AddContactDialogComponent {
   private isDuplicateEmail(email: string): boolean {
     const wanted = email.trim().toLowerCase();
     return this.contactsService.contacts().some((contact) => contact.email.toLowerCase() === wanted);
+  }
+
+  private buildContact(): NewContact {
+    const { name, email, phone } = this.values();
+    return buildNewContact(name, email.toLowerCase(), phone);
+  }
+
+  private async save(): Promise<void> {
+    this.isSaving.set(true);
+    try {
+      const contact = await this.contactsService.addContact(this.buildContact());
+      if (contact) this.finish(contact);
+      else this.showSaveError();
+    } finally {
+      this.isSaving.set(false);
+    }
+  }
+
+  private finish(contact: Contact): void {
+    this.toastService.show(SUCCESS_MESSAGE);
+    this.created.emit(contact);
+    this.close();
+  }
+
+  private showSaveError(): void {
+    this.formError.set(this.contactsService.errorMessage());
+    this.contactsService.errorMessage.set('');
   }
 }
