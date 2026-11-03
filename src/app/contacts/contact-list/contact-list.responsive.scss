@@ -1,0 +1,53 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+@media (max-width: 1023px) {
+  :host {
+    width: 100%;
+    min-width: 0;
+    height: calc(100dvh - 160px);
+  }
+
+  .list {
+    padding: 16px 16px 96px;
+  }
+
+  .addContactButton {
+    display: none;
+  }
+
+  .letter {
+    padding: 16px 36px 12px;
+  }
+
+  .contactRow {
+    gap: 24px;
+  }
+
+  .email {
+    max-width: calc(100vw - 180px);
+  }
+
+  .floatingAddButton {
+    @include setFlex();
+    position: fixed;
+    right: 16px;
+    bottom: 96px;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: $clrHighlight1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+
+    &:hover {
+      background-color: $clrHighlight2;
+    }
+  }
+}
