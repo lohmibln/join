@@ -32,3 +32,58 @@
     transform: none;
   }
 }
+
+// Left brand panel
+
+.brand {
+  @include setFlex(column, center, flex-start);
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 467px;
+  height: 100%;
+  padding: 66px 48px;
+  background-color: $clrHighlight1;
+}
+
+.logo {
+  position: absolute;
+  top: 25.93%;
+  left: 10.04%;
+  width: 11.91%;
+  height: 11.19%;
+  object-fit: contain;
+}
+
+.brandText {
+  @include setFlex(column, center, flex-start, 16px);
+  width: 371px;
+}
+
+.headline {
+  @include setFlex(column, center, flex-start, 8px);
+}
+
+.title {
+  margin: 0;
+  font-size: $fsH1;
+  font-weight: $fwH1;
+  line-height: 120%;
+  color: $clrBaseBright;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 27px;
+  line-height: 120%;
+  color: $clrBaseBright;
+}
+
+.underline {
+  display: block;
+  width: 90px;
+  height: 3px;
+  margin-bottom: -3px;
+  background-color: $clrHighlight2;
+}
