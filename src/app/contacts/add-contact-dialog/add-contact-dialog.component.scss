@@ -1,6 +1,8 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixin';
 
+$clrLightBlue: #124658; // Figma name: "Ligth blue"
+
 // Values from the Figma CSS export (desktop only, mobile follows in a responsive file).
 
 .overlay {
@@ -86,4 +88,96 @@
   height: 3px;
   margin-bottom: -3px;
   background-color: $clrHighlight2;
+}
+
+// Close button and avatar
+
+.closeButton {
+  position: absolute;
+  top: 48px;
+  left: 1132px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: unset;
+  border-radius: 56px;
+  background: url('/assets/icons/close.svg') center / 32px 32px no-repeat;
+  transition: $stdTransition;
+
+  &:hover {
+    background-image: url('/assets/icons/close-hover.svg');
+  }
+}
+
+// The svg is 134px: the 120px avatar plus its ring and shadow (7px on each side).
+.avatar {
+  position: absolute;
+  top: 197px;
+  left: 543px;
+  width: 134px;
+  height: 134px;
+}
+
+// Form
+
+.form {
+  position: absolute;
+  top: 137px;
+  right: 48px;
+  width: 422px;
+}
+
+// 50px input + 8px gap + 16px error area, so the inputs keep Figma's 82px spacing.
+.formGroup {
+  @include setFlex(column, flex-start, stretch, 8px);
+  height: 74px;
+  margin-bottom: 8px;
+
+  .errorMessage {
+    display: block;
+    height: 16px;
+    line-height: 16px;
+  }
+}
+
+.formField {
+  @include setFlex(row, flex-start, center, 10px);
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  padding: 13px 21px;
+  background-color: $clrBaseBright;
+  border: 1px solid rgba(107, 107, 107, 0.713726);
+  border-radius: $stdRadiusInteractive;
+  transition: $stdTransition;
+
+  &:focus-within {
+    border-color: $clrLightBlue;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: unset;
+    border-radius: 0;
+    outline: none;
+    background-color: transparent;
+    line-height: 120%;
+    color: #000000;
+
+    &:focus {
+      border: unset;
+    }
+
+    &::placeholder {
+      color: rgba(107, 107, 107, 0.713726);
+    }
+  }
+
+  img {
+    flex: none;
+    width: 24px;
+    height: 24px;
+  }
 }
