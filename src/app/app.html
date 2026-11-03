@@ -4,9 +4,14 @@
 }
 
 <div class="mainArea">
-  <div class="mainAreaContent contentLimit" [class.withShell]="!authenticationService.isLoginSignUpView">
+  <div
+    class="mainAreaContent contentLimit"
+    [class.withShell]="!authenticationService.isLoginSignUpView"
+  >
     <div class="flex1">
       <router-outlet />
     </div>
   </div>
 </div>
+
+<app-toast />

@@ -2,11 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
 import { AuthenticationService } from './shared/services/authentication.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SidebarComponent, HeaderComponent],
+  imports: [RouterOutlet, SidebarComponent, HeaderComponent, ToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
