@@ -1,0 +1,5 @@
+@if (toastService.isVisible()) {
+  <div class="toast" role="status" aria-live="polite">
+    <div class="toastBox">{{ toastService.message() }}</div>
+  </div>
+}
