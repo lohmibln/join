@@ -35,6 +35,23 @@
           <span class="errorMessage" role="alert">{{ errors().name }}</span>
         }
       </div>
+
+      <div class="formGroup">
+        <div class="formField" [class.errorInput]="errors().email !== ''">
+          <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            autocomplete="off"
+            [value]="values().email"
+            (input)="onInput('email', $event)"
+          />
+          <img src="assets/icons/mail.svg" alt="" />
+        </div>
+        @if (errors().email) {
+          <span class="errorMessage" role="alert">{{ errors().email }}</span>
+        }
+      </div>
     </form>
   </section>
 </div>
