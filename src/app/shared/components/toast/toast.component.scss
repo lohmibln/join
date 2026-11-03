@@ -1,0 +1,40 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixin';
+
+// Values from the Figma CSS export (desktop only, mobile follows later).
+
+// Outer layer: position and the outer shadow. The top edge sits on the bottom edge of the
+// centered 592px dialog (50% + 296px), horizontally centered.
+.toast {
+  position: fixed;
+  top: calc(50% + 296px);
+  left: 50%;
+  z-index: 2000;
+  width: 326px;
+  height: 74px;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
+  transform: translateX(-50%);
+  animation: toastSlideInFromRight 300ms ease-out;
+}
+
+.toastBox {
+  @include setFlex();
+  width: 100%;
+  height: 100%;
+  background-color: $clrHighlight1;
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  color: $clrBaseBright;
+  font-size: $fSDefault;
+  line-height: 120%;
+}
+
+// Figma prototype: same as the dialog, "Move in" from the right, ease-out, 300ms.
+@keyframes toastSlideInFromRight {
+  from {
+    transform: translateX(50vw);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
