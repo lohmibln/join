@@ -52,6 +52,23 @@
           <span class="errorMessage" role="alert">{{ errors().email }}</span>
         }
       </div>
+
+      <div class="formGroup">
+        <div class="formField" [class.errorInput]="errors().phone !== ''">
+          <input
+            name="phone"
+            type="text"
+            placeholder="Phone"
+            autocomplete="off"
+            [value]="values().phone"
+            (input)="onInput('phone', $event)"
+          />
+          <img src="assets/icons/call.svg" alt="" />
+        </div>
+        @if (errors().phone) {
+          <span class="errorMessage" role="alert">{{ errors().phone }}</span>
+        }
+      </div>
     </form>
   </section>
 </div>
