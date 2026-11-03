@@ -1,0 +1,37 @@
+@import '../../styles/variables';
+@import '../../styles/mixin';
+
+.contacts {
+  display: flex;
+  align-items: flex-start;
+  min-height: calc(100dvh - 96px);
+}
+
+.detailArea {
+  flex: 1;
+  min-width: 0;
+  padding: 56px 56px 0;
+  background-color: $clrBackground;
+  min-height: calc(100dvh - 96px);
+}
+
+.pageTitle {
+  @include setFlex(row, flex-start, center, 30px);
+  margin-bottom: 48px;
+
+  h1 {
+    font-size: $fsH1;
+    line-height: 1.2;
+  }
+}
+
+.tagline {
+  padding-left: 30px;
+  border-left: 3px solid $clrHighlight2;
+  color: $clrHighlight1;
+  font-size: 27px;
+}
+
+.backButton {
+  display: none;
+}
