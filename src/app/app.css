@@ -17,3 +17,13 @@
 .flex1 {
   flex: 1;
 }
+
+.withShell {
+  padding: 96px 0 0 232px;
+}
+
+@media (max-width: 1023px) {
+  .withShell {
+    padding: 80px 0 80px;
+  }
+}
