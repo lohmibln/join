@@ -1,0 +1,15 @@
+<header class="header">
+  <span class="title">Kanban Project Management Tool</span>
+  <a class="mobileLogo" routerLink="/success">
+    <img src="assets/img/logo-dark.svg" alt="Join logo" />
+  </a>
+
+  <div class="actions">
+    <a class="help" routerLink="/help">
+      <img src="assets/icons/help.svg" alt="Help" />
+    </a>
+    <button class="userBadge" type="button" (click)="authenticationService.logout()">
+      {{ initials }}
+    </button>
+  </div>
+</header>

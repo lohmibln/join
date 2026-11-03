@@ -1,0 +1,50 @@
+@import '../../styles/variables';
+
+@media (max-width: 1023px) {
+  .contacts {
+    min-height: calc(100dvh - 160px);
+  }
+
+  .hiddenOnMobile {
+    display: none !important;
+  }
+
+  .detailArea {
+    padding: 24px 16px 0;
+    min-height: calc(100dvh - 160px);
+  }
+
+  .pageTitle {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 32px;
+
+    h1 {
+      font-size: 47px;
+    }
+  }
+
+  .tagline {
+    padding: 0 0 12px;
+    border-left: none;
+    border-bottom: 3px solid $clrHighlight2;
+    font-size: $fSDefault;
+  }
+
+  .backButton {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    display: block;
+    padding: 4px;
+    border: none;
+    background-color: transparent;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

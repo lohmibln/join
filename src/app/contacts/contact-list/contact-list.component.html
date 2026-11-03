@@ -1,0 +1,38 @@
+<div class="list">
+  <button class="addContactButton" type="button" (click)="addContact.emit()">
+    Add new contact
+    <img src="assets/icons/person-add.svg" alt="" />
+  </button>
+
+  @for (group of groups(); track group.letter) {
+    <div class="letter">{{ group.letter }}</div>
+    <hr class="separator" />
+
+    @for (contact of group.contacts; track contact.id) {
+      <button
+        class="contactRow"
+        type="button"
+        [class.selected]="contact.id === selectedId()"
+        (click)="selectContact.emit(contact)"
+      >
+        <span class="avatar" [style.background-color]="colorOf(contact)">
+          {{ contact.name_shortcut }}
+        </span>
+        <span class="info">
+          <span class="name">{{ contact.full_name }}</span>
+          <span class="email">{{ contact.email }}</span>
+        </span>
+      </button>
+    }
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  } @else if (groups().length === 0) {
+    <p class="empty">No contacts yet. Add your first one!</p>
+  }
+</div>
+
+<button class="floatingAddButton" type="button" aria-label="Add new contact" (click)="addContact.emit()">
+  <img src="assets/icons/contacts/add-contact-mobile.svg" alt="" />
+</button>

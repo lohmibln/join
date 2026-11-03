@@ -1,5 +1,10 @@
+@if (!authenticationService.isLoginSignUpView) {
+  <app-sidebar />
+  <app-header />
+}
+
 <div class="mainArea">
-  <div class="mainAreaContent contentLimit">
+  <div class="mainAreaContent contentLimit" [class.withShell]="!authenticationService.isLoginSignUpView">
     <div class="flex1">
       <router-outlet />
     </div>

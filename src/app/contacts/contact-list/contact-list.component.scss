@@ -1,0 +1,112 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+:host {
+  display: block;
+  position: relative;
+  width: 424px;
+  min-width: 424px;
+  height: calc(100dvh - 96px);
+  background-color: $clrBaseBright;
+}
+
+.list {
+  height: 100%;
+  overflow-y: auto;
+  padding: 32px 24px;
+}
+
+.addContactButton {
+  @include setFlex(row, center, center, 16px);
+  width: 100%;
+  height: 56px;
+  margin-bottom: 8px;
+  border: none;
+  background-color: $clrHighlight1;
+  color: $clrBaseBright;
+  font-size: 21px;
+  font-weight: 700;
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+
+  &:hover {
+    background-color: $clrHighlight2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.letter {
+  padding: 16px 36px;
+  font-size: $fSDefault;
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid $clrSeparatingLines;
+  margin-bottom: 8px;
+}
+
+.contactRow {
+  @include setFlex(row, flex-start, center, 35px);
+  width: 100%;
+  padding: 15px 24px;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  color: $clrBaseDark;
+
+  &:hover {
+    background-color: #eef0f3;
+  }
+
+  &.selected {
+    background-color: $clrHighlight1;
+    color: $clrBaseBright;
+  }
+}
+
+.avatar {
+  @include setFlex();
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid $clrBaseBright;
+  color: $clrBaseBright;
+  font-size: 12px;
+}
+
+.info {
+  @include setFlex(column, center, flex-start);
+  min-width: 0;
+}
+
+.name {
+  font-size: $fSDefault;
+}
+
+.email {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #007cee;
+  font-size: $fSTer;
+}
+
+.empty,
+.error {
+  padding: 24px 36px;
+  color: $clrDisabled;
+}
+
+.error {
+  color: $clrErrorMessageText;
+}
+
+.floatingAddButton {
+  display: none;
+}
