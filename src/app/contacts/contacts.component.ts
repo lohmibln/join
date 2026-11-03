@@ -4,11 +4,12 @@ import { ContactsService } from '../shared/services/contacts.service';
 import { NavbarService } from '../shared/services/navbar.service';
 import { groupContactsByLetter } from '../shared/utils/contact.utils';
 import { ContactListComponent } from './contact-list/contact-list.component';
+import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dialog.component';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [ContactListComponent],
+  imports: [ContactListComponent, AddContactDialogComponent],
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss', './contacts.responsive.scss'],
 })
@@ -17,6 +18,7 @@ export class ContactsComponent implements OnInit {
   private readonly navbarService = inject(NavbarService);
 
   readonly selectedContact = signal<Contact | null>(null);
+  readonly isAddContactDialogOpen = signal(false);
   readonly groups = computed(() => groupContactsByLetter(this.contactsService.contacts()));
 
   ngOnInit(): void {
