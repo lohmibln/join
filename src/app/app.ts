@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './layout/header/header.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { AuthenticationService } from './shared/services/authentication.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SidebarComponent, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
