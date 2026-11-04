@@ -1,5 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Contact } from '../../shared/models/contact.model';
+import { getContactColor } from '../../shared/utils/contact.utils';
 
 @Component({
   selector: 'app-contact-detail',
@@ -9,4 +10,6 @@ import { Contact } from '../../shared/models/contact.model';
 })
 export class ContactDetailComponent {
   contact = input.required<Contact>();
+
+  readonly color = computed(() => getContactColor(this.contact().name_shortcut_color_code));
 }
