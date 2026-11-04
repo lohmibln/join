@@ -53,7 +53,9 @@ export function buildNewContact(name: string, email: string, phone: string): New
 }
 
 export function groupContactsByLetter(contacts: Contact[]): ContactGroup[] {
-  const sorted = [...contacts].sort();
+  const sorted = [...contacts].sort((a, b) =>
+    a.full_name.localeCompare(b.full_name, 'de', { sensitivity: 'base' }),
+  );
   const groups: ContactGroup[] = [];
   for (const contact of sorted) {
     const letter = contact.full_name.charAt(0).toUpperCase();
