@@ -1,4 +1,16 @@
 <div class="header">
   <span class="avatar" [style.background-color]="color()">{{ contact().name_shortcut }}</span>
-  <h2 class="name">{{ contact().full_name }}</h2>
+  <div class="info">
+    <h2 class="name">{{ contact().full_name }}</h2>
+    <div class="actions">
+      <button class="actionButton editButton" type="button" (click)="editContact.emit()">
+        <span class="actionIcon"></span>
+        Edit
+      </button>
+      <button class="actionButton deleteButton" type="button" (click)="deleteContact.emit()">
+        <span class="actionIcon"></span>
+        Delete
+      </button>
+    </div>
+  </div>
 </div>

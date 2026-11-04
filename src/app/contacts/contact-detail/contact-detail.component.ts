@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { Contact } from '../../shared/models/contact.model';
 import { getContactColor } from '../../shared/utils/contact.utils';
 
@@ -10,6 +10,9 @@ import { getContactColor } from '../../shared/utils/contact.utils';
 })
 export class ContactDetailComponent {
   contact = input.required<Contact>();
+
+  editContact = output<void>();
+  deleteContact = output<void>();
 
   readonly color = computed(() => getContactColor(this.contact().name_shortcut_color_code));
 }
