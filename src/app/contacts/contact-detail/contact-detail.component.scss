@@ -1,6 +1,19 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixin';
 
+.header {
+  @include setFlex(row, flex-start, center, 51px);
+}
+
+.name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #000000;
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 120%;
+}
+
 // 120px circle plus its 3px ring, the Figma gap of 54px is measured from the circle.
 .avatar {
   @include setFlex();
