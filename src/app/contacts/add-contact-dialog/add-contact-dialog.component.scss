@@ -22,7 +22,8 @@ $clrLightBlue: #124658; // Figma name: "Ligth blue"
   overflow: hidden;
   background-color: $clrBaseBright;
   border-radius: 30px;
-  animation: slideInFromRight 300ms ease-out;
+  // Figma prototype says 300ms, but it feels too abrupt, so we slow it down.
+  animation: slideInFromRight 500ms ease-out;
 }
 
 // Figma prototype: open overlay, "Move in" from the right, ease-out, 300ms.
