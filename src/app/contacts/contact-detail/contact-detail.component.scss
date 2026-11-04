@@ -5,6 +5,11 @@
   @include setFlex(row, flex-start, center, 51px);
 }
 
+.info {
+  @include setFlex(column, center, flex-start, 8px);
+  min-width: 0;
+}
+
 .name {
   min-width: 0;
   overflow-wrap: anywhere;
@@ -27,4 +32,50 @@
   font-size: 47px;
   font-weight: 500;
   line-height: 120%;
+}
+
+.actions {
+  @include setFlex(row, flex-start, center, 16px);
+}
+
+.actionButton {
+  @include setFlex(row, flex-start, center, 8px);
+  padding: 0;
+  border: unset;
+  background-color: transparent;
+  color: $clrHighlight1;
+  font-size: $fSTer;
+  line-height: 120%;
+
+  &:hover {
+    color: $clrHighlight2;
+  }
+}
+
+.actionIcon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background: center / 24px 24px no-repeat;
+  transition: $stdTransition;
+}
+
+.editButton {
+  .actionIcon {
+    background-image: url('/assets/icons/edit.svg');
+  }
+
+  &:hover .actionIcon {
+    background-image: url('/assets/icons/edit-blue.svg');
+  }
+}
+
+.deleteButton {
+  .actionIcon {
+    background-image: url('/assets/icons/delete.svg');
+  }
+
+  &:hover .actionIcon {
+    background-image: url('/assets/icons/delete-blue.svg');
+  }
 }
