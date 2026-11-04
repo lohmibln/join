@@ -6,7 +6,7 @@ import { getContactColor } from '../../shared/utils/contact.utils';
   selector: 'app-contact-detail',
   standalone: true,
   templateUrl: './contact-detail.component.html',
-  styleUrl: './contact-detail.component.scss',
+  styleUrls: ['./contact-detail.component.scss', './contact-detail.responsive.scss'],
 })
 export class ContactDetailComponent {
   contact = input.required<Contact>();
