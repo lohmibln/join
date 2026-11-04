@@ -4,6 +4,7 @@
     [groups]="groups()"
     [selectedId]="selectedContact()?.id ?? null"
     [errorMessage]="contactsService.errorMessage()"
+    (selectContact)="selectedContact.set($event)"
     (addContact)="isAddContactDialogOpen.set(true)"
   />
 
