@@ -1,3 +1,5 @@
+@import '../../../styles/variables';
+
 @media (max-width: 1023px) {
   .header {
     gap: 17px;
@@ -13,5 +15,47 @@
   .name {
     font-size: 36px;
     font-weight: 700;
+  }
+
+  // Edit and delete move into the options menu above the round button.
+  .actions {
+    display: none;
+    position: fixed;
+    right: 16px;
+    bottom: 176px;
+    z-index: 10;
+    width: 116px;
+    padding: 10px;
+    border-radius: 20px 20px 0 20px;
+    background-color: $clrBaseBright;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    &.open {
+      display: block;
+    }
+  }
+
+  .actionButton {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+  }
+
+  // The svg is 64px: the 56px button plus room for its shadow (4px on the sides, 8px below).
+  .menuButton {
+    display: block;
+    position: fixed;
+    right: 12px;
+    bottom: 104px;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: unset;
+    border-radius: 0;
+    background: url('/assets/icons/contacts/more-mobile.svg') center / 64px 64px no-repeat;
+
+    &:hover {
+      background-image: url('/assets/icons/contacts/more-mobile-hover.svg');
+    }
   }
 }
