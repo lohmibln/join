@@ -2,7 +2,7 @@
   <span class="avatar" [style.background-color]="color()">{{ contact().name_shortcut }}</span>
   <div class="info">
     <h2 class="name">{{ contact().full_name }}</h2>
-    <div class="actions">
+    <div class="actions" [class.open]="isMenuOpen()">
       <button class="actionButton editButton" type="button" (click)="editContact.emit()">
         <span class="actionIcon"></span>
         Edit
@@ -14,3 +14,11 @@
     </div>
   </div>
 </div>
+
+<button
+  class="menuButton"
+  type="button"
+  aria-label="Contact options"
+  [attr.aria-expanded]="isMenuOpen()"
+  (click)="toggleMenu($event)"
+></button>
