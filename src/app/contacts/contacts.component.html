@@ -21,6 +21,10 @@
         <img src="assets/icons/arrow-left.svg" alt="" />
       </button>
     </div>
+
+    @if (selectedContact(); as contact) {
+      <app-contact-detail [contact]="contact" />
+    }
   </div>
 
   @if (isAddContactDialogOpen()) {

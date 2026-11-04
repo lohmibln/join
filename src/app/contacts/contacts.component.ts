@@ -4,12 +4,13 @@ import { ContactsService } from '../shared/services/contacts.service';
 import { NavbarService } from '../shared/services/navbar.service';
 import { groupContactsByLetter } from '../shared/utils/contact.utils';
 import { ContactListComponent } from './contact-list/contact-list.component';
+import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dialog.component';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [ContactListComponent, AddContactDialogComponent],
+  imports: [ContactListComponent, ContactDetailComponent, AddContactDialogComponent],
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss', './contacts.responsive.scss'],
 })
