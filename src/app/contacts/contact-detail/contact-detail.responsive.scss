@@ -13,6 +13,10 @@
   }
 
   .name {
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 36px;
     font-weight: 700;
   }

@@ -11,8 +11,11 @@
 }
 
 .name {
+  max-width: 800px;
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #000000;
   font-size: 47px;
   font-weight: 500;
