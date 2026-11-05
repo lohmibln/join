@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Contact } from '../shared/models/contact.model';
 import { ContactsService } from '../shared/services/contacts.service';
 import { NavbarService } from '../shared/services/navbar.service';
@@ -20,7 +20,7 @@ import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-d
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss', './contacts.responsive.scss'],
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent implements OnInit, OnDestroy {
   contactsService = inject(ContactsService);
   private readonly navbarService = inject(NavbarService);
 
@@ -29,9 +29,35 @@ export class ContactsComponent implements OnInit {
   readonly isEditContactDialogOpen = signal(false);
   readonly groups = computed(() => groupContactsByLetter(this.contactsService.contacts()));
 
+  constructor() {
+    // Keep the open detail in sync when Realtime (or local save) updates the list.
+    effect(() => {
+      const selected = this.selectedContact();
+      if (!selected) {
+        return;
+      }
+
+      const fresh = this.contactsService.contacts().find((contact) => contact.id === selected.id);
+      if (!fresh) {
+        this.selectedContact.set(null);
+        this.isEditContactDialogOpen.set(false);
+        return;
+      }
+
+      if (fresh !== selected) {
+        this.selectedContact.set(fresh);
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.navbarService.setSelection('contacts');
     void this.contactsService.loadContacts();
+    this.contactsService.startRealtime();
+  }
+
+  ngOnDestroy(): void {
+    this.contactsService.stopRealtime();
   }
 
   openEditContact(): void {
