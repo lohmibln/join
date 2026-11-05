@@ -13,8 +13,10 @@ export interface ContactFormValues {
 export type ContactFormErrors = Record<keyof ContactFormValues, string>;
 
 const NAME_PATTERN = /^\p{L}+(?:['’-]\p{L}+)*(?:\s+\p{L}+(?:['’-]\p{L}+)*)+$/u;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_PATTERN = /^\+?\d+$/;
+/** ASCII-only email (no ä ö ü or other special letters). */
+const EMAIL_PATTERN = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+const PHONE_INPUT_PATTERN = /^\+?[\d\s()-]+$/;
+const UMLAUT_PATTERN = /[äöüÄÖÜß]/;
 
 /**
  * Validates the full name: required, no digits, first and last name.
@@ -30,27 +32,78 @@ export function validateName(value: string): string {
 }
 
 /**
- * Validates the email address: required and matching the email pattern.
+ * Validates the email address: required, valid format, no umlauts (ä ö ü).
  * @param value - Raw input value.
  * @returns Error message or empty string.
  */
 export function validateEmail(value: string): string {
     const email = value.trim();
     if (!email) return 'Please enter an email address.';
+    if (UMLAUT_PATTERN.test(email) || /[^\x00-\x7F]/.test(email)) {
+        return 'Please use an email without special characters (ä, ö, ü).';
+    }
     if (!EMAIL_PATTERN.test(email)) return 'Please enter a valid email address.';
     return '';
 }
 
 /**
- * Validates the phone number: required, digits only, optional leading "+".
+ * Strips formatting and an optional German country code (+49 / 49 / 0049).
+ * @param phone - Raw phone input.
+ * @returns National digits only, or null if the input is not a phone-like value.
+ */
+function getNationalPhoneDigits(phone: string): string | null {
+    const cleaned = phone.trim().replace(/[\s()-]/g, '');
+    if (!/^\+?\d+$/.test(cleaned)) {
+        return null;
+    }
+
+    let digits = cleaned.replace(/^\+/, '');
+    if (digits.startsWith('0049')) {
+        digits = digits.slice(4);
+    } else if (digits.startsWith('49')) {
+        digits = digits.slice(2);
+    }
+
+    return digits;
+}
+
+/**
+ * Validates the phone number: required, digits only, 8–11 digits excluding +49.
  * @param value - Raw input value.
  * @returns Error message or empty string.
  */
 export function validatePhone(value: string): string {
     const phone = value.trim();
     if (!phone) return 'Please enter a phone number.';
-    if (!PHONE_PATTERN.test(phone)) return 'Use digits only (optional "+" at the start).';
+    if (!PHONE_INPUT_PATTERN.test(phone)) {
+        return 'Use digits only (optional "+" and spaces).';
+    }
+
+    const nationalDigits = getNationalPhoneDigits(phone);
+    if (nationalDigits === null) {
+        return 'Use digits only (optional "+" and spaces).';
+    }
+    if (nationalDigits.length < 8 || nationalDigits.length > 11) {
+        return 'Phone number must be 8–11 digits (excluding +49).';
+    }
     return '';
+}
+
+/**
+ * Validates a single contact field.
+ * @param field - Which field to validate.
+ * @param value - Raw input value.
+ * @returns Error message or empty string.
+ */
+export function validateContactField(field: keyof ContactFormValues, value: string): string {
+    switch (field) {
+        case 'name':
+            return validateName(value);
+        case 'email':
+            return validateEmail(value);
+        case 'phone':
+            return validatePhone(value);
+    }
 }
 
 /**
