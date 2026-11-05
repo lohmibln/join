@@ -35,7 +35,7 @@ export class ContactsService {
 
     this.realtimeChannel = supabase
       .channel('contacts-live')
-      .on(
+      .on<Contact>(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'contacts' },
         (payload) => this.applyRealtimeChange(payload),
