@@ -52,6 +52,22 @@ export function buildNewContact(name: string, email: string, phone: string): New
   };
 }
 
+/** Builds an updated contact and keeps the existing id and avatar color. */
+export function buildUpdatedContact(
+  existing: Contact,
+  name: string,
+  email: string,
+  phone: string,
+): Contact {
+  const draft = buildNewContact(name, email, phone);
+  return {
+    ...draft,
+    id: existing.id,
+    name_shortcut_color_code: existing.name_shortcut_color_code,
+    img: existing.img,
+  };
+}
+
 export function groupContactsByLetter(contacts: Contact[]): ContactGroup[] {
   const sorted = [...contacts].sort((a, b) =>
     a.full_name.localeCompare(b.full_name, 'de', { sensitivity: 'base' }),
