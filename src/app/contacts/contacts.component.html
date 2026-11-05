@@ -23,7 +23,10 @@
     </div>
 
     @if (selectedContact(); as contact) {
-      <app-contact-detail [contact]="contact" />
+      <app-contact-detail
+        [contact]="contact"
+        (editContact)="openEditContact()"
+      />
     }
   </div>
 
@@ -31,6 +34,14 @@
     <app-add-contact-dialog
       (closed)="isAddContactDialogOpen.set(false)"
       (created)="selectedContact.set($event)"
+    />
+  }
+
+  @if (isEditContactDialogOpen() && selectedContact(); as contact) {
+    <app-edit-contact-dialog
+      [contact]="contact"
+      (closed)="closeEditContact()"
+      (updated)="onContactUpdated($event)"
     />
   }
 </section>

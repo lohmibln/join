@@ -6,11 +6,17 @@ import { groupContactsByLetter } from '../shared/utils/contact.utils';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dialog.component';
+import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [ContactListComponent, ContactDetailComponent, AddContactDialogComponent],
+  imports: [
+    ContactListComponent,
+    ContactDetailComponent,
+    AddContactDialogComponent,
+    EditContactDialogComponent,
+  ],
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss', './contacts.responsive.scss'],
 })
@@ -20,10 +26,24 @@ export class ContactsComponent implements OnInit {
 
   readonly selectedContact = signal<Contact | null>(null);
   readonly isAddContactDialogOpen = signal(false);
+  readonly isEditContactDialogOpen = signal(false);
   readonly groups = computed(() => groupContactsByLetter(this.contactsService.contacts()));
 
   ngOnInit(): void {
     this.navbarService.setSelection('contacts');
     void this.contactsService.loadContacts();
+  }
+
+  openEditContact(): void {
+    this.isEditContactDialogOpen.set(true);
+  }
+
+  closeEditContact(): void {
+    this.isEditContactDialogOpen.set(false);
+  }
+
+  onContactUpdated(contact: Contact): void {
+    this.selectedContact.set(contact);
+    this.closeEditContact();
   }
 }
