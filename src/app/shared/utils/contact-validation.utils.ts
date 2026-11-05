@@ -40,7 +40,7 @@ export function validateEmail(value: string): string {
     const email = value.trim();
     if (!email) return 'Please enter an email address.';
     if (UMLAUT_PATTERN.test(email) || /[^\x00-\x7F]/.test(email)) {
-        return 'Please use an email without special characters (ä, ö, ü).';
+        return 'Please use an email without special characters.';
     }
     if (!EMAIL_PATTERN.test(email)) return 'Please enter a valid email address.';
     return '';
