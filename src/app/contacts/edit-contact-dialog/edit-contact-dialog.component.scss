@@ -1,0 +1,15 @@
+// Edit-only avatar: colored initials instead of the add-dialog placeholder image.
+.avatarInitials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 1;
+  color: #ffffff;
+  object-fit: unset;
+}

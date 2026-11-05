@@ -1,0 +1,92 @@
+<div class="overlay" (click)="onOverlayClick($event)">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="editContactTitle">
+    <div class="brand">
+      <img class="logo" src="assets/img/logo-white.svg" alt="Join logo" />
+      <div class="brandText">
+        <div class="headline">
+          <h2 id="editContactTitle" class="title">Edit contact</h2>
+        </div>
+        <span class="underline"></span>
+      </div>
+    </div>
+
+    <button class="closeButton" type="button" aria-label="Close dialog" (click)="close()"></button>
+
+    <div
+      class="avatar avatarInitials"
+      [style.background-color]="avatarColor()"
+      aria-hidden="true"
+    >
+      {{ avatarShortcut() }}
+    </div>
+
+    <form class="form" novalidate (submit)="submit($event)">
+      <div class="formGroup">
+        <div class="formField" [class.errorInput]="errors().name !== ''">
+          <input
+            #nameInput
+            name="name"
+            type="text"
+            placeholder="Name"
+            autocomplete="off"
+            [value]="values().name"
+            (input)="onInput('name', $event)"
+          />
+          <span class="fieldIcon personIcon"></span>
+        </div>
+        @if (errors().name) {
+          <span class="errorMessage" role="alert">{{ errors().name }}</span>
+        }
+      </div>
+
+      <div class="formGroup">
+        <div class="formField" [class.errorInput]="errors().email !== ''">
+          <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            autocomplete="off"
+            [value]="values().email"
+            (input)="onInput('email', $event)"
+          />
+          <span class="fieldIcon mailIcon"></span>
+        </div>
+        @if (errors().email) {
+          <span class="errorMessage" role="alert">{{ errors().email }}</span>
+        }
+      </div>
+
+      <div class="formGroup">
+        <div class="formField" [class.errorInput]="errors().phone !== ''">
+          <input
+            name="phone"
+            type="text"
+            placeholder="Phone"
+            autocomplete="off"
+            [value]="values().phone"
+            (input)="onInput('phone', $event)"
+          />
+          <span class="fieldIcon callIcon"></span>
+        </div>
+        @if (errors().phone) {
+          <span class="errorMessage" role="alert">{{ errors().phone }}</span>
+        }
+      </div>
+
+      <div class="buttons">
+        <button class="secondaryButton" type="button" (click)="onDelete()">
+          Delete
+          <span class="cancelIcon"></span>
+        </button>
+        <button class="primaryButton" type="submit" [disabled]="isSaving()">
+          Save
+          <img src="assets/icons/check-white.svg" alt="" />
+        </button>
+      </div>
+
+      @if (formError()) {
+        <p class="errorMessage formError" role="alert">{{ formError() }}</p>
+      }
+    </form>
+  </section>
+</div>
