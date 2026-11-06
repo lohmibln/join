@@ -7,6 +7,7 @@ import {
   ContactFormErrors,
   ContactFormValues,
   hasErrors,
+  validateContactField,
   validateContactForm,
 } from '../../shared/utils/contact-validation.utils';
 
@@ -39,15 +40,36 @@ export class AddContactDialogComponent {
   }
 
   /**
- * Stores the typed value and removes the error of that field.
- * @param field - Field that was changed.
- * @param event - Input event of the field.
- */
+   * Stores the typed value and removes the error of that field.
+   * @param field - Field that was changed.
+   * @param event - Input event of the field.
+   */
   onInput(field: keyof ContactFormValues, event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.values.update((values) => ({ ...values, [field]: value }));
     this.errors.update((errors) => ({ ...errors, [field]: '' }));
     this.formError.set('');
+  }
+
+  /**
+   * Hides the error while the user is editing the field again.
+   * @param field - Field that received focus.
+   */
+  onFocus(field: keyof ContactFormValues): void {
+    this.errors.update((errors) => ({ ...errors, [field]: '' }));
+    this.formError.set('');
+  }
+
+  /**
+   * Validates only the field the user left (blur).
+   * @param field - Field that lost focus.
+   */
+  onBlur(field: keyof ContactFormValues): void {
+    let message = validateContactField(field, this.values()[field]);
+    if (field === 'email' && !message && this.isDuplicateEmail(this.values().email)) {
+      message = DUPLICATE_EMAIL_MESSAGE;
+    }
+    this.errors.update((errors) => ({ ...errors, [field]: message }));
   }
 
   /**
