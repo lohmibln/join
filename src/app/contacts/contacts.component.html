@@ -26,6 +26,7 @@
       <app-contact-detail
         [contact]="contact"
         (editContact)="openEditContact()"
+        (deleteContact)="onDeleteContact()"
       />
     }
   </div>
@@ -42,6 +43,7 @@
       [contact]="contact"
       (closed)="closeEditContact()"
       (updated)="onContactUpdated($event)"
+      (deleted)="onContactDeleted()"
     />
   }
 </section>

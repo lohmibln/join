@@ -7,6 +7,7 @@ import {
   ContactFormErrors,
   ContactFormValues,
   hasErrors,
+  validateContactField,
   validateContactForm,
 } from '../../shared/utils/contact-validation.utils';
 
@@ -71,6 +72,25 @@ export class EditContactDialogComponent {
   }
 
   /**
+   * Hides the error while the user is editing the field again.
+   */
+  onFocus(field: keyof ContactFormValues): void {
+    this.errors.update((errors) => ({ ...errors, [field]: '' }));
+    this.formError.set('');
+  }
+
+  /**
+   * Validates only the field the user left (blur).
+   */
+  onBlur(field: keyof ContactFormValues): void {
+    let message = validateContactField(field, this.values()[field]);
+    if (field === 'email' && !message && this.isDuplicateEmail(this.values().email)) {
+      message = DUPLICATE_EMAIL_MESSAGE;
+    }
+    this.errors.update((errors) => ({ ...errors, [field]: message }));
+  }
+
+  /**
    * Validates and saves the contact via Supabase when the form is valid.
    */
   async submit(event: Event): Promise<void> {
@@ -92,9 +112,25 @@ export class EditContactDialogComponent {
     if (event.target === event.currentTarget) this.close();
   }
 
-  /** Delete is wired in a later step; for now it only notifies the parent. */
-  onDelete(): void {
-    this.deleted.emit(this.contact());
+  /**
+   * Deletes the contact in Supabase (like the reference edit dialog), then notifies the parent.
+   */
+  async onDelete(): Promise<void> {
+    if (this.isSaving()) return;
+
+    this.isSaving.set(true);
+    try {
+      const contact = this.contact();
+      const deleted = await this.contactsService.deleteContact(contact);
+      if (deleted) {
+        this.deleted.emit(contact);
+        this.close();
+        return;
+      }
+      this.showSaveError();
+    } finally {
+      this.isSaving.set(false);
+    }
   }
 
   private collectErrors(): ContactFormErrors {

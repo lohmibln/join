@@ -94,6 +94,19 @@ export class ContactsService {
     return updated;
   }
 
+  async deleteContact(contact: Contact): Promise<boolean> {
+    const { error } = await supabase.from('contacts').delete().eq('id', contact.id);
+
+    if (error) {
+      this.errorMessage.set('Contact could not be deleted. Please try again later.');
+      return false;
+    }
+
+    this.errorMessage.set('');
+    this.contacts.update((contacts) => contacts.filter((entry) => entry.id !== contact.id));
+    return true;
+  }
+
   private applyRealtimeChange(payload: RealtimePostgresChangesPayload<Contact>): void {
     if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
       this.upsertLocal(payload.new as Contact);

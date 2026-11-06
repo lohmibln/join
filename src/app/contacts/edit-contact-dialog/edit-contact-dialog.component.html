@@ -31,6 +31,8 @@
             autocomplete="off"
             [value]="values().name"
             (input)="onInput('name', $event)"
+            (focus)="onFocus('name')"
+            (blur)="onBlur('name')"
           />
           <span class="fieldIcon personIcon"></span>
         </div>
@@ -48,6 +50,8 @@
             autocomplete="off"
             [value]="values().email"
             (input)="onInput('email', $event)"
+            (focus)="onFocus('email')"
+            (blur)="onBlur('email')"
           />
           <span class="fieldIcon mailIcon"></span>
         </div>
@@ -65,6 +69,8 @@
             autocomplete="off"
             [value]="values().phone"
             (input)="onInput('phone', $event)"
+            (focus)="onFocus('phone')"
+            (blur)="onBlur('phone')"
           />
           <span class="fieldIcon callIcon"></span>
         </div>
@@ -74,7 +80,7 @@
       </div>
 
       <div class="buttons">
-        <button class="secondaryButton" type="button" (click)="onDelete()">
+        <button class="secondaryButton" type="button" [disabled]="isSaving()" (click)="onDelete()">
           Delete
           <span class="cancelIcon"></span>
         </button>

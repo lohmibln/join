@@ -72,4 +72,28 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.selectedContact.set(contact);
     this.closeEditContact();
   }
+
+  /**
+   * Deletes the selected contact (detail Delete button), then returns to the list.
+   */
+  async onDeleteContact(): Promise<void> {
+    const contact = this.selectedContact();
+    if (!contact) {
+      return;
+    }
+
+    const deleted = await this.contactsService.deleteContact(contact);
+    if (deleted) {
+      this.selectedContact.set(null);
+      this.closeEditContact();
+    }
+  }
+
+  /**
+   * Clears selection after a successful delete from the edit dialog.
+   */
+  onContactDeleted(): void {
+    this.selectedContact.set(null);
+    this.closeEditContact();
+  }
 }
