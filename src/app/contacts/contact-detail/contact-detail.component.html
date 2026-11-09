@@ -15,6 +15,18 @@
   </div>
 </div>
 
+<section class="contactInfo">
+  <h3 class="infoTitle">Contact Information</h3>
+  <div class="infoRow">
+    <span class="infoLabel">Email</span>
+    <a class="infoEmail" [href]="'mailto:' + contact().email">{{ contact().email }}</a>
+  </div>
+  <div class="infoRow">
+    <span class="infoLabel">Phone</span>
+    <a class="infoPhone" [href]="'tel:' + contact().phone">{{ contact().phone }}</a>
+  </div>
+</section>
+
 <button
   class="menuButton"
   type="button"
