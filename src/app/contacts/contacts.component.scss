@@ -10,14 +10,14 @@
 .detailArea {
   flex: 1;
   min-width: 0;
-  padding: 56px 56px 0;
+  padding: 119px 56px 0;
   background-color: $clrBackground;
   min-height: calc(100dvh - 96px);
 }
 
 .pageTitle {
   @include setFlex(row, flex-start, center, 30px);
-  margin-bottom: 48px;
+  margin-bottom: 29px;
 
   h1 {
     font-size: $fsH1;
