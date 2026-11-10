@@ -13,6 +13,8 @@ export type AuthErrorField =
   | 'global'
   | null;
 
+type AuthErrorDetails = { message?: string; code?: string; status?: number };
+
 const GUEST_STORAGE_KEY = 'joinGuestLogin';
 
 @Injectable({
@@ -35,16 +37,9 @@ export class AuthenticationService {
   readonly errorMessageForFailedRequest = signal('');
   readonly errorOccoursIn = signal<AuthErrorField>(null);
 
-  async createUser(email: string, password: string, fullName?: string) {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName ?? '',
-        },
-      },
-    });
+  async createUser(email: string, password: string, fullName = ''): Promise<boolean> {
+    const options = { data: { full_name: fullName } };
+    const { data, error } = await supabase.auth.signUp({ email, password, options });
 
     if (error) {
       this.setAuthError(error);
@@ -57,43 +52,22 @@ export class AuthenticationService {
   }
 
   async login(email: string, password: string): Promise<boolean> {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error || !data.session || !data.user) {
-      this.isUserLoggedIn = false;
-      this.currentLoggedInUser = null;
-      this.setAuthError(
-        error ?? {
-          message: 'Invalid login credentials',
-          status: 400,
-          code: 'invalid_credentials',
-        },
-      );
+      this.handleFailedLogin(error);
       return false;
     }
 
     localStorage.removeItem(GUEST_STORAGE_KEY);
-    this.isUserLoggedIn = true;
-    this.currentLoggedInUser = data.user;
-    this.isLoginSignUpView = false;
-    this.resetAuthError();
-    this.navbarService.setSelection('success');
-    await this.router.navigate(['/success']);
+    await this.finishLogin(data.user);
     return true;
   }
 
   /** Guest bypass — no Supabase auth required. */
   async loginAsGuest(): Promise<void> {
     localStorage.setItem(GUEST_STORAGE_KEY, 'true');
-    this.isUserLoggedIn = true;
-    this.currentLoggedInUser = null;
-    this.isLoginSignUpView = false;
-    this.resetAuthError();
-    this.navbarService.setSelection('success');
-    await this.router.navigate(['/success']);
+    await this.finishLogin(null);
   }
 
   async logout() {
@@ -121,44 +95,19 @@ export class AuthenticationService {
     return this.isUserLoggedIn;
   }
 
-  setAuthError(error: { message?: string; code?: string; status?: number }) {
+  setAuthError(error: AuthErrorDetails): void {
     const message = (error.message ?? '').toLowerCase();
     const code = (error.code ?? '').toLowerCase();
 
-    if (
-      code.includes('invalid_credentials') ||
-      message.includes('invalid login credentials') ||
-      message.includes('invalid email or password') ||
-      error.status === 400
-    ) {
-      this.errorOccoursIn.set('email-pw');
-      this.errorMessageForFailedRequest.set(
-        'Check your email and password. Please try again.',
-      );
-      return;
+    if (this.isInvalidCredentials(error)) {
+      this.showAuthError('email-pw', 'Check your email and password. Please try again.');
+    } else if (code.includes('user_already_exists') || message.includes('already registered')) {
+      this.showAuthError('email', 'Email is already in use');
+    } else if (code.includes('weak_password') || message.includes('weak password')) {
+      this.showAuthError('pw', 'Weak password. Use at least 6 characters');
+    } else {
+      this.showAuthError('global', error.message || 'Technical Error, please try again later');
     }
-
-    if (
-      code.includes('user_already_exists') ||
-      message.includes('already registered')
-    ) {
-      this.errorOccoursIn.set('email');
-      this.errorMessageForFailedRequest.set('Email is already in use');
-      return;
-    }
-
-    if (code.includes('weak_password') || message.includes('weak password')) {
-      this.errorOccoursIn.set('pw');
-      this.errorMessageForFailedRequest.set(
-        'Weak password. Use at least 6 characters',
-      );
-      return;
-    }
-
-    this.errorOccoursIn.set('global');
-    this.errorMessageForFailedRequest.set(
-      error.message || 'Technical Error, please try again later',
-    );
   }
 
   resetAuthError() {
@@ -169,5 +118,35 @@ export class AuthenticationService {
   /** Kept for templates copied from the original project. */
   resetFirebaseError() {
     this.resetAuthError();
+  }
+
+  private handleFailedLogin(error: AuthErrorDetails | null): void {
+    this.isUserLoggedIn = false;
+    this.currentLoggedInUser = null;
+    this.setAuthError(error ?? { message: 'Invalid login credentials', status: 400 });
+  }
+
+  private async finishLogin(user: User | null): Promise<void> {
+    this.isUserLoggedIn = true;
+    this.currentLoggedInUser = user;
+    this.isLoginSignUpView = false;
+    this.resetAuthError();
+    this.navbarService.setSelection('success');
+    await this.router.navigate(['/success']);
+  }
+
+  private isInvalidCredentials(error: AuthErrorDetails): boolean {
+    const message = (error.message ?? '').toLowerCase();
+    return (
+      (error.code ?? '').toLowerCase().includes('invalid_credentials') ||
+      message.includes('invalid login credentials') ||
+      message.includes('invalid email or password') ||
+      error.status === 400
+    );
+  }
+
+  private showAuthError(field: AuthErrorField, message: string): void {
+    this.errorOccoursIn.set(field);
+    this.errorMessageForFailedRequest.set(message);
   }
 }
