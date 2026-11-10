@@ -26,7 +26,13 @@
       </p>
 
       <div class="buttons">
-        <button class="secondaryButton" type="button" [disabled]="isDeleting()" (click)="close()">
+        <button
+          #cancelButton
+          class="secondaryButton"
+          type="button"
+          [disabled]="isDeleting()"
+          (click)="close()"
+        >
           Cancel
           <span class="cancelIcon"></span>
         </button>

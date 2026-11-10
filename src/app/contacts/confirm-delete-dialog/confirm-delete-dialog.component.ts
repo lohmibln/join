@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { afterNextRender, Component, ElementRef, input, output, viewChild } from '@angular/core';
 
 /**
  * Asks the user to confirm before a contact is deleted for good.
@@ -16,11 +16,18 @@ import { Component, input, output } from '@angular/core';
     host: { '(document:keydown.escape)': 'close()' },
 })
 export class ConfirmDeleteDialogComponent {
+    private readonly cancelButton = viewChild.required<ElementRef<HTMLButtonElement>>('cancelButton');
+
     readonly contactName = input.required<string>();
     readonly isDeleting = input(false);
 
     readonly closed = output<void>();
     readonly confirmed = output<void>();
+
+    constructor() {
+        // preventScroll: focusing while the dialog is still off-screen must not scroll the page.
+        afterNextRender(() => this.cancelButton().nativeElement.focus({ preventScroll: true }));
+    }
 
     /**
      * Closes the dialog without deleting anything.
