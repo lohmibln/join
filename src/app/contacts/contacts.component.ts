@@ -47,6 +47,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
       if (!fresh) {
         this.selectedContact.set(null);
         this.isEditContactDialogOpen.set(false);
+        this.isDeleteConfirmOpen.set(false);
         return;
       }
 
@@ -106,6 +107,9 @@ export class ContactsComponent implements OnInit, OnDestroy {
         this.toastService.show('Contact successfully deleted');
         this.selectedContact.set(null);
         this.closeEditContact();
+      } else {
+        this.toastService.show(this.contactsService.errorMessage());
+        this.contactsService.errorMessage.set('');
       }
     } finally {
       this.isDeleting.set(false);
