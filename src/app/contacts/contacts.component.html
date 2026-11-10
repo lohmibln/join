@@ -26,7 +26,7 @@
       <app-contact-detail
         [contact]="contact"
         (editContact)="openEditContact()"
-        (deleteContact)="onDeleteContact()"
+        (deleteContact)="openDeleteConfirm()"
       />
     }
   </div>
@@ -44,6 +44,15 @@
       (closed)="closeEditContact()"
       (updated)="onContactUpdated($event)"
       (deleted)="onContactDeleted()"
+    />
+  }
+
+  @if (isDeleteConfirmOpen() && selectedContact(); as contact) {
+    <app-confirm-delete-dialog
+      [contactName]="contact.full_name"
+      [isDeleting]="isDeleting()"
+      (closed)="closeDeleteConfirm()"
+      (confirmed)="onDeleteContact()"
     />
   }
 </section>

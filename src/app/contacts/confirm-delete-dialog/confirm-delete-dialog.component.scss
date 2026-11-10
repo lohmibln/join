@@ -1,0 +1,33 @@
+@import '../../../styles/variables';
+
+// Overlay, dialog size, brand panel, close button and button looks come from the
+// add contact dialog styles. Only what is different here is set below.
+
+// Same position as the form of the add/edit dialog.
+.confirmContent {
+  position: absolute;
+  top: 137px;
+  right: 48px;
+  width: 422px;
+}
+
+// Not in Figma: text size and spacing are our own choice.
+.confirmText {
+  margin: 0;
+  font-size: 21px;
+  line-height: 120%;
+  color: #000000;
+  overflow-wrap: anywhere;
+}
+
+// "Delete permanently" is wider than the 214px Save button, so the row grows with its content.
+.buttons {
+  width: auto;
+  margin-top: 40px;
+}
+
+.primaryButton {
+  width: auto;
+  min-width: 214px;
+  padding-inline: 24px;
+}

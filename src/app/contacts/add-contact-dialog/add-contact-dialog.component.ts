@@ -36,7 +36,8 @@ export class AddContactDialogComponent {
   readonly isSaving = signal(false);
 
   constructor() {
-    afterNextRender(() => this.nameInput().nativeElement.focus());
+    // preventScroll: focusing while the dialog is still off-screen must not scroll the page.
+    afterNextRender(() => this.nameInput().nativeElement.focus({ preventScroll: true }));
   }
 
   /**

@@ -1,0 +1,39 @@
+<!-- Texts of this dialog are not in Figma, the layout is shared with the add/edit dialog. -->
+<div class="overlay" (click)="onOverlayClick($event)">
+  <section
+    class="dialog"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="confirmDeleteTitle"
+    aria-describedby="confirmDeleteText"
+  >
+    <div class="brand">
+      <img class="logo" src="assets/img/logo-white.svg" alt="Join logo" />
+      <div class="brandText">
+        <div class="headline">
+          <h2 id="confirmDeleteTitle" class="title">Delete contact</h2>
+        </div>
+        <span class="underline"></span>
+      </div>
+    </div>
+
+    <button class="closeButton" type="button" aria-label="Close dialog" (click)="close()"></button>
+
+    <div class="confirmContent">
+      <p id="confirmDeleteText" class="confirmText">
+        Do you really want to delete <strong>{{ contactName() }}</strong> permanently? This cannot
+        be undone.
+      </p>
+
+      <div class="buttons">
+        <button class="secondaryButton" type="button" [disabled]="isDeleting()" (click)="close()">
+          Cancel
+          <span class="cancelIcon"></span>
+        </button>
+        <button class="primaryButton" type="button" [disabled]="isDeleting()" (click)="confirm()">
+          Delete permanently
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
