@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   password = '';
   isPasswordVisible = false;
   readonly showAnimation = signal(false);
+  readonly isLoggingIn = signal(false);
 
   constructor() {
     void this.checklogin();
@@ -64,8 +65,13 @@ export class LoginComponent implements OnInit {
    * @param email - Email of the user.
    * @param pw - Password of the user.
    */
-  login(email: string, pw: string) {
-    void this.authenticationService.login(email, pw);
+  async login(email: string, pw: string) {
+    this.isLoggingIn.set(true);
+    try {
+      await this.authenticationService.login(email, pw);
+    } finally {
+      this.isLoggingIn.set(false);
+    }
   }
 
   /**
@@ -73,7 +79,12 @@ export class LoginComponent implements OnInit {
    */
   async loginAsGuest() {
     this.authenticationService.resetAuthError();
-    await this.authenticationService.loginAsGuest();
+    this.isLoggingIn.set(true);
+    try {
+      await this.authenticationService.loginAsGuest();
+    } finally {
+      this.isLoggingIn.set(false);
+    }
   }
 
   /**
@@ -91,7 +102,7 @@ export class LoginComponent implements OnInit {
     ngForm.control.markAllAsTouched();
     if (ngForm.submitted && ngForm.form.valid) {
       this.authenticationService.resetAuthError();
-      this.login(this.email, this.password);
+      void this.login(this.email, this.password);
     }
   }
 }

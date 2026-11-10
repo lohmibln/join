@@ -159,10 +159,11 @@
         </div>
 
         <div class="buttonContainer">
-          <button class="loginBtn" type="submit" value="Send">Log in</button>
+          <button class="loginBtn" type="submit" value="Send" [disabled]="isLoggingIn()">Log in</button>
           <button
             class="guestLoginBtn"
             type="button"
+            [disabled]="isLoggingIn()"
             (click)="authenticationService.resetAuthError(); loginAsGuest()"
           >
             Guest Log in
