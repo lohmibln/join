@@ -43,7 +43,7 @@
       [contact]="contact"
       (closed)="closeEditContact()"
       (updated)="onContactUpdated($event)"
-      (deleted)="onContactDeleted()"
+      (deleteRequested)="openDeleteConfirm()"
     />
   }
 

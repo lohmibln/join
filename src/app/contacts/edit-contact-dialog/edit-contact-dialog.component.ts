@@ -34,7 +34,7 @@ export class EditContactDialogComponent {
 
   readonly closed = output<void>();
   readonly updated = output<Contact>();
-  readonly deleted = output<Contact>();
+  readonly deleteRequested = output<void>();
 
   readonly values = signal<ContactFormValues>({ name: '', email: '', phone: '' });
   readonly errors = signal<ContactFormErrors>(EMPTY_ERRORS);
@@ -111,27 +111,6 @@ export class EditContactDialogComponent {
 
   onOverlayClick(event: MouseEvent): void {
     if (event.target === event.currentTarget) this.close();
-  }
-
-  /**
-   * Deletes the contact in Supabase (like the reference edit dialog), then notifies the parent.
-   */
-  async onDelete(): Promise<void> {
-    if (this.isSaving()) return;
-
-    this.isSaving.set(true);
-    try {
-      const contact = this.contact();
-      const deleted = await this.contactsService.deleteContact(contact);
-      if (deleted) {
-        this.deleted.emit(contact);
-        this.close();
-        return;
-      }
-      this.showSaveError();
-    } finally {
-      this.isSaving.set(false);
-    }
   }
 
   private collectErrors(): ContactFormErrors {

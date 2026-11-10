@@ -80,7 +80,7 @@
       </div>
 
       <div class="buttons">
-        <button class="secondaryButton" type="button" [disabled]="isSaving()" (click)="onDelete()">
+        <button class="secondaryButton" type="button" [disabled]="isSaving()" (click)="deleteRequested.emit()">
           Delete
           <span class="cancelIcon"></span>
         </button>

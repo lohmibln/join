@@ -112,12 +112,4 @@ export class ContactsComponent implements OnInit, OnDestroy {
       this.closeDeleteConfirm();
     }
   }
-
-  /**
-   * Clears selection after a successful delete from the edit dialog.
-   */
-  onContactDeleted(): void {
-    this.selectedContact.set(null);
-    this.closeEditContact();
-  }
 }
