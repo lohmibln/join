@@ -13,6 +13,8 @@ export type AuthErrorField =
   | 'global'
   | null;
 
+const GUEST_STORAGE_KEY = 'joinGuestLogin';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -73,6 +75,7 @@ export class AuthenticationService {
       return false;
     }
 
+    localStorage.removeItem(GUEST_STORAGE_KEY);
     this.isUserLoggedIn = true;
     this.currentLoggedInUser = data.user;
     this.isLoginSignUpView = false;
@@ -84,6 +87,7 @@ export class AuthenticationService {
 
   /** Guest bypass — no Supabase auth required. */
   async loginAsGuest(): Promise<void> {
+    localStorage.setItem(GUEST_STORAGE_KEY, 'true');
     this.isUserLoggedIn = true;
     this.currentLoggedInUser = null;
     this.isLoginSignUpView = false;
@@ -100,6 +104,7 @@ export class AuthenticationService {
       return;
     }
 
+    localStorage.removeItem(GUEST_STORAGE_KEY);
     this.isUserLoggedIn = false;
     this.currentLoggedInUser = null;
     this.isLoginSignUpView = true;
@@ -112,7 +117,7 @@ export class AuthenticationService {
     const user = data.session?.user ?? null;
 
     this.currentLoggedInUser = user;
-    this.isUserLoggedIn = !!user;
+    this.isUserLoggedIn = !!user || localStorage.getItem(GUEST_STORAGE_KEY) === 'true';
     return this.isUserLoggedIn;
   }
 
