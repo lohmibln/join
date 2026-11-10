@@ -15,7 +15,7 @@ export type ContactFormErrors = Record<keyof ContactFormValues, string>;
 const NAME_PATTERN = /^\p{L}+(?:['’-]\p{L}+)*(?:\s+\p{L}+(?:['’-]\p{L}+)*)+$/u;
 /** ASCII-only email (no ä ö ü or other special letters). */
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
-const PHONE_INPUT_PATTERN = /^\+?[\d\s()-]+$/;
+const PHONE_PATTERN = /^\+?\d+$/;
 const UMLAUT_PATTERN = /[äöüÄÖÜß]/;
 
 /**
@@ -47,23 +47,14 @@ export function validateEmail(value: string): string {
 }
 
 /**
- * Strips formatting and an optional German country code (+49 / 49 / 0049).
- * @param phone - Raw phone input.
- * @returns National digits only, or null if the input is not a phone-like value.
+ * Removes an optional "+" and the German country code (+49 / 49 / 0049).
+ * @param phone - Phone number made of digits and an optional "+".
+ * @returns National digits only.
  */
-function getNationalPhoneDigits(phone: string): string | null {
-    const cleaned = phone.trim().replace(/[\s()-]/g, '');
-    if (!/^\+?\d+$/.test(cleaned)) {
-        return null;
-    }
-
-    let digits = cleaned.replace(/^\+/, '');
-    if (digits.startsWith('0049')) {
-        digits = digits.slice(4);
-    } else if (digits.startsWith('49')) {
-        digits = digits.slice(2);
-    }
-
+function getNationalPhoneDigits(phone: string): string {
+    const digits = phone.replace(/^\+/, '');
+    if (digits.startsWith('0049')) return digits.slice(4);
+    if (digits.startsWith('49')) return digits.slice(2);
     return digits;
 }
 
@@ -75,14 +66,9 @@ function getNationalPhoneDigits(phone: string): string | null {
 export function validatePhone(value: string): string {
     const phone = value.trim();
     if (!phone) return 'Please enter a phone number.';
-    if (!PHONE_INPUT_PATTERN.test(phone)) {
-        return 'Use digits only (optional "+" and spaces).';
-    }
+    if (!PHONE_PATTERN.test(phone)) return 'Use digits only (optional "+").';
 
     const nationalDigits = getNationalPhoneDigits(phone);
-    if (nationalDigits === null) {
-        return 'Use digits only (optional "+" and spaces).';
-    }
     if (nationalDigits.length < 8 || nationalDigits.length > 11) {
         return 'Phone number must be 8–11 digits (excluding +49).';
     }
