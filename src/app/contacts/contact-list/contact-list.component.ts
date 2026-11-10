@@ -16,6 +16,11 @@ export class ContactListComponent {
   selectContact = output<Contact>();
   addContact = output<void>();
 
+  /**
+   * Gets the avatar color of a contact.
+   * @param contact - Contact in the list.
+   * @returns CSS color value.
+   */
   colorOf(contact: Contact): string {
     return getContactColor(contact.name_shortcut_color_code);
   }

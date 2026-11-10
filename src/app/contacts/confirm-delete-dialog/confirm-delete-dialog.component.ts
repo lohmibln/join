@@ -22,15 +22,25 @@ export class ConfirmDeleteDialogComponent {
     readonly closed = output<void>();
     readonly confirmed = output<void>();
 
+    /**
+     * Closes the dialog without deleting anything.
+     */
     close(): void {
         this.closed.emit();
     }
 
+    /**
+     * Reports that the user confirmed the delete.
+     */
     confirm(): void {
         if (this.isDeleting()) return;
         this.confirmed.emit();
     }
 
+    /**
+     * Closes the dialog when the dark background is clicked.
+     * @param event - Click event of the overlay.
+     */
     onOverlayClick(event: MouseEvent): void {
         if (event.target === event.currentTarget) this.close();
     }

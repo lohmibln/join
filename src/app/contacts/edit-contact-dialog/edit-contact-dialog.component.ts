@@ -55,10 +55,18 @@ export class EditContactDialogComponent {
     });
   }
 
+  /**
+   * Gets the avatar color of the edited contact.
+   * @returns CSS color value.
+   */
   avatarColor(): string {
     return getContactColor(this.contact().name_shortcut_color_code);
   }
 
+  /**
+   * Gets the initials of the edited contact.
+   * @returns Initials for the avatar.
+   */
   avatarShortcut(): string {
     return this.contact().name_shortcut;
   }
@@ -106,14 +114,25 @@ export class EditContactDialogComponent {
     await this.save();
   }
 
+  /**
+   * Closes the dialog.
+   */
   close(): void {
     this.closed.emit();
   }
 
+  /**
+   * Closes the dialog when the dark background is clicked.
+   * @param event - Click event of the overlay.
+   */
   onOverlayClick(event: MouseEvent): void {
     if (event.target === event.currentTarget) this.close();
   }
 
+  /**
+   * Validates the whole form including the duplicate email check.
+   * @returns Error message per field.
+   */
   private collectErrors(): ContactFormErrors {
     const errors = validateContactForm(this.values());
     if (!errors.email && this.isDuplicateEmail(this.values().email)) {
@@ -122,6 +141,11 @@ export class EditContactDialogComponent {
     return errors;
   }
 
+  /**
+   * Checks whether another contact already uses this email.
+   * @param email - Email to look for.
+   * @returns True if the email is already taken.
+   */
   private isDuplicateEmail(email: string): boolean {
     const wanted = email.trim().toLowerCase();
     const currentId = this.contact().id;
@@ -130,6 +154,9 @@ export class EditContactDialogComponent {
       .some((entry) => entry.id !== currentId && entry.email.toLowerCase() === wanted);
   }
 
+  /**
+   * Saves the changes and blocks the form while the request is running.
+   */
   private async save(): Promise<void> {
     this.isSaving.set(true);
     try {
@@ -143,12 +170,19 @@ export class EditContactDialogComponent {
     }
   }
 
+  /**
+   * Shows the success toast and closes the dialog.
+   * @param contact - Contact that was saved.
+   */
   private finish(contact: Contact): void {
     this.toastService.show(SUCCESS_MESSAGE);
     this.updated.emit(contact);
     this.close();
   }
 
+  /**
+   * Moves the service error into the form.
+   */
   private showSaveError(): void {
     this.formError.set(this.contactsService.errorMessage());
     this.contactsService.errorMessage.set('');

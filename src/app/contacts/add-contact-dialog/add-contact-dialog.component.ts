@@ -101,6 +101,10 @@ export class AddContactDialogComponent {
     if (event.target === event.currentTarget) this.close();
   }
 
+  /**
+   * Validates the whole form including the duplicate email check.
+   * @returns Error message per field.
+   */
   private collectErrors(): ContactFormErrors {
     const errors = validateContactForm(this.values());
     if (!errors.email && this.isDuplicateEmail(this.values().email)) {
@@ -109,16 +113,28 @@ export class AddContactDialogComponent {
     return errors;
   }
 
+  /**
+   * Checks whether another contact already uses this email.
+   * @param email - Email to look for.
+   * @returns True if the email is already taken.
+   */
   private isDuplicateEmail(email: string): boolean {
     const wanted = email.trim().toLowerCase();
     return this.contactsService.contacts().some((contact) => contact.email.toLowerCase() === wanted);
   }
 
+  /**
+   * Builds the new contact from the form values.
+   * @returns Contact data for Supabase.
+   */
   private buildContact(): NewContact {
     const { name, email, phone } = this.values();
     return buildNewContact(name, email.toLowerCase(), phone);
   }
 
+  /**
+   * Saves the contact and blocks the form while the request is running.
+   */
   private async save(): Promise<void> {
     this.isSaving.set(true);
     try {
@@ -130,12 +146,19 @@ export class AddContactDialogComponent {
     }
   }
 
+  /**
+   * Shows the success toast and closes the dialog.
+   * @param contact - Contact that was created.
+   */
   private finish(contact: Contact): void {
     this.toastService.show(SUCCESS_MESSAGE);
     this.created.emit(contact);
     this.close();
   }
 
+  /**
+   * Moves the service error into the form.
+   */
   private showSaveError(): void {
     this.formError.set(this.contactsService.errorMessage());
     this.contactsService.errorMessage.set('');

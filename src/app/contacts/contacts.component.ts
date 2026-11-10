@@ -40,24 +40,40 @@ export class ContactsComponent implements OnInit, OnDestroy {
     effect(() => this.syncSelectedContact());
   }
 
+  /**
+   * Loads the contacts and starts the live updates.
+   */
   ngOnInit(): void {
     this.navbarService.setSelection('contacts');
     void this.contactsService.loadContacts();
     this.contactsService.startRealtime();
   }
 
+  /**
+   * Stops the live updates when the page is left.
+   */
   ngOnDestroy(): void {
     this.contactsService.stopRealtime();
   }
 
+  /**
+   * Opens the edit dialog for the selected contact.
+   */
   openEditContact(): void {
     this.isEditContactDialogOpen.set(true);
   }
 
+  /**
+   * Closes the edit dialog.
+   */
   closeEditContact(): void {
     this.isEditContactDialogOpen.set(false);
   }
 
+  /**
+   * Shows the saved contact and closes the edit dialog.
+   * @param contact - Contact returned after saving.
+   */
   onContactUpdated(contact: Contact): void {
     this.selectedContact.set(contact);
     this.closeEditContact();
@@ -70,6 +86,9 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.isDeleteConfirmOpen.set(true);
   }
 
+  /**
+   * Closes the delete confirmation dialog.
+   */
   closeDeleteConfirm(): void {
     this.isDeleteConfirmOpen.set(false);
   }
@@ -92,6 +111,10 @@ export class ContactsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Deletes the contact and shows the result as a toast.
+   * @param contact - Contact to delete.
+   */
   private async deleteContact(contact: Contact): Promise<void> {
     if (await this.contactsService.deleteContact(contact)) {
       this.toastService.show('Contact successfully deleted');
@@ -102,6 +125,9 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.contactsService.errorMessage.set('');
   }
 
+  /**
+   * Replaces the selected contact with its latest version, or clears it if it is gone.
+   */
   private syncSelectedContact(): void {
     const selected = this.selectedContact();
     if (!selected) {
@@ -116,6 +142,9 @@ export class ContactsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Removes the selection and closes all dialogs that belong to it.
+   */
   private clearSelection(): void {
     this.selectedContact.set(null);
     this.closeEditContact();
