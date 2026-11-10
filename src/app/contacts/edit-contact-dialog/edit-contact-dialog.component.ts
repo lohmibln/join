@@ -24,7 +24,7 @@ const SUCCESS_MESSAGE = 'Contact successfully updated';
     '../add-contact-dialog/add-contact-dialog.responsive.scss',
     './edit-contact-dialog.component.scss',
   ],
-  host: { '(document:keydown.escape)': 'close()' },
+  host: { '(document:keydown.escape)': 'onEscape()' },
 })
 export class EditContactDialogComponent {
   private readonly contactsService = inject(ContactsService);
@@ -32,6 +32,7 @@ export class EditContactDialogComponent {
   private readonly nameInput = viewChild.required<ElementRef<HTMLInputElement>>('nameInput');
 
   readonly contact = input.required<Contact>();
+  readonly isCovered = input(false);
 
   readonly closed = output<void>();
   readonly updated = output<Contact>();
@@ -112,6 +113,13 @@ export class EditContactDialogComponent {
     if (hasErrors(errors)) return;
 
     await this.save();
+  }
+
+  /**
+   * Closes the dialog with Esc, unless another dialog is open on top of it.
+   */
+  onEscape(): void {
+    if (!this.isCovered()) this.close();
   }
 
   /**
