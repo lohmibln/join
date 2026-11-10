@@ -31,3 +31,24 @@
   min-width: 214px;
   padding-inline: 24px;
 }
+
+@media (max-width: 1259px) {
+  .brand {
+    padding-bottom: 32px;
+  }
+
+  .confirmContent {
+    position: static;
+    width: auto;
+    padding: 32px 16px;
+  }
+
+  .buttons {
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .primaryButton {
+    min-width: 0;
+  }
+}

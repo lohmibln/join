@@ -10,6 +10,7 @@ import { Component, input, output } from '@angular/core';
     templateUrl: './confirm-delete-dialog.component.html',
     styleUrls: [
         '../add-contact-dialog/add-contact-dialog.component.scss',
+        '../add-contact-dialog/add-contact-dialog.responsive.scss',
         './confirm-delete-dialog.component.scss',
     ],
     host: { '(document:keydown.escape)': 'close()' },
