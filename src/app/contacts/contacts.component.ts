@@ -37,24 +37,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
   constructor() {
     // Keep the open detail in sync when Realtime (or local save) updates the list.
-    effect(() => {
-      const selected = this.selectedContact();
-      if (!selected) {
-        return;
-      }
-
-      const fresh = this.contactsService.contacts().find((contact) => contact.id === selected.id);
-      if (!fresh) {
-        this.selectedContact.set(null);
-        this.isEditContactDialogOpen.set(false);
-        this.isDeleteConfirmOpen.set(false);
-        return;
-      }
-
-      if (fresh !== selected) {
-        this.selectedContact.set(fresh);
-      }
-    });
+    effect(() => this.syncSelectedContact());
   }
 
   ngOnInit(): void {
@@ -102,18 +85,40 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
     this.isDeleting.set(true);
     try {
-      const deleted = await this.contactsService.deleteContact(contact);
-      if (deleted) {
-        this.toastService.show('Contact successfully deleted');
-        this.selectedContact.set(null);
-        this.closeEditContact();
-      } else {
-        this.toastService.show(this.contactsService.errorMessage());
-        this.contactsService.errorMessage.set('');
-      }
+      await this.deleteContact(contact);
     } finally {
       this.isDeleting.set(false);
       this.closeDeleteConfirm();
     }
+  }
+
+  private async deleteContact(contact: Contact): Promise<void> {
+    if (await this.contactsService.deleteContact(contact)) {
+      this.toastService.show('Contact successfully deleted');
+      this.clearSelection();
+      return;
+    }
+    this.toastService.show(this.contactsService.errorMessage());
+    this.contactsService.errorMessage.set('');
+  }
+
+  private syncSelectedContact(): void {
+    const selected = this.selectedContact();
+    if (!selected) {
+      return;
+    }
+
+    const fresh = this.contactsService.contacts().find((contact) => contact.id === selected.id);
+    if (!fresh) {
+      this.clearSelection();
+    } else if (fresh !== selected) {
+      this.selectedContact.set(fresh);
+    }
+  }
+
+  private clearSelection(): void {
+    this.selectedContact.set(null);
+    this.closeEditContact();
+    this.closeDeleteConfirm();
   }
 }

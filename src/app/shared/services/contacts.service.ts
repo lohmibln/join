@@ -57,11 +57,7 @@ export class ContactsService {
     const { data, error } = await supabase.from('contacts').insert(newContact).select().single();
 
     if (error || !data) {
-      this.errorMessage.set(
-        error?.code === '23505'
-          ? 'A contact with this email already exists.'
-          : 'Contact could not be saved. Please try again later.',
-      );
+      this.setWriteError(error?.code, 'Contact could not be saved. Please try again later.');
       return null;
     }
 
@@ -72,26 +68,17 @@ export class ContactsService {
 
   async updateContact(contact: Contact): Promise<Contact | null> {
     const { id, ...fields } = contact;
-    const { data, error } = await supabase
-      .from('contacts')
-      .update(fields)
-      .eq('id', id)
-      .select()
-      .single();
+    const query = supabase.from('contacts').update(fields).eq('id', id);
+    const { data, error } = await query.select().single();
 
     if (error || !data) {
-      this.errorMessage.set(
-        error?.code === '23505'
-          ? 'A contact with this email already exists.'
-          : 'Contact could not be updated. Please try again later.',
-      );
+      this.setWriteError(error?.code, 'Contact could not be updated. Please try again later.');
       return null;
     }
 
-    const updated = data as Contact;
     this.errorMessage.set('');
-    this.upsertLocal(updated);
-    return updated;
+    this.upsertLocal(data as Contact);
+    return data as Contact;
   }
 
   async deleteContact(contact: Contact): Promise<boolean> {
@@ -120,6 +107,10 @@ export class ContactsService {
       }
       this.contacts.update((contacts) => contacts.filter((entry) => entry.id !== removed.id));
     }
+  }
+
+  private setWriteError(code: string | undefined, fallback: string): void {
+    this.errorMessage.set(code === '23505' ? 'A contact with this email already exists.' : fallback);
   }
 
   private upsertLocal(contact: Contact): void {

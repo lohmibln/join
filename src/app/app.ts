@@ -17,24 +17,17 @@ export class App implements OnInit {
 
   constructor() {
     this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationStart)) {
-        return;
-      }
-
-      switch (event.url) {
-        case '/':
-        case '/login':
-        case '/signUp':
-          this.authenticationService.isLoginSignUpView = true;
-          break;
-        default:
-          this.authenticationService.isLoginSignUpView = false;
-          break;
+      if (event instanceof NavigationStart) {
+        this.updateLoginView(event.url);
       }
     });
   }
 
   async ngOnInit() {
     await this.authenticationService.checkLogin();
+  }
+
+  private updateLoginView(url: string): void {
+    this.authenticationService.isLoginSignUpView = ['/', '/login', '/signUp'].includes(url);
   }
 }
