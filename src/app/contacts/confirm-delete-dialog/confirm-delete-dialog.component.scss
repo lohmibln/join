@@ -3,12 +3,18 @@
 // Overlay, dialog size, brand panel, close button and button looks come from the
 // add contact dialog styles. Only what is different here is set below.
 
-// Same position as the form of the add/edit dialog.
+// "Delete contact" is too long for one line at the 61px of the other dialogs.
+.title {
+  font-size: 47px;
+}
+
+// Centered in the white area next to the 467px brand panel.
 .confirmContent {
   position: absolute;
-  top: 137px;
-  right: 48px;
+  top: 50%;
+  left: calc(467px + (100% - 467px) / 2);
   width: 422px;
+  transform: translate(-50%, -50%);
 }
 
 // Not in Figma: text size and spacing are our own choice.
@@ -16,6 +22,7 @@
   margin: 0;
   font-size: 21px;
   line-height: 120%;
+  text-align: center;
   color: #000000;
   overflow-wrap: anywhere;
 }
@@ -41,6 +48,11 @@
     position: static;
     width: auto;
     padding: 32px 16px;
+    transform: none;
+  }
+
+  .confirmText {
+    text-align: left;
   }
 
   .buttons {
