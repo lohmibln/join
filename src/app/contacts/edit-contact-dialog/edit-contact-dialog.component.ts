@@ -21,6 +21,7 @@ const SUCCESS_MESSAGE = 'Contact successfully updated';
   templateUrl: './edit-contact-dialog.component.html',
   styleUrls: [
     '../add-contact-dialog/add-contact-dialog.component.scss',
+    '../add-contact-dialog/add-contact-dialog.responsive.scss',
     './edit-contact-dialog.component.scss',
   ],
   host: { '(document:keydown.escape)': 'close()' },

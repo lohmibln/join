@@ -19,7 +19,7 @@ const SUCCESS_MESSAGE = 'Contact successfully created';
   selector: 'app-add-contact-dialog',
   standalone: true,
   templateUrl: './add-contact-dialog.component.html',
-  styleUrl: './add-contact-dialog.component.scss',
+  styleUrls: ['./add-contact-dialog.component.scss', './add-contact-dialog.responsive.scss'],
   host: { '(document:keydown.escape)': 'close()' },
 })
 export class AddContactDialogComponent {

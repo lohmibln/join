@@ -1,0 +1,102 @@
+@import '../../../styles/variables';
+
+// The desktop dialog is 1212px wide, below that the stacked mobile layout from Figma is used.
+@media (max-width: 1259px) {
+  .overlay {
+    padding: 16px;
+  }
+
+  .dialog {
+    width: 100%;
+    max-width: 396px;
+    height: auto;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+  }
+
+  .brand {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 64px 24px 96px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .brandText {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 47px;
+  }
+
+  .subtitle {
+    font-size: $fSDefault;
+  }
+
+  .closeButton {
+    top: 24px;
+    right: 16px;
+    left: auto;
+    background-image: url('/assets/icons/close-white.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/close-white-hover.svg');
+    }
+  }
+
+  .avatar {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: -67px auto 0;
+  }
+
+  .form {
+    position: static;
+    width: auto;
+    padding: 24px 16px 32px;
+  }
+
+  // The height grows with the message, long errors need two lines on small phones.
+  .formGroup {
+    height: auto;
+    min-height: 65px;
+
+    .errorMessage {
+      height: auto;
+      line-height: 120%;
+    }
+  }
+
+  .formField {
+    height: 41px;
+    padding: 8px 21px;
+  }
+
+  .buttons {
+    justify-content: center;
+    width: 100%;
+    margin-top: 8px;
+    gap: 20px;
+  }
+
+  .secondaryButton,
+  .primaryButton {
+    width: auto;
+    height: 51px;
+    padding: 10px;
+  }
+
+  .secondaryButton .cancelIcon {
+    display: none;
+  }
+
+  // Figma mobile: the add dialog only has the primary button and the close icon.
+  .desktopOnly {
+    display: none;
+  }
+}
