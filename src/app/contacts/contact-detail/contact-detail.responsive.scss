@@ -19,6 +19,14 @@
 }
 
 @media (max-width: 1023px) {
+  .contactInfo {
+    margin-top: 18px;
+  }
+
+  .infoTitle {
+    height: auto;
+  }
+
   // Edit and delete move into the options menu above the round button.
   .actions {
     display: none;
