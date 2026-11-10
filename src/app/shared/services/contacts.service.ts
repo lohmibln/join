@@ -12,6 +12,9 @@ export class ContactsService {
 
   private realtimeChannel: RealtimeChannel | null = null;
 
+  /**
+   * Loads all contacts from Supabase into the list.
+   */
   async loadContacts(): Promise<void> {
     const { data, error } = await supabase.from('contacts').select('*');
 
@@ -53,6 +56,11 @@ export class ContactsService {
     this.realtimeChannel = null;
   }
 
+  /**
+   * Saves a new contact and adds it to the list.
+   * @param newContact - Contact data without id.
+   * @returns The saved contact, or null if saving failed.
+   */
   async addContact(newContact: NewContact): Promise<Contact | null> {
     const { data, error } = await supabase.from('contacts').insert(newContact).select().single();
 
@@ -66,6 +74,11 @@ export class ContactsService {
     return data as Contact;
   }
 
+  /**
+   * Saves the changes of a contact and updates the list.
+   * @param contact - Contact with its new values.
+   * @returns The saved contact, or null if saving failed.
+   */
   async updateContact(contact: Contact): Promise<Contact | null> {
     const { id, ...fields } = contact;
     const query = supabase.from('contacts').update(fields).eq('id', id);
@@ -81,6 +94,11 @@ export class ContactsService {
     return data as Contact;
   }
 
+  /**
+   * Deletes a contact and removes it from the list.
+   * @param contact - Contact to delete.
+   * @returns True if the contact was deleted.
+   */
   async deleteContact(contact: Contact): Promise<boolean> {
     const { error } = await supabase.from('contacts').delete().eq('id', contact.id);
 
@@ -94,6 +112,10 @@ export class ContactsService {
     return true;
   }
 
+  /**
+   * Applies a live change from Supabase to the list.
+   * @param payload - Change sent by Supabase Realtime.
+   */
   private applyRealtimeChange(payload: RealtimePostgresChangesPayload<Contact>): void {
     if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
       this.upsertLocal(payload.new as Contact);
@@ -109,10 +131,19 @@ export class ContactsService {
     }
   }
 
+  /**
+   * Sets the message for a failed insert or update.
+   * @param code - Database error code.
+   * @param fallback - Message for all other errors.
+   */
   private setWriteError(code: string | undefined, fallback: string): void {
     this.errorMessage.set(code === '23505' ? 'A contact with this email already exists.' : fallback);
   }
 
+  /**
+   * Adds a contact to the list or replaces its old version.
+   * @param contact - Contact to store.
+   */
   private upsertLocal(contact: Contact): void {
     this.contacts.update((contacts) => {
       const index = contacts.findIndex((entry) => entry.id === contact.id);

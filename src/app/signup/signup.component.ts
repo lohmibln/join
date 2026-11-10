@@ -29,6 +29,9 @@ import { AuthenticationService } from '../shared/services/authentication.service
 export class SignupComponent implements OnInit {
   private readonly authenticationService = inject(AuthenticationService);
 
+  /**
+   * Marks the page as login view.
+   */
   ngOnInit(): void {
     this.authenticationService.isLoginSignUpView = true;
   }

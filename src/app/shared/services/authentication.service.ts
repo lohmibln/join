@@ -37,6 +37,13 @@ export class AuthenticationService {
   readonly errorMessageForFailedRequest = signal('');
   readonly errorOccoursIn = signal<AuthErrorField>(null);
 
+  /**
+   * Creates a new user account.
+   * @param email - Email of the new user.
+   * @param password - Password of the new user.
+   * @param fullName - Name shown in the app.
+   * @returns True if the account was created.
+   */
   async createUser(email: string, password: string, fullName = ''): Promise<boolean> {
     const options = { data: { full_name: fullName } };
     const { data, error } = await supabase.auth.signUp({ email, password, options });
@@ -51,6 +58,12 @@ export class AuthenticationService {
     return true;
   }
 
+  /**
+   * Logs a user in and opens the start page.
+   * @param email - Email of the user.
+   * @param password - Password of the user.
+   * @returns True if the login worked.
+   */
   async login(email: string, password: string): Promise<boolean> {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -70,6 +83,9 @@ export class AuthenticationService {
     await this.finishLogin(null);
   }
 
+  /**
+   * Logs the current user or guest out and opens the login page.
+   */
   async logout() {
     const { error } = await supabase.auth.signOut();
 
@@ -86,6 +102,10 @@ export class AuthenticationService {
     await this.router.navigate(['/']);
   }
 
+  /**
+   * Restores the login state after a page load.
+   * @returns True if a user or guest is logged in.
+   */
   async checkLogin(): Promise<boolean> {
     const { data } = await supabase.auth.getSession();
     const user = data.session?.user ?? null;
@@ -95,6 +115,10 @@ export class AuthenticationService {
     return this.isUserLoggedIn;
   }
 
+  /**
+   * Translates a Supabase auth error into a message for the form.
+   * @param error - Error returned by Supabase.
+   */
   setAuthError(error: AuthErrorDetails): void {
     const message = (error.message ?? '').toLowerCase();
     const code = (error.code ?? '').toLowerCase();
@@ -110,6 +134,9 @@ export class AuthenticationService {
     }
   }
 
+  /**
+   * Removes the current auth error.
+   */
   resetAuthError() {
     this.errorOccoursIn.set(null);
     this.errorMessageForFailedRequest.set('');
@@ -120,12 +147,20 @@ export class AuthenticationService {
     this.resetAuthError();
   }
 
+  /**
+   * Resets the login state and shows the error.
+   * @param error - Error returned by Supabase, if any.
+   */
   private handleFailedLogin(error: AuthErrorDetails | null): void {
     this.isUserLoggedIn = false;
     this.currentLoggedInUser = null;
     this.setAuthError(error ?? { message: 'Invalid login credentials', status: 400 });
   }
 
+  /**
+   * Stores the login state and opens the start page.
+   * @param user - Logged in user, or null for a guest.
+   */
   private async finishLogin(user: User | null): Promise<void> {
     this.isUserLoggedIn = true;
     this.currentLoggedInUser = user;
@@ -135,6 +170,11 @@ export class AuthenticationService {
     await this.router.navigate(['/success']);
   }
 
+  /**
+   * Checks whether an error means wrong email or password.
+   * @param error - Error returned by Supabase.
+   * @returns True for wrong credentials.
+   */
   private isInvalidCredentials(error: AuthErrorDetails): boolean {
     const message = (error.message ?? '').toLowerCase();
     return (
@@ -145,6 +185,11 @@ export class AuthenticationService {
     );
   }
 
+  /**
+   * Shows an auth error at the given field.
+   * @param field - Field the error belongs to.
+   * @param message - Text of the error.
+   */
   private showAuthError(field: AuthErrorField, message: string): void {
     this.errorOccoursIn.set(field);
     this.errorMessageForFailedRequest.set(message);

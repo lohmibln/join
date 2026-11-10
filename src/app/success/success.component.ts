@@ -41,10 +41,16 @@ import { AuthenticationService } from '../shared/services/authentication.service
 export class SuccessComponent implements OnInit {
   private readonly authenticationService = inject(AuthenticationService);
 
+  /**
+   * Marks the page as part of the app shell.
+   */
   ngOnInit(): void {
     this.authenticationService.isLoginSignUpView = false;
   }
 
+  /**
+   * Logs the current user out.
+   */
   logout() {
     this.authenticationService.logout();
   }

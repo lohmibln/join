@@ -23,10 +23,17 @@ export class App implements OnInit {
     });
   }
 
+  /**
+   * Restores the login state when the app starts.
+   */
   async ngOnInit() {
     await this.authenticationService.checkLogin();
   }
 
+  /**
+   * Hides sidebar and header on login and sign up.
+   * @param url - Url of the new page.
+   */
   private updateLoginView(url: string): void {
     this.authenticationService.isLoginSignUpView = ['/', '/login', '/signUp'].includes(url);
   }

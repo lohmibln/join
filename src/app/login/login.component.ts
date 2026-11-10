@@ -27,11 +27,17 @@ export class LoginComponent implements OnInit {
     this.checkFirstVisit();
   }
 
+  /**
+   * Marks the page as login view and clears old errors.
+   */
   ngOnInit(): void {
     this.authenticationService.isLoginSignUpView = true;
     this.authenticationService.resetAuthError();
   }
 
+  /**
+   * Opens the start page if someone is already logged in.
+   */
   async checklogin() {
     await this.authenticationService.checkLogin();
     if (this.authenticationService.isUserLoggedIn) {
@@ -40,6 +46,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Plays the logo animation on the first visit only.
+   */
   checkFirstVisit() {
     if (!this.authenticationService.isLoginAnnimationPlayedOnce) {
       this.showAnimation.set(true);
@@ -50,19 +59,34 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Starts the login with email and password.
+   * @param email - Email of the user.
+   * @param pw - Password of the user.
+   */
   login(email: string, pw: string) {
     void this.authenticationService.login(email, pw);
   }
 
+  /**
+   * Logs in as guest.
+   */
   async loginAsGuest() {
     this.authenticationService.resetAuthError();
     await this.authenticationService.loginAsGuest();
   }
 
+  /**
+   * Shows or hides the password.
+   */
   toggleIsPasswordVisible() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
+  /**
+   * Validates the form and starts the login.
+   * @param ngForm - Submitted login form.
+   */
   onSubmit(ngForm: NgForm) {
     ngForm.control.markAllAsTouched();
     if (ngForm.submitted && ngForm.form.valid) {

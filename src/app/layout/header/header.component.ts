@@ -13,6 +13,10 @@ import { getInitials } from '../../shared/utils/contact.utils';
 export class HeaderComponent {
   authenticationService = inject(AuthenticationService);
 
+  /**
+   * Gets the initials for the user badge.
+   * @returns Initials of the user, or G for a guest.
+   */
   get initials(): string {
     const fullName = this.authenticationService.currentLoggedInUser?.user_metadata?.['full_name'];
     return fullName ? getInitials(fullName) : 'G';
