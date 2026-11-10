@@ -11,7 +11,7 @@
 }
 
 .name {
-  max-width: 800px;
+  max-width: min(800px, 100%);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -108,7 +108,8 @@
 }
 
 .infoEmail {
-  color: $clrHighlight1;
+  padding: 0;
+  color: #007cee;
   text-decoration: none;
 
   &:hover {
@@ -117,6 +118,7 @@
 }
 
 .infoPhone {
+  padding: 0;
   color: inherit;
   text-decoration: none;
 }
