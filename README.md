@@ -1,60 +1,136 @@
 # Join
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.5.
+**Join** is a web app for organizing teamwork: manage contacts, create tasks, and track progress on a shared Kanban board.
 
-## Development server
+It is built as a modern Angular client with **Supabase** as the backend (auth + database + realtime), inspired by the classic Join product scope (login, summary, board, add task, contacts).
 
-To start a local development server, run:
+---
+
+## Product scope
+
+Join covers the full day-to-day flow of a small project team:
+
+### Authentication
+- **Log in** with email and password  
+- **Sign up** for a new account  
+- **Guest log in** for quick demos without creating an account  
+- Protected routes after login  
+- Legal pages: Privacy Policy & Legal Notice  
+
+### Summary (Join 360)
+- Personal greeting for the logged-in user  
+- Key metrics at a glance: to-do, done, tasks in board, urgent tasks, upcoming deadline  
+- Quick navigation into the board  
+
+### Board
+- Kanban columns: **To do**, **In progress**, **Await feedback**, **Done**  
+- Search tasks  
+- Open task details in an overlay  
+- Add tasks from the board (desktop overlay / mobile page)  
+- Move tasks between statuses  
+
+### Add Task
+- Create tasks with title, description, due date, priority, category  
+- Assign contacts  
+- Optional subtasks  
+- Confirmation when a task is added to the board  
+
+### Contacts
+- Alphabetically grouped contact list  
+- Contact detail view  
+- **Add**, **edit**, and **delete** contacts  
+- Name, email, phone validation  
+- Consistent avatar colors stored with each contact  
+- Live updates when contacts change (Supabase Realtime)  
+
+### App shell
+- Sidebar navigation (Summary, Add Task, Board, Contacts)  
+- Header with user context / help  
+
+---
+
+## This repository
+
+This repo implements Join with **Angular 22** and **Supabase**.
+
+**Currently in good shape here:** login (incl. intro animation), guest login, contacts (CRUD + realtime), shared Supabase setup.
+
+**Still to complete toward full scope:** summary, board, add task, full sign-up UI, legal pages — matching the feature set above.
+
+---
+
+## Tech stack
+
+| Area | Technology |
+|------|------------|
+| Frontend | Angular 22 (standalone components), SCSS |
+| Backend | [Supabase](https://supabase.com) |
+| Auth | Supabase Auth |
+| Database | PostgreSQL |
+| Realtime | Supabase Realtime |
+
+---
+
+## Getting started
+
+### Requirements
+- Node.js (LTS recommended)  
+- npm  
+- Access to the team Supabase project  
+
+### Install & run
 
 ```bash
-ng serve
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+App: [http://localhost:4200](http://localhost:4200)
 
-## Code scaffolding
+### Environment
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Configure Supabase in:
 
-```bash
-ng generate component component-name
+`src/environments/environment.ts`
+
+Use the shared **project URL** and **publishable key**. Never commit the secret/service-role key.
+
+### Supabase SQL (new project)
+
+In `/supabase`:
+
+- `contacts.sql` — contacts table + RLS  
+- `contacts-realtime.sql` — enable live contact updates  
+
+Run once in the Supabase SQL Editor if needed.
+
+---
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Dev server (port 4200) |
+| `npm run build` | Production build |
+| `npm test` | Unit tests |
+
+---
+
+## License
+
+Free to use, free to share, free to modify.
+
+You may use this project for learning, demos, and your own work **as long as it stays free**: do not sell this project itself or a closed paid redistribution of it as a product. Attribution to the original Join / team project is appreciated.
+
 ```
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software to use, copy, modify, and distribute it for free, subject to
+the following conditions:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- The software (or substantial copies of it) must remain free of charge.
+- Commercial sale of this software as a paid product is not allowed.
+- The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
 
-```bash
-ng generate --help
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page. 
