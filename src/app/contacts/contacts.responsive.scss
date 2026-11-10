@@ -1,5 +1,26 @@
 @import '../../styles/variables';
 
+// Sidebar and list leave little room for the detail area at these widths.
+@media (max-width: 1240px) {
+  .detailArea {
+    padding: 40px 24px 0;
+  }
+
+  .pageTitle {
+    flex-wrap: wrap;
+    gap: 16px;
+
+    h1 {
+      font-size: 47px;
+    }
+  }
+
+  .tagline {
+    padding-left: 16px;
+    font-size: $fSDefault;
+  }
+}
+
 @media (max-width: 1023px) {
   .contacts {
     min-height: calc(100dvh - 160px);

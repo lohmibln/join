@@ -1,6 +1,27 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixin';
 
+@media (max-width: 1240px) {
+  :host {
+    width: 320px;
+    min-width: 320px;
+  }
+
+  .list {
+    padding: 24px 16px;
+  }
+
+  .contactRow {
+    gap: 16px;
+    padding: 15px 12px;
+  }
+
+  .name,
+  .email {
+    max-width: 190px;
+  }
+}
+
 @media (max-width: 1023px) {
   :host {
     width: 100%;

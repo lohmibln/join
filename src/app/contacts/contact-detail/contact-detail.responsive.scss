@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-@media (max-width: 1023px) {
+@media (max-width: 1240px) {
   .header {
     gap: 17px;
   }
@@ -13,12 +13,14 @@
   }
 
   .name {
-    max-width: 280px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     font-size: 36px;
     font-weight: 700;
+  }
+}
+
+@media (max-width: 1023px) {
+  .name {
+    max-width: 280px;
   }
 
   // Edit and delete move into the options menu above the round button.
