@@ -5,6 +5,10 @@
     @for (column of columns; track column.status) {
       <div class="column">
         <h2 class="columnTitle">{{ column.title }}</h2>
+
+        @if (tasksOf(column.status).length === 0) {
+          <p class="noTasks">No tasks {{ column.title }}</p>
+        }
       </div>
     }
   </div>
