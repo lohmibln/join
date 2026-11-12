@@ -11,3 +11,22 @@
     line-height: 1.2;
   }
 }
+
+.columns {
+  @include setFlex(row, flex-start, flex-start, 26px);
+  margin-top: 48px;
+}
+
+.column {
+  @include setFlex(column, flex-start, stretch, 12px);
+  flex: 1;
+  min-width: 0;
+  max-width: 252px;
+}
+
+.columnTitle {
+  color: #42526e;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 24px;
+}
