@@ -49,26 +49,22 @@
     max-width: calc(100vw - 180px);
   }
 
+  // The svg already is the whole round button: 56px circle plus room for its shadow
+  // (4px on the sides, 8px below), so it is used as background without an extra circle.
   .floatingAddButton {
-    @include setFlex();
+    display: block;
     position: fixed;
-    right: 16px;
-    bottom: 96px;
-    width: 56px;
-    height: 56px;
+    right: 12px;
+    bottom: 88px;
+    width: 64px;
+    height: 64px;
     padding: 0;
-    border: none;
-    border-radius: 50%;
-    background-color: $clrHighlight1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-
-    img {
-      width: 32px;
-      height: 32px;
-    }
+    border: unset;
+    border-radius: 0;
+    background: url('/assets/icons/contacts/add-contact-mobile.svg') center / 64px 64px no-repeat;
 
     &:hover {
-      background-color: $clrHighlight2;
+      background-image: url('/assets/icons/contacts/add-contact-mobile-hover.svg');
     }
   }
 }
