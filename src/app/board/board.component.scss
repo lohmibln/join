@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+@import '../../styles/mixin';
+
+.board {
+  min-height: calc(100dvh - 96px);
+  padding: 84px 64px 0;
+  background-color: $clrBackground;
+
+  h1 {
+    font-size: $fsH1;
+    line-height: 1.2;
+  }
+}
+
+.columns {
+  @include setFlex(row, flex-start, flex-start, 26px);
+  margin-top: 48px;
+}
+
+.column {
+  @include setFlex(column, flex-start, stretch, 12px);
+  flex: 1;
+  min-width: 0;
+  max-width: 252px;
+}
+
+.noTasks {
+  @include setFlex();
+  height: 48px;
+  padding: 0 16px;
+  border: 1px dashed $clrHoverIcon;
+  border-radius: $stdRadiusInteractive;
+  background-color: #e7e7e7;
+  color: $clrDisabled;
+  font-size: $fSTer;
+  text-align: center;
+}
+
+.columnTitle {
+  color: #42526e;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 24px;
+}
