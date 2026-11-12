@@ -1,0 +1,9 @@
+# Angular routes like /contacts only exist in the browser.
+# Send every request that is not a real file or folder to index.html,
+# so reloading a page or opening a link does not end in "Not Found".
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
