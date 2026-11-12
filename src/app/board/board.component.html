@@ -1,3 +1,11 @@
 <section class="board">
   <h1>Board</h1>
+
+  <div class="columns">
+    @for (column of columns; track column.status) {
+      <div class="column">
+        <h2 class="columnTitle">{{ column.title }}</h2>
+      </div>
+    }
+  </div>
 </section>
