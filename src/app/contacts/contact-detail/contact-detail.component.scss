@@ -22,6 +22,16 @@
   line-height: 120%;
 }
 
+// The page content stops at 1440px, but like the header the name may use the free space
+// up to the right edge of the window. 945px = sidebar, list, page padding, avatar and gap
+// on the left (889px) plus 56px space on the right.
+@media (min-width: 1441px) {
+  .name {
+    width: max-content;
+    max-width: calc(100vw - 945px);
+  }
+}
+
 // 120px circle plus its 3px ring, the Figma gap of 54px is measured from the circle.
 .avatar {
   @include setFlex();
