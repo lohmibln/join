@@ -54,8 +54,9 @@
   .floatingAddButton {
     display: block;
     position: fixed;
+    // Figma: 16px from the right and 32px above the bottom navigation.
     right: 12px;
-    bottom: 88px;
+    bottom: 104px;
     width: 64px;
     height: 64px;
     padding: 0;
