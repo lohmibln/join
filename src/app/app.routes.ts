@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth.guard';
+import { BoardComponent } from './board/board.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -10,6 +11,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signUp', component: SignupComponent },
   { path: 'success', component: SuccessComponent, canActivate: [authGuard] },
+  { path: 'board', component: BoardComponent, canActivate: [authGuard] },
   { path: 'contacts', component: ContactsComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' },
 ];
