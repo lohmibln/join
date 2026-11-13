@@ -1,44 +1,104 @@
 @import '../../styles/variables';
-@import '../../styles/mixin';
 
 .board {
   min-height: calc(100dvh - 96px);
-  padding: 84px 64px 0;
-  background-color: $clrBackground;
+  padding: 48px 40px 64px;
+  background: $clrBackground;
+}
+
+.boardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 
   h1 {
+    margin: 0;
     font-size: $fsH1;
-    line-height: 1.2;
+    font-weight: $fwH1;
+    color: $clrBaseDark;
   }
 }
 
 .columns {
-  @include setFlex(row, flex-start, flex-start, 26px);
-  margin-top: 48px;
+  display: flex;
+  gap: 24px;
+  margin-top: 40px;
+  align-items: flex-start;
 }
 
 .column {
-  @include setFlex(column, flex-start, stretch, 12px);
   flex: 1;
   min-width: 0;
-  max-width: 252px;
+  max-width: 280px;
 }
 
-.noTasks {
-  @include setFlex();
-  height: 48px;
-  padding: 0 16px;
-  border: 1px dashed $clrHoverIcon;
-  border-radius: $stdRadiusInteractive;
-  background-color: #e7e7e7;
-  color: $clrDisabled;
-  font-size: $fSTer;
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: $fSSec;
+    font-weight: 700;
+    color: #42526e;
+  }
+}
+
+.addTaskBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: $stdTransition;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover img {
+    content: url('/assets/icons/board/plus-hover.svg');
+  }
+
+  &:active img {
+    content: url('/assets/icons/board/plus-active.svg');
+  }
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 48px;
+}
+
+.taskTrigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.emptyColumn {
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px dashed $clrSeparatingLines;
+  border-radius: 10px;
+  background: #e7e7e7;
+  color: #a8a8a8;
+  font-size: 16px;
   text-align: center;
-}
-
-.columnTitle {
-  color: #42526e;
-  font-size: 21px;
-  font-weight: 700;
-  line-height: 24px;
 }
