@@ -79,17 +79,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 48px;
+  min-height: 80px;
 }
 
-.taskTrigger {
+.taskItem {
   display: block;
   width: 100%;
-  padding: 0;
-  border: none;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
 }
 
 .emptyColumn {
