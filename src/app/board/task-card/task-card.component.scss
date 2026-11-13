@@ -1,0 +1,127 @@
+@import '../../../styles/variables';
+
+.taskCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  background: $clrBaseBright;
+  border-radius: 24px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: $stdTransition;
+
+  &:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16);
+  }
+}
+
+.category {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 16px;
+  border-radius: 8px;
+  color: $clrBaseBright;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+.userStory {
+  background-color: #0038ff;
+}
+
+.technicalTask {
+  background-color: #1fd7c1;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: $clrHighlight1;
+  line-height: 120%;
+}
+
+.description {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #a8a8a8;
+  line-height: 120%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.subtasks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.progressTrack {
+  flex: 1;
+  height: 8px;
+  border-radius: 8px;
+  background: #f4f4f4;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 8px;
+  background: $clrHighlight2;
+}
+
+.progressLabel {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: $clrBaseDark;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  min-height: 32px;
+}
+
+.assignees {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: -8px;
+  border: 1px solid $clrBaseBright;
+  border-radius: 50%;
+  color: $clrBaseBright;
+  font-size: 12px;
+  font-weight: 400;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &.more {
+    background: $clrBaseGray;
+    color: $clrHighlight1;
+  }
+}
+
+.prio {
+  width: 20px;
+  height: 14px;
+  object-fit: contain;
+}
