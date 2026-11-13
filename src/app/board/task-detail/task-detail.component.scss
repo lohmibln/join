@@ -1,0 +1,210 @@
+@import '../../../styles/variables';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 525px;
+  max-height: 90dvh;
+  padding: 48px 40px;
+  background: $clrBaseBright;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: $stdTransition;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+}
+
+.scroll {
+  overflow-y: auto;
+  padding-right: 8px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+}
+
+.category {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 8px;
+  color: $clrBaseBright;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+.userStory {
+  background-color: #0038ff;
+}
+
+.technicalTask {
+  background-color: #1fd7c1;
+}
+
+.title {
+  margin: 0 0 16px;
+  font-size: 32px;
+  font-weight: 700;
+  color: $clrBaseDark;
+  line-height: 120%;
+}
+
+.description {
+  margin: 0 0 24px;
+  font-size: 16px;
+  color: $clrBaseDark;
+  line-height: 140%;
+}
+
+.infoRow {
+  margin-bottom: 24px;
+
+  .label {
+    display: block;
+    color: $clrHighlight1;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  &.horizontal {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    .label {
+      min-width: 100px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.value {
+  color: $clrBaseDark;
+  font-size: 16px;
+}
+
+.prio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: $clrBaseDark;
+
+  img {
+    width: 20px;
+    height: 14px;
+    object-fit: contain;
+  }
+}
+
+.assignedList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.assignedRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: $clrBaseBright;
+  font-size: 12px;
+}
+
+.name {
+  font-size: 16px;
+  color: $clrBaseDark;
+}
+
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.subtask {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: $clrBaseDark;
+
+  .check {
+    width: 18px;
+    height: 18px;
+  }
+
+  .done {
+    text-decoration: line-through;
+    color: $clrDisabled;
+  }
+}
+
+.empty {
+  font-size: 14px;
+  color: $clrDisabled;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    padding: 32px 24px;
+    max-height: 95dvh;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .infoRow.horizontal {
+    gap: 16px;
+  }
+}
