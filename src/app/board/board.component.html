@@ -3,7 +3,7 @@
     <h1>Board</h1>
   </div>
 
-  <div class="columns">
+  <div class="columns" cdkDropListGroup>
     @for (column of columns; track column.status) {
       <section class="column">
         <div class="columnHeader">
@@ -20,11 +20,24 @@
           }
         </div>
 
-        <div class="taskList">
+        <div
+          class="taskList"
+          cdkDropList
+          [id]="dropListIdForStatus(column.status)"
+          [cdkDropListData]="tasksByStatus()[column.status]"
+          (cdkDropListDropped)="onDrop($event)"
+        >
           @for (task of tasksByStatus()[column.status]; track task.id) {
-            <button type="button" class="taskTrigger" (click)="openTask(task)">
+            <div
+              class="taskItem"
+              cdkDrag
+              [cdkDragData]="task"
+              (cdkDragStarted)="onDragStarted()"
+              (cdkDragEnded)="onDragEnded()"
+              (click)="onTaskClick(task)"
+            >
               <app-task-card [task]="task" />
-            </button>
+            </div>
           } @empty {
             <p class="emptyColumn">No tasks</p>
           }
