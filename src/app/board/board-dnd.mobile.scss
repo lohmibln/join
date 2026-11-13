@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+/* Larger drop targets when columns stack on mobile. */
+@media (max-width: 1023px) {
+  .taskList {
+    min-height: 120px;
+    padding-bottom: 8px;
+  }
+
+  .taskItem {
+    width: 100%;
+  }
+
+  .emptyColumn {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
