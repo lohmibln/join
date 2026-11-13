@@ -1,15 +1,39 @@
 <section class="board">
-  <h1>Board</h1>
+  <div class="boardHeader">
+    <h1>Board</h1>
+  </div>
 
   <div class="columns">
     @for (column of columns; track column.status) {
-      <div class="column">
-        <h2 class="columnTitle">{{ column.title }}</h2>
+      <section class="column">
+        <div class="columnHeader">
+          <h2>{{ column.title }}</h2>
+          @if (column.status !== 'done') {
+            <button
+              type="button"
+              class="addTaskBtn"
+              (click)="onAddTask(column.status)"
+              [attr.aria-label]="'Add task to ' + column.title"
+            >
+              <img src="assets/icons/board/plus.svg" alt="" />
+            </button>
+          }
+        </div>
 
-        @if (tasksOf(column.status).length === 0) {
-          <p class="noTasks">No tasks {{ column.title }}</p>
-        }
-      </div>
+        <div class="taskList">
+          @for (task of tasksByStatus()[column.status]; track task.id) {
+            <button type="button" class="taskTrigger" (click)="openTask(task)">
+              <app-task-card [task]="task" />
+            </button>
+          } @empty {
+            <p class="emptyColumn">No tasks</p>
+          }
+        </div>
+      </section>
     }
   </div>
 </section>
+
+@if (selectedTask(); as task) {
+  <app-task-detail [task]="task" (close)="closeTask()" />
+}
