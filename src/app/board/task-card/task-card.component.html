@@ -1,0 +1,45 @@
+<article class="taskCard">
+  <span
+    class="category"
+    [class.userStory]="task.category === 'User Story'"
+    [class.technicalTask]="task.category === 'Technical Task'"
+  >
+    {{ task.category }}
+  </span>
+
+  <h3 class="title">{{ task.title }}</h3>
+
+  @if (descriptionPreview) {
+    <p class="description">{{ descriptionPreview }}</p>
+  }
+
+  @if (subtaskProgress.total > 0) {
+    <div class="subtasks">
+      <div class="progressTrack">
+        <div class="progressFill" [style.width.%]="progressPercent"></div>
+      </div>
+      <span class="progressLabel">{{ subtaskProgress.done }}/{{ subtaskProgress.total }} Subtasks</span>
+    </div>
+  }
+
+  <div class="footer">
+    <div class="assignees">
+      @for (contact of assignedContacts; track contact.id; let i = $index) {
+        @if (i < 3) {
+          <span
+            class="avatar"
+            [style.background-color]="avatarColor(contact)"
+            [style.z-index]="assignedContacts.length - i"
+          >
+            {{ contact.name_shortcut }}
+          </span>
+        }
+      }
+      @if (assignedContacts.length > 3) {
+        <span class="avatar more">+{{ assignedContacts.length - 3 }}</span>
+      }
+    </div>
+
+    <img class="prio" [src]="prioIcon" [alt]="task.prio" />
+  </div>
+</article>
