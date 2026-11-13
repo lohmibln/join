@@ -1,0 +1,8 @@
+@import '../../styles/variables';
+
+/* Highlight a column while another card is dragged over it. */
+.taskList.cdk-drop-list-receiving {
+  outline: 1px dashed $clrHighlight2;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
