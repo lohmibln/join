@@ -1,0 +1,72 @@
+<div class="overlay" (click)="onBackdropClick($event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button type="button" class="closeBtn" (click)="close.emit()" aria-label="Close">
+      <img src="assets/icons/close.svg" alt="" />
+    </button>
+
+    <div class="scroll">
+      <span
+        class="category"
+        [class.userStory]="task.category === 'User Story'"
+        [class.technicalTask]="task.category === 'Technical Task'"
+      >
+        {{ task.category }}
+      </span>
+
+      <h1 class="title">{{ task.title }}</h1>
+
+      @if (task.description) {
+        <p class="description">{{ task.description }}</p>
+      }
+
+      <div class="infoRow horizontal">
+        <span class="label">Due date:</span>
+        <span class="value">{{ task.due_date }}</span>
+      </div>
+
+      <div class="infoRow horizontal">
+        <span class="label">Priority:</span>
+        <span class="prio">
+          {{ task.prio }}
+          <img [src]="prioIcon" [alt]="task.prio" />
+        </span>
+      </div>
+
+      <div class="infoRow">
+        <span class="label">Assigned To:</span>
+        <div class="assignedList">
+          @for (contact of assignedContacts; track contact.id) {
+            <div class="assignedRow">
+              <span class="avatar" [style.background-color]="avatarColor(contact)">
+                {{ contact.name_shortcut }}
+              </span>
+              <span class="name">{{ contact.full_name }}</span>
+            </div>
+          }
+          @if (assignedContacts.length === 0) {
+            <span class="empty">No contacts assigned</span>
+          }
+        </div>
+      </div>
+
+      <div class="infoRow">
+        <span class="label">Subtasks</span>
+        <div class="subtasks">
+          @for (sub of task.sub_tasks; track $index) {
+            <div class="subtask">
+              <img
+                class="check"
+                [src]="sub.checked ? 'assets/icons/checkbox-checked.svg' : 'assets/icons/checkbox.svg'"
+                [alt]="sub.checked ? 'Done' : 'Open'"
+              />
+              <span [class.done]="sub.checked">{{ sub.description }}</span>
+            </div>
+          }
+          @if (task.sub_tasks.length === 0) {
+            <span class="empty">No subtasks</span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
