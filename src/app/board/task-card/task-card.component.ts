@@ -44,6 +44,12 @@ export class TaskCardComponent {
     return total === 0 ? 0 : (done / total) * 100;
   }
 
+  /** Detailed progress text shown on hover, e.g. "5 of 7 subtasks completed". */
+  get progressTooltip(): string {
+    const { done, total } = this.subtaskProgress;
+    return `${done} of ${total} subtasks completed`;
+  }
+
   get prioIcon(): string {
     switch (this.task.prio) {
       case 'Urgent':
