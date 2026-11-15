@@ -53,10 +53,19 @@
         <span class="label">Subtasks</span>
         <div class="subtasks">
           @for (sub of task.sub_tasks; track $index) {
-            <div class="subtask">
+            <div
+              class="subtask"
+              role="checkbox"
+              tabindex="0"
+              [attr.aria-checked]="sub.checked"
+              (click)="onSubtaskToggle($index)"
+              (keydown.enter)="onSubtaskToggle($index)"
+            >
               <img
                 class="check"
-                [src]="sub.checked ? 'assets/icons/checkbox-checked.svg' : 'assets/icons/checkbox.svg'"
+                [src]="
+                  sub.checked ? 'assets/icons/checkbox-checked.svg' : 'assets/icons/checkbox.svg'
+                "
                 [alt]="sub.checked ? 'Done' : 'Open'"
               />
               <span [class.done]="sub.checked">{{ sub.description }}</span>
