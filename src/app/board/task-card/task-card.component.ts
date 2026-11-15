@@ -33,12 +33,14 @@ export class TaskCardComponent {
     return `${text.slice(0, 60)}…`;
   }
 
+  /** Returns the number of completed subtasks and the total count. */
   get subtaskProgress(): { done: number; total: number } {
     const total = this.task.sub_tasks?.length ?? 0;
     const done = this.task.sub_tasks?.filter((s) => s.checked).length ?? 0;
     return { done, total };
   }
 
+  /** Returns the completed share of subtasks as a percentage (0-100). */
   get progressPercent(): number {
     const { done, total } = this.subtaskProgress;
     return total === 0 ? 0 : (done / total) * 100;
