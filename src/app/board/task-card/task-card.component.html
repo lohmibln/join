@@ -14,11 +14,22 @@
   }
 
   @if (subtaskProgress.total > 0) {
-    <div class="subtasks">
+    <div
+      class="subtasks"
+      [attr.title]="progressTooltip"
+      role="progressbar"
+      aria-label="Subtask progress"
+      aria-valuemin="0"
+      [attr.aria-valuemax]="subtaskProgress.total"
+      [attr.aria-valuenow]="subtaskProgress.done"
+      [attr.aria-valuetext]="progressTooltip"
+    >
       <div class="progressTrack">
         <div class="progressFill" [style.width.%]="progressPercent"></div>
       </div>
-      <span class="progressLabel">{{ subtaskProgress.done }}/{{ subtaskProgress.total }} Subtasks</span>
+      <span class="progressLabel"
+        >{{ subtaskProgress.done }}/{{ subtaskProgress.total }} Subtasks</span
+      >
     </div>
   }
 
