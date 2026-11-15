@@ -48,5 +48,5 @@
 </section>
 
 @if (selectedTask(); as task) {
-  <app-task-detail [task]="task" (close)="closeTask()" />
+  <app-task-detail [task]="task" (close)="closeTask()" (subtaskToggled)="onSubtaskToggle($event)" />
 }

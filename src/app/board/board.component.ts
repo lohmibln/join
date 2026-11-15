@@ -69,6 +69,25 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.selectedTask.set(null);
   }
 
+  /** Toggles one subtask of the open task and refreshes the board cards. */
+  onSubtaskToggle(index: number): void {
+    const open = this.selectedTask();
+    if (!open) {
+      return;
+    }
+    const updated = this.withToggledSubtask(open, index);
+    this.tasks.update((list) => list.map((t) => (t.id === updated.id ? updated : t)));
+    this.selectedTask.set(updated);
+  }
+
+  /** Returns a copy of the task with the checked state of one subtask flipped. */
+  private withToggledSubtask(task: Task, index: number): Task {
+    const subTasks = task.sub_tasks.map((sub, i) =>
+      i === index ? { ...sub, checked: !sub.checked } : sub,
+    );
+    return { ...task, sub_tasks: subTasks };
+  }
+
   onAddTask(status: TaskStatus): void {
     // Placeholder until Add Task flow is implemented.
     this.addTaskStatus.set(status);
