@@ -14,6 +14,7 @@ import { getContactColor } from '../../shared/utils/contact.utils';
 export class TaskDetailComponent {
   @Input({ required: true }) task!: Task;
   @Output() close = new EventEmitter<void>();
+  @Output() subtaskToggled = new EventEmitter<number>();
 
   private readonly contactsService = inject(ContactsService);
 
@@ -43,5 +44,10 @@ export class TaskDetailComponent {
     if (event.target === event.currentTarget) {
       this.close.emit();
     }
+  }
+
+  /** Emits the index of the clicked subtask so the parent can toggle it. */
+  onSubtaskToggle(index: number): void {
+    this.subtaskToggled.emit(index);
   }
 }
