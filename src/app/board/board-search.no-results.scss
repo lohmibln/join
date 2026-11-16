@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.noSearchResults {
+  margin: 24px 0 0;
+  padding: 16px 24px;
+  border: 1px dashed $clrSeparatingLines;
+  border-radius: 10px;
+  background: #e7e7e7;
+  color: #a8a8a8;
+  font-size: 16px;
+  text-align: center;
+}
