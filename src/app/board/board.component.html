@@ -1,7 +1,27 @@
 <section class="board">
   <div class="boardHeader">
     <h1>Board</h1>
+
+    <div class="boardHeaderActions">
+      <div class="searchBar">
+        <input
+          class="searchInput"
+          type="search"
+          name="boardSearch"
+          [placeholder]="searchPlaceholder"
+          [value]="searchQuery()"
+          (input)="onSearchInput($event)"
+          aria-label="Search tasks"
+        />
+        <span class="searchSeparator" aria-hidden="true"></span>
+        <img class="searchIcon" src="assets/icons/search.svg" alt="" />
+      </div>
+    </div>
   </div>
+
+  @if (hasNoSearchResults()) {
+    <p class="noSearchResults" role="status">{{ noResultsMessage }}</p>
+  }
 
   <div class="columns" cdkDropListGroup>
     @for (column of columns; track column.status) {
@@ -39,7 +59,7 @@
               <app-task-card [task]="task" />
             </div>
           } @empty {
-            <p class="emptyColumn">No tasks</p>
+            <p class="emptyColumn">{{ hasNoSearchResults() ? noResultsMessage : emptyColumnMessage }}</p>
           }
         </div>
       </section>
