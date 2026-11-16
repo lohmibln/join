@@ -6,6 +6,15 @@ import { BOARD_COLUMNS } from './board-columns';
 import { applyTaskStatusChange } from './board-dnd.apply';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
 import { taskFromDropEvent } from './board-dnd.task-from-drop';
+import { filterTasksBySearch, isBoardSearchActive } from './board-search.filter';
+import { groupTasksByStatus } from './board-search.group';
+import { hasNoBoardSearchResults } from './board-search.has-no-results';
+import {
+  BOARD_SEARCH_EMPTY_COLUMN,
+  BOARD_SEARCH_NO_RESULTS,
+  BOARD_SEARCH_PLACEHOLDER,
+} from './board-search.messages';
+import { readSearchInputValue } from './board-search.read-input';
 import { DEMO_TASKS } from './demo-tasks';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
@@ -21,6 +30,9 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
     './board-dnd.styles.scss',
     './board-dnd.mobile.scss',
     './board-dnd.receiving.scss',
+    './board-search.bar.scss',
+    './board-search.no-results.scss',
+    './board-search.responsive.scss',
   ],
 })
 export class BoardComponent implements OnInit, OnDestroy {
@@ -30,24 +42,26 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly tasks = signal<Task[]>([...DEMO_TASKS]);
   readonly selectedTask = signal<Task | null>(null);
   readonly addTaskStatus = signal<TaskStatus | null>(null);
+  readonly searchQuery = signal('');
+
+  readonly searchPlaceholder = BOARD_SEARCH_PLACEHOLDER;
+  readonly noResultsMessage = BOARD_SEARCH_NO_RESULTS;
+  readonly emptyColumnMessage = BOARD_SEARCH_EMPTY_COLUMN;
 
   /** True while a card is being dragged (avoids opening detail on drop). */
   private isDragging = false;
 
-  readonly tasksByStatus = computed(() => {
-    const map: Record<TaskStatus, Task[]> = {
-      todo: [],
-      inProgress: [],
-      awaitFeedback: [],
-      done: [],
-    };
+  readonly isSearchActive = computed(() => isBoardSearchActive(this.searchQuery()));
 
-    for (const task of this.tasks()) {
-      map[task.status].push(task);
-    }
+  readonly visibleTasks = computed(() =>
+    filterTasksBySearch(this.tasks(), this.searchQuery()),
+  );
 
-    return map;
-  });
+  readonly tasksByStatus = computed(() => groupTasksByStatus(this.visibleTasks()));
+
+  readonly hasNoSearchResults = computed(() =>
+    hasNoBoardSearchResults(this.isSearchActive(), this.visibleTasks().length),
+  );
 
   readonly dropListIdForStatus = dropListIdForStatus;
 
@@ -59,6 +73,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.contactsService.stopRealtime();
+  }
+
+  onSearchInput(event: Event): void {
+    this.searchQuery.set(readSearchInputValue(event));
   }
 
   openTask(task: Task): void {
