@@ -1,0 +1,57 @@
+@import '../../styles/variables';
+
+.boardHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 250px;
+  background-color: $clrBaseBright;
+  border: 1px solid #a8a8a8;
+  border-radius: 10px;
+  transition: border-color 0.3s ease-in-out;
+
+  &:focus-within {
+    border-color: $clrHighlight2;
+  }
+}
+
+.searchInput {
+  width: 80%;
+  border: none;
+  border-radius: 10px 0 0 10px;
+  outline: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  background: transparent;
+  color: $clrBaseDark;
+
+  &::placeholder {
+    color: #a8a8a8;
+  }
+}
+
+.searchSeparator {
+  position: absolute;
+  left: 80%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 80%;
+  border-left: 2px solid $clrSeparatingLines;
+}
+
+.searchIcon {
+  position: absolute;
+  left: calc(80% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
