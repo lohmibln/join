@@ -1,0 +1,34 @@
+<button
+  class="field categoryField"
+  type="button"
+  aria-haspopup="listbox"
+  aria-controls="categoryList"
+  [class.open]="isOpen()"
+  [class.errorInput]="hasError()"
+  [attr.aria-expanded]="isOpen()"
+  (click)="toggle()"
+  (keydown.escape)="close()"
+>
+  <span class="categoryText" [class.placeholder]="!value()">
+    {{ value() || 'Select task category' }}
+  </span>
+  <span class="arrowButton" aria-hidden="true"></span>
+</button>
+
+@if (isOpen()) {
+  <ul id="categoryList" class="list" role="listbox">
+    @for (category of categories; track category) {
+      <li>
+        <button
+          class="option"
+          type="button"
+          role="option"
+          [attr.aria-selected]="category === value()"
+          (click)="choose(category)"
+        >
+          {{ category }}
+        </button>
+      </li>
+    }
+  </ul>
+}

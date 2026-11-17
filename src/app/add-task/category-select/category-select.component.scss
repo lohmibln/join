@@ -1,0 +1,43 @@
+@import '../../../styles/variables';
+
+// The field, list and arrow come from the assigned-to dropdown, this file only adapts them.
+
+.categoryField {
+  width: 100%;
+  color: #000000;
+  font-size: $fSDefault;
+  text-align: left;
+}
+
+.categoryText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &.placeholder {
+    color: #000000;
+  }
+}
+
+.categoryField .arrowButton {
+  display: block;
+}
+
+.categoryField:hover .arrowButton {
+  background-color: #eeeeee;
+}
+
+// Small laptops: same smaller text as the other fields of the form.
+@container addTaskForm (max-width: 899px) {
+  .categoryField {
+    font-size: $fSSec;
+  }
+}
+
+@media (max-width: 1023px) {
+  .categoryField {
+    font-size: $fSTer;
+  }
+}
