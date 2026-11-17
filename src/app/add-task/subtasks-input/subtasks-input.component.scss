@@ -1,0 +1,173 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+:host {
+  display: block;
+  font-size: $fSDefault;
+}
+
+.field {
+  @include setFlex(row, space-between, center, 8px);
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border: 1px solid $clrFieldBorder;
+  border-radius: $stdRadiusInteractive;
+  background-color: $clrBaseBright;
+  transition: $stdTransition;
+
+  &:hover,
+  &:focus-within {
+    border-color: $clrHighlight2;
+  }
+}
+
+.subtaskInput,
+.editInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: unset;
+  border-radius: 0;
+  background-color: transparent;
+  color: $clrBaseDark;
+  font-size: inherit;
+  line-height: 120%;
+
+  &:focus {
+    border: unset;
+  }
+
+  &::placeholder {
+    color: $clrFieldBorder;
+  }
+}
+
+.icons {
+  @include setFlex(row, flex-end, center, 4px);
+  flex: none;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: $clrSeparatingLines;
+}
+
+.iconButton {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: unset;
+  border-radius: 50%;
+  background: center / 24px 24px no-repeat;
+
+  &:hover {
+    background-color: #eeeeee;
+  }
+
+  &.plus {
+    background-image: url('/assets/icons/add.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/add-hover.svg');
+    }
+  }
+
+  &.cancel {
+    background-image: url('/assets/icons/close.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/close-hover.svg');
+    }
+  }
+
+  &.confirm {
+    background-image: url('/assets/icons/check.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/check-hover.svg');
+    }
+  }
+
+  &.edit {
+    background-image: url('/assets/icons/edit.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/edit-hover.svg');
+    }
+  }
+
+  &.delete {
+    background-image: url('/assets/icons/delete.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/delete-hover.svg');
+    }
+  }
+}
+
+.list {
+  @include setFlex(column, flex-start, stretch, 2px);
+  margin-top: 4px;
+  list-style: none;
+}
+
+.item {
+  @include setFlex(row, space-between, center, 8px);
+  min-height: 32px;
+  padding: 2px 8px 2px 16px;
+  border-radius: $stdRadiusInteractive;
+  color: $clrBaseDark;
+  font-size: $fSTer;
+  line-height: 120%;
+
+  &:hover:not(.editing) {
+    background-color: #eeeeee;
+
+    .hoverIcons {
+      visibility: visible;
+    }
+  }
+
+  &.editing {
+    padding-left: 16px;
+    border-bottom: 1px solid $clrHighlight2;
+    border-radius: 0;
+    background-color: $clrBaseBright;
+  }
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &::before {
+    content: '•';
+    margin-right: 8px;
+  }
+}
+
+.hoverIcons {
+  visibility: hidden;
+}
+
+// Small laptops: same smaller text as the other fields of the form.
+@container addTaskForm (max-width: 899px) {
+  :host {
+    font-size: $fSSec;
+  }
+}
+
+@media (max-width: 1023px) {
+  :host {
+    font-size: $fSTer;
+  }
+
+  .field {
+    height: 44px;
+  }
+}

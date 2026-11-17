@@ -1,0 +1,54 @@
+<div class="field">
+  <input
+    class="subtaskInput"
+    type="text"
+    name="subtask"
+    placeholder="Add new subtask"
+    autocomplete="off"
+    [value]="draft()"
+    (input)="onDraftInput($event)"
+    (keydown.enter)="add($event)"
+  />
+  @if (draft()) {
+    <div class="icons">
+      <button class="iconButton cancel" type="button" aria-label="Clear subtask" (click)="clearDraft()"></button>
+      <span class="divider" aria-hidden="true"></span>
+      <button class="iconButton confirm" type="button" aria-label="Add subtask" (click)="add()"></button>
+    </div>
+  } @else {
+    <button class="iconButton plus" type="button" aria-label="Add subtask" (click)="add()"></button>
+  }
+</div>
+
+@if (subtasks().length > 0) {
+  <ul class="list">
+    @for (subtask of subtasks(); track $index) {
+      @if (editIndex() === $index) {
+        <li class="item editing">
+          <input
+            class="editInput"
+            type="text"
+            aria-label="Edit subtask"
+            [value]="editText()"
+            (input)="onEditInput($event)"
+            (keydown.enter)="saveEdit($event)"
+          />
+          <div class="icons">
+            <button class="iconButton delete" type="button" aria-label="Delete subtask" (click)="remove($index)"></button>
+            <span class="divider" aria-hidden="true"></span>
+            <button class="iconButton confirm" type="button" aria-label="Save subtask" (click)="saveEdit()"></button>
+          </div>
+        </li>
+      } @else {
+        <li class="item" (dblclick)="startEdit($index)">
+          <span class="text">{{ subtask }}</span>
+          <div class="icons hoverIcons">
+            <button class="iconButton edit" type="button" aria-label="Edit subtask" (click)="startEdit($index)"></button>
+            <span class="divider" aria-hidden="true"></span>
+            <button class="iconButton delete" type="button" aria-label="Delete subtask" (click)="remove($index)"></button>
+          </div>
+        </li>
+      }
+    }
+  </ul>
+}
