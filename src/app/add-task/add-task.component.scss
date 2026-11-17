@@ -1,0 +1,48 @@
+@import '../../styles/variables';
+
+// Figma: headline 61px, 48px above the fields, buttons at the bottom of the page.
+.addTask {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 96px);
+  padding: clamp(48px, 16dvh, 164px) 96px 40px;
+  background-color: $clrBackground;
+
+  app-add-task-form {
+    flex: 1;
+  }
+}
+
+.pageTitle {
+  margin-bottom: 48px;
+  font-size: $fsH1;
+  line-height: 120%;
+}
+
+// Smaller laptops: less side space, so both columns keep enough room.
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .addTask {
+    padding-right: 48px;
+    padding-left: 48px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .addTask {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+}
+
+// Mobile: 48px below the header, 47px headline, buttons fixed above the menu.
+@media (max-width: 1023px) {
+  .addTask {
+    min-height: calc(100dvh - 160px);
+    padding: 48px 16px 112px;
+  }
+
+  .pageTitle {
+    margin-bottom: 40px;
+    font-size: 47px;
+  }
+}
