@@ -1,0 +1,186 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+:host {
+  position: relative;
+  display: block;
+}
+
+.field {
+  @include setFlex(row, space-between, center, 8px);
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border: 1px solid $clrFieldBorder;
+  border-radius: $stdRadiusInteractive;
+  background-color: $clrBaseBright;
+  transition: $stdTransition;
+
+  &:hover,
+  &.open {
+    border-color: $clrHighlight2;
+  }
+}
+
+.filterInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: unset;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: $fSDefault;
+  cursor: pointer;
+
+  &:focus {
+    border: unset;
+    cursor: text;
+  }
+
+  &::placeholder {
+    color: #000000;
+  }
+}
+
+.arrowButton {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: unset;
+  border-radius: 50%;
+  background: url('/assets/icons/arrow-drop-down.svg') center / 24px 24px no-repeat;
+
+  &:hover {
+    background-color: #eeeeee;
+    background-image: url('/assets/icons/arrow-drop-down-hover.svg');
+  }
+
+  .open & {
+    background-image: url('/assets/icons/arrow-drop-up.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/arrow-drop-up-hover.svg');
+    }
+  }
+}
+
+// The list lies over the fields below, like the reference dropdown.
+.list {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  max-height: 260px;
+  padding: 4px 0;
+  overflow-y: auto;
+  list-style: none;
+  border-radius: 0 0 $stdRadiusInteractive $stdRadiusInteractive;
+  background-color: $clrBaseBright;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.option {
+  @include setFlex(row, flex-start, center, 16px);
+  width: 100%;
+  padding: 7px 16px;
+  border: unset;
+  border-radius: $stdRadiusInteractive;
+  background-color: transparent;
+  text-align: left;
+
+  &:hover {
+    background-color: #eeeeee;
+  }
+
+  &.selected {
+    background-color: $clrHighlight1;
+    color: $clrBaseBright;
+
+    &:hover {
+      background-color: $clrHighlight1Darker;
+    }
+  }
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// The svg files are only used as a shape (mask), so the box can turn white on a selected row.
+.checkbox {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background-color: $clrHighlight1;
+  -webkit-mask: url('/assets/icons/checkbox.svg') center / 24px 24px no-repeat;
+  mask: url('/assets/icons/checkbox.svg') center / 24px 24px no-repeat;
+
+  .selected & {
+    background-color: $clrBaseBright;
+    -webkit-mask-image: url('/assets/icons/checkbox-checked.svg');
+    mask-image: url('/assets/icons/checkbox-checked.svg');
+  }
+}
+
+.noContacts {
+  padding: 12px 16px;
+  color: $clrDisabled;
+  font-size: $fSTer;
+}
+
+.avatars {
+  @include setFlex(row, flex-start, center, 8px);
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.avatar {
+  @include setFlex();
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border: 2px solid $clrBaseBright;
+  border-radius: 50%;
+  color: $clrBaseBright;
+  font-size: 12px;
+}
+
+.more {
+  background-color: $clrHighlight1;
+}
+
+// Small laptops: same smaller text as the other fields of the form.
+@container addTaskForm (max-width: 899px) {
+  .filterInput {
+    font-size: $fSSec;
+  }
+}
+
+@media (max-width: 1023px) {
+  .filterInput {
+    font-size: $fSTer;
+  }
+
+  // On mobile the list pushes the fields below down, so it never covers the fixed buttons.
+  .list {
+    position: static;
+    max-height: 240px;
+    margin-top: 4px;
+    border-radius: $stdRadiusInteractive;
+  }
+
+  .option {
+    gap: 12px;
+    font-size: $fSTer;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+}

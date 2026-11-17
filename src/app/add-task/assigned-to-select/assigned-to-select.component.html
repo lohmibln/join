@@ -1,0 +1,59 @@
+<div class="field" [class.open]="isOpen()">
+  <input
+    class="filterInput"
+    type="text"
+    name="assignedTo"
+    placeholder="Select contacts to assign"
+    autocomplete="off"
+    role="combobox"
+    aria-controls="assignedToList"
+    [attr.aria-expanded]="isOpen()"
+    [value]="filter()"
+    (input)="onFilterInput($event)"
+    (click)="isOpen.set(true)"
+    (keydown.escape)="close()"
+    (keydown.enter)="$event.preventDefault()"
+  />
+  <button
+    class="arrowButton"
+    type="button"
+    [attr.aria-label]="isOpen() ? 'Close contact list' : 'Open contact list'"
+    (click)="toggle()"
+  ></button>
+</div>
+
+@if (isOpen()) {
+  <ul id="assignedToList" class="list" role="listbox" aria-multiselectable="true">
+    @for (contact of filteredContacts(); track contact.id) {
+      <li>
+        <button
+          class="option"
+          type="button"
+          role="option"
+          [class.selected]="isSelected(contact)"
+          [attr.aria-selected]="isSelected(contact)"
+          (click)="toggleContact(contact)"
+        >
+          <span class="avatar" [style.background-color]="avatarColor(contact)">
+            {{ contact.name_shortcut }}
+          </span>
+          <span class="name">{{ contact.full_name }}</span>
+          <span class="checkbox"></span>
+        </button>
+      </li>
+    } @empty {
+      <li class="noContacts">No contacts found</li>
+    }
+  </ul>
+} @else if (selectedContacts().length > 0) {
+  <div class="avatars">
+    @for (contact of visibleAvatars(); track contact.id) {
+      <span class="avatar" [style.background-color]="avatarColor(contact)" [title]="contact.full_name">
+        {{ contact.name_shortcut }}
+      </span>
+    }
+    @if (hiddenAvatarCount() > 0) {
+      <span class="avatar more">+{{ hiddenAvatarCount() }}</span>
+    }
+  </div>
+}
