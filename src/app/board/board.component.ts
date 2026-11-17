@@ -1,7 +1,10 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Task, TaskStatus } from '../shared/models/task.model';
 import { ContactsService } from '../shared/services/contacts.service';
+import { TasksService } from '../shared/services/tasks.service';
+import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
 import { applyTaskStatusChange } from './board-dnd.apply';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
@@ -15,14 +18,20 @@ import {
   BOARD_SEARCH_PLACEHOLDER,
 } from './board-search.messages';
 import { readSearchInputValue } from './board-search.read-input';
-import { DEMO_TASKS } from './demo-tasks';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [TaskCardComponent, TaskDetailComponent, CdkDropListGroup, CdkDropList, CdkDrag],
+  imports: [
+    TaskCardComponent,
+    TaskDetailComponent,
+    AddTaskDialogComponent,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
+  ],
   templateUrl: './board.component.html',
   styleUrls: [
     './board.component.scss',
@@ -33,13 +42,16 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
     './board-search.bar.scss',
     './board-search.no-results.scss',
     './board-search.responsive.scss',
+    './board-add-task.button.scss',
   ],
 })
 export class BoardComponent implements OnInit, OnDestroy {
   private readonly contactsService = inject(ContactsService);
+  private readonly tasksService = inject(TasksService);
+  private readonly router = inject(Router);
 
   readonly columns = BOARD_COLUMNS;
-  readonly tasks = signal<Task[]>([...DEMO_TASKS]);
+  readonly tasks = this.tasksService.tasks;
   readonly selectedTask = signal<Task | null>(null);
   readonly addTaskStatus = signal<TaskStatus | null>(null);
   readonly searchQuery = signal('');
@@ -66,13 +78,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly dropListIdForStatus = dropListIdForStatus;
 
   async ngOnInit(): Promise<void> {
-    await this.contactsService.loadContacts();
+    await Promise.all([this.contactsService.loadContacts(), this.tasksService.loadTasks()]);
     this.contactsService.startRealtime();
-    this.assignDemoAssignees();
+    this.tasksService.startRealtime();
   }
 
   ngOnDestroy(): void {
     this.contactsService.stopRealtime();
+    this.tasksService.stopRealtime();
   }
 
   onSearchInput(event: Event): void {
@@ -94,8 +107,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       return;
     }
     const updated = this.withToggledSubtask(open, index);
-    this.tasks.update((list) => list.map((t) => (t.id === updated.id ? updated : t)));
     this.selectedTask.set(updated);
+    void this.tasksService.updateTask(updated);
   }
 
   /** Returns a copy of the task with the checked state of one subtask flipped. */
@@ -106,9 +119,22 @@ export class BoardComponent implements OnInit, OnDestroy {
     return { ...task, sub_tasks: subTasks };
   }
 
+  /**
+   * Opens the Add Task form for a column. Small screens get the Add Task page,
+   * larger ones the dialog on top of the board.
+   * @param status - Column the new task is added to.
+   */
   onAddTask(status: TaskStatus): void {
-    // Placeholder until Add Task flow is implemented.
+    if (window.matchMedia('(max-width: 1023px)').matches) {
+      void this.router.navigate(['/addTask'], { queryParams: { status } });
+      return;
+    }
     this.addTaskStatus.set(status);
+  }
+
+  /** Closes the Add Task dialog. */
+  closeAddTask(): void {
+    this.addTaskStatus.set(null);
   }
 
   onDragStarted(): void {
@@ -148,23 +174,9 @@ export class BoardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.tasks.update((list) => applyTaskStatusChange(list, task.id, newStatus));
-  }
-
-  /** Seeds demo cards with the first contacts so initials show on the board. */
-  private assignDemoAssignees(): void {
-    const contacts = this.contactsService.contacts();
-    if (contacts.length === 0) {
-      return;
-    }
-
-    const ids = contacts.slice(0, 4).map((c) => c.id);
-
-    this.tasks.update((list) =>
-      list.map((task, index) => ({
-        ...task,
-        assigned_to: ids.slice(0, (index % 3) + 1),
-      })),
+    const moved = applyTaskStatusChange(this.tasks(), task.id, newStatus).find(
+      (entry) => entry.id === task.id,
     );
+    if (moved) void this.tasksService.updateTask(moved);
   }
 }
