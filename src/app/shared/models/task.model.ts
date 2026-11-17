@@ -20,3 +20,5 @@ export interface Task {
   assigned_to: string[];
   sub_tasks: SubTask[];
 }
+
+export type NewTask = Omit<Task, 'id'>;
