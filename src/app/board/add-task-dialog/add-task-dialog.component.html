@@ -1,0 +1,7 @@
+<div class="overlay" (click)="onOverlayClick($event)">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="addTaskDialogTitle">
+    <button class="closeButton" type="button" aria-label="Close dialog" (click)="close()"></button>
+    <h1 id="addTaskDialogTitle" class="title">Add Task</h1>
+    <app-add-task-form [status]="status()" [isDialog]="true" (created)="close()" (cancelled)="close()" />
+  </section>
+</div>

@@ -1,0 +1,69 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+.overlay {
+  @include setFlex();
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+// Figma "Floating add task": 1116 x 870, white, radius 30, content starts 74px left / 64px top.
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1116px;
+  min-height: min(870px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 64px 66px 64px 74px;
+  overflow-y: auto;
+  border-radius: 30px;
+  background-color: $clrBaseBright;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+
+  app-add-task-form {
+    flex: 1;
+  }
+}
+
+.title {
+  margin-bottom: 37px;
+  font-size: $fsH1;
+  line-height: 120%;
+}
+
+.closeButton {
+  position: absolute;
+  top: 64px;
+  right: 40px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: unset;
+  border-radius: 50%;
+  background: url('/assets/icons/close.svg') center / 24px 24px no-repeat;
+
+  &:hover {
+    background-color: #eeeeee;
+    background-image: url('/assets/icons/close-hover.svg');
+  }
+}
+
+@media (max-width: 1240px) {
+  .dialog {
+    padding: 32px;
+  }
+
+  .title {
+    margin-bottom: 32px;
+  }
+
+  .closeButton {
+    top: 32px;
+    right: 32px;
+  }
+}
