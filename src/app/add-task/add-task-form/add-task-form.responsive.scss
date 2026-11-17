@@ -1,0 +1,195 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+// ---------- Width of the form itself (page and dialog) ----------
+
+// Two columns, but little room: the priority buttons move closer together.
+@container addTaskForm (max-width: 959px) {
+  .prioButtons {
+    gap: 8px;
+  }
+
+  .prioButton {
+    gap: 6px;
+    padding: 0 6px;
+  }
+}
+
+// Small laptops (1024px up to ~1200px): still two columns, like on desktop,
+// only with smaller gaps and text. The fields are stacked only on mobile.
+@container addTaskForm (max-width: 899px) {
+  .columns {
+    gap: 24px;
+  }
+
+  .label,
+  .input {
+    font-size: $fSSec;
+  }
+
+  .prioButtons {
+    gap: 6px;
+  }
+
+  .prioButton,
+  .prioButton.active {
+    gap: 4px;
+    padding: 0 4px;
+    font-size: $fSTer;
+  }
+
+  .prioButton img {
+    width: 16px;
+    height: 12px;
+  }
+
+  .textarea {
+    height: 104px;
+  }
+}
+
+// ---------- Mobile (same breakpoint as the mobile header and menu) ----------
+
+@media (max-width: 1023px) {
+  .form {
+    gap: 16px;
+    max-width: none;
+  }
+
+  .columns {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .column {
+    gap: 16px;
+    max-width: none;
+  }
+
+  .leftColumn {
+    gap: 32px;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .label,
+  .input,
+  .prioButton {
+    font-size: $fSTer;
+  }
+
+  .label {
+    color: #000000;
+  }
+
+  .prioLabel {
+    color: #42526e;
+  }
+
+  .input {
+    height: 40px;
+    padding: 10px 21px;
+  }
+
+  .textarea {
+    height: 88px;
+    min-height: 40px;
+    padding: 18px 21px;
+  }
+
+  .dateInput {
+    padding: 8px 48px 8px 21px;
+    background-position: right 21px center;
+  }
+
+  .prioButtons {
+    gap: 16px;
+  }
+
+  .prioButton {
+    gap: 8px;
+    height: 41px;
+    padding: 0 10px;
+
+    &.active {
+      font-size: $fSTer;
+    }
+  }
+
+  .prioButton img {
+    width: 20px;
+    height: 15px;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 0;
+  }
+
+  // On the page the buttons stay fixed above the mobile menu.
+  .form:not(.dialogForm) .buttons {
+    position: fixed;
+    right: 0;
+    bottom: 80px;
+    left: 0;
+    z-index: 20;
+    gap: 32px;
+    padding: 12px 16px;
+    background-color: $clrBackground;
+  }
+
+  .formError {
+    margin-top: 0;
+    text-align: left;
+  }
+}
+
+// Narrow phones: the three priority buttons still fit next to each other.
+@media (max-width: 420px) {
+  .prioButtons {
+    gap: 8px;
+  }
+
+  .prioButton {
+    gap: 6px;
+    padding: 0 6px;
+  }
+
+  .form:not(.dialogForm) .buttons {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 359px) {
+  .prioButtons {
+    gap: 6px;
+  }
+
+  .prioButton,
+  .prioButton.active {
+    gap: 4px;
+    padding: 0 4px;
+    font-size: 13px;
+  }
+
+  .prioButton img {
+    width: 16px;
+    height: 12px;
+  }
+
+  .form:not(.dialogForm) .buttons {
+    gap: 8px;
+  }
+
+  .secondaryButton,
+  .primaryButton {
+    flex: 1;
+    min-width: 0;
+    padding: 16px 8px;
+    font-size: $fSTer;
+    white-space: nowrap;
+  }
+}
