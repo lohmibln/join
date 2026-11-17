@@ -1,0 +1,270 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+$clrUrgent: #ff3d00;
+$clrMedium: #ffa800;
+$clrLow: #7ae229;
+$columnWidth: 440px;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  // The layout reacts to the width of the form itself (page and dialog differ).
+  container: addTaskForm / inline-size;
+}
+
+// Figma: two 440px columns, 48px gap on each side of the 1px separator.
+.form {
+  @include setFlex(column, flex-start, stretch, 48px);
+  flex: 1;
+  width: 100%;
+  max-width: $columnWidth * 2 + 97px;
+}
+
+.columns {
+  @include setFlex(row, flex-start, stretch, 48px);
+}
+
+.column {
+  @include setFlex(column, flex-start, stretch, 24px);
+  flex: 1;
+  min-width: 0;
+  max-width: $columnWidth;
+}
+
+// The left fields keep space for their error message below the field.
+.leftColumn {
+  gap: 32px;
+}
+
+.separator {
+  flex: none;
+  width: 1px;
+  min-height: 424px;
+  background-color: $clrSeparatingLines;
+}
+
+.formGroup {
+  @include setFlex(column, flex-start, stretch, 8px);
+  position: relative;
+}
+
+.label {
+  color: $clrHighlight1;
+  font-size: $fSDefault;
+  line-height: 120%;
+}
+
+.prioLabel {
+  color: #000000;
+}
+
+.required {
+  color: $clrRequired;
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  border-color: $clrFieldBorder;
+  background-color: $clrBaseBright;
+  line-height: 120%;
+  color: #000000;
+
+  &:hover:not(:focus) {
+    border-color: $clrHighlight2;
+  }
+
+  &::placeholder {
+    color: $clrFieldBorder;
+  }
+}
+
+.textarea {
+  height: 120px;
+  min-height: 48px;
+  padding: 18px 16px;
+  resize: vertical;
+}
+
+// The browser's own calendar icon is hidden, the Join icon is placed instead.
+.dateInput {
+  position: relative;
+  padding-right: 48px;
+  background: $clrBaseBright url('/assets/icons/calendar.svg') right 16px center / 24px 24px
+    no-repeat;
+  cursor: pointer;
+  // Safari centres the date and gives the field a minimum width.
+  min-width: 0;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &.empty:not(:focus) {
+    color: $clrFieldBorder;
+  }
+
+  &::-webkit-date-and-time-value {
+    text-align: left;
+  }
+}
+
+// Sits under the field (4px gap), so the fields do not jump when a message appears.
+.errorText {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  color: $clrFieldError;
+  font-size: 12px;
+  line-height: 120%;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.prioButtons {
+  @include setFlex(row, space-between, center, 16px);
+}
+
+.prioButton {
+  @include setFlex(row, center, center, 8px);
+  flex: 1;
+  min-width: 0;
+  height: 56px;
+  padding: 16px 10px;
+  border: unset;
+  background-color: $clrBaseBright;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  color: #000000;
+  font-size: $fSDefault;
+  line-height: 120%;
+  white-space: nowrap;
+
+  img {
+    flex: none;
+    width: 20px;
+    height: 15px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &.active {
+    color: $clrBaseBright;
+    font-size: 21px;
+    font-weight: 700;
+    box-shadow: none;
+  }
+
+  &.urgent.active {
+    background-color: $clrUrgent;
+  }
+
+  &.medium.active {
+    background-color: $clrMedium;
+  }
+
+  &.low.active {
+    background-color: $clrLow;
+  }
+}
+
+.footer {
+  @include setFlex(row, space-between, flex-end, 16px);
+  margin-top: auto;
+}
+
+.requiredHint {
+  color: #000000;
+  font-size: $fSTer;
+  line-height: 120%;
+
+  .required {
+    font-size: $fSDefault;
+  }
+}
+
+.buttons {
+  @include setFlex(row, flex-end, center, 16px);
+
+  // Figma: Cancel and Create Task are 25px apart in the board dialog.
+  .dialogForm & {
+    gap: 25px;
+  }
+}
+
+.secondaryButton,
+.primaryButton {
+  @include setFlex(row, center, center, 4px);
+  height: 56px;
+  padding: 16px;
+  line-height: 120%;
+}
+
+.secondaryButton {
+  border: 1px solid $clrHighlight1;
+  background-color: transparent;
+  color: $clrHighlight1;
+
+  .cancelIcon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    background: url('/assets/icons/cancel.svg') center / 24px 24px no-repeat;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $clrHighlight2;
+    color: $clrHighlight2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    .cancelIcon {
+      background-image: url('/assets/icons/cancel-hover.svg');
+    }
+  }
+}
+
+.primaryButton {
+  border: unset;
+  background-color: $clrHighlight1;
+  color: $clrBaseBright;
+  font-size: 21px;
+  font-weight: 700;
+
+  img {
+    flex: none;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: $clrHighlight2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active:not(:disabled) {
+    background-color: $clrHighlight1Darker;
+  }
+
+  &:disabled {
+    background-color: $clrDisabled;
+    color: $clrBaseBright;
+  }
+}
+
+.formError {
+  margin-top: -32px;
+  text-align: right;
+}

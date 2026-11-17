@@ -1,0 +1,139 @@
+<form class="form" novalidate [class.dialogForm]="isDialog()" (submit)="submit($event)">
+  <div class="columns">
+    <div class="column leftColumn">
+      <div class="formGroup">
+        <label class="label" for="taskTitle">Title<span class="required">*</span></label>
+        <input
+          id="taskTitle"
+          class="input"
+          name="title"
+          type="text"
+          placeholder="Enter a title"
+          autocomplete="off"
+          [class.errorInput]="errors().title !== ''"
+          [value]="values().title"
+          (input)="onInput('title', $event)"
+          (blur)="onBlur('title')"
+        />
+        <span class="errorText" role="alert">{{ errors().title }}</span>
+      </div>
+
+      <div class="formGroup">
+        <label class="label" for="taskDescription">Description</label>
+        <textarea
+          id="taskDescription"
+          class="input textarea"
+          name="description"
+          placeholder="Enter a Description"
+          [value]="values().description"
+          (input)="onInput('description', $event)"
+        ></textarea>
+      </div>
+
+      <div class="formGroup">
+        <label class="label" for="taskDueDate">Due date<span class="required">*</span></label>
+        <input
+          id="taskDueDate"
+          class="input dateInput"
+          name="dueDate"
+          type="date"
+          [class.empty]="!values().dueDate"
+          [class.errorInput]="errors().dueDate !== ''"
+          [min]="today"
+          [value]="values().dueDate"
+          (input)="onInput('dueDate', $event)"
+          (click)="openDatePicker($event)"
+          (blur)="onBlur('dueDate')"
+        />
+        <span class="errorText" role="alert">{{ errors().dueDate }}</span>
+      </div>
+    </div>
+
+    <span class="separator" aria-hidden="true"></span>
+
+    <div class="column rightColumn">
+      <div class="formGroup">
+        <span class="label prioLabel" id="prioLabel">Priority</span>
+        <div class="prioButtons" role="radiogroup" aria-labelledby="prioLabel">
+          @for (option of prioOptions; track option.value) {
+            <button
+              class="prioButton"
+              type="button"
+              role="radio"
+              [class]="option.icon"
+              [class.active]="values().prio === option.value"
+              [attr.aria-checked]="values().prio === option.value"
+              (click)="selectPrio(option.value)"
+            >
+              {{ option.value }}
+              <img
+                [src]="
+                  'assets/icons/priority/' +
+                  (values().prio === option.value ? option.activeIcon : option.icon) +
+                  '.svg'
+                "
+                alt=""
+              />
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <span class="label" id="assignedToLabel">Assigned to</span>
+        <app-assigned-to-select
+          aria-labelledby="assignedToLabel"
+          [selectedIds]="values().assignedTo"
+          (selectedIdsChange)="onAssignedChange($event)"
+        />
+      </div>
+
+      <div class="formGroup">
+        <span class="label" id="categoryLabel">Category<span class="required">*</span></span>
+        <app-category-select
+          aria-labelledby="categoryLabel"
+          [value]="values().category"
+          [hasError]="errors().category !== ''"
+          (valueChange)="onCategoryChange($event)"
+          (closed)="onBlur('category')"
+        />
+        <span class="errorText" role="alert">{{ errors().category }}</span>
+      </div>
+
+      <div class="formGroup">
+        <span class="label" id="subtasksLabel">Subtasks</span>
+        <app-subtasks-input
+          aria-labelledby="subtasksLabel"
+          [subtasks]="values().subtasks"
+          (subtasksChange)="onSubtasksChange($event)"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="requiredHint"><span class="required">*</span>This field is required</p>
+
+    <div class="buttons">
+      @if (isDialog()) {
+        <button class="secondaryButton" type="button" (click)="cancelled.emit()">
+          Cancel
+          <span class="cancelIcon"></span>
+        </button>
+      } @else {
+        <button class="secondaryButton" type="button" [disabled]="isSaving()" (click)="clear()">
+          Clear
+          <span class="cancelIcon"></span>
+        </button>
+      }
+      <button class="primaryButton" type="submit" [disabled]="isSaving()">
+        Create Task
+        <img src="assets/icons/check-white.svg" alt="" />
+      </button>
+    </div>
+  </div>
+
+  @if (formError()) {
+    <p class="errorMessage formError" role="alert">{{ formError() }}</p>
+  }
+</form>
