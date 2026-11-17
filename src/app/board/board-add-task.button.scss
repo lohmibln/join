@@ -1,0 +1,40 @@
+@import '../../styles/variables';
+@import '../../styles/mixin';
+
+// "Add task" button next to the search field, it opens the same form as the column "+".
+.addTaskHeaderButton {
+  @include setFlex(row, center, center, 4px);
+  flex: none;
+  height: 48px;
+  padding: 8px 16px;
+  border: unset;
+  background-color: $clrHighlight1;
+  color: $clrBaseBright;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 120%;
+
+  img {
+    flex: none;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    background-color: $clrHighlight2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active {
+    background-color: $clrHighlight1Darker;
+  }
+}
+
+// On small screens only the "+" is shown, so the button fits next to the search field.
+@media (max-width: 1023px) {
+  .addTaskHeaderButton {
+    width: 48px;
+    padding: 0;
+    font-size: 0;
+  }
+}

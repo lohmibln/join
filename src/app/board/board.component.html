@@ -16,6 +16,11 @@
         <span class="searchSeparator" aria-hidden="true"></span>
         <img class="searchIcon" src="assets/icons/search.svg" alt="" />
       </div>
+
+      <button class="addTaskHeaderButton" type="button" (click)="onAddTask('todo')">
+        Add task
+        <img src="assets/icons/plus-white.svg" alt="" />
+      </button>
     </div>
   </div>
 
@@ -69,4 +74,8 @@
 
 @if (selectedTask(); as task) {
   <app-task-detail [task]="task" (close)="closeTask()" (subtaskToggled)="onSubtaskToggle($event)" />
+}
+
+@if (addTaskStatus(); as status) {
+  <app-add-task-dialog [status]="status" (closed)="closeAddTask()" />
 }
