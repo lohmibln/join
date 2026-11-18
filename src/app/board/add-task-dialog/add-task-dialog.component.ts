@@ -15,7 +15,7 @@ import { AddTaskFormComponent } from '../../add-task/add-task-form/add-task-form
 })
 export class AddTaskDialogComponent {
   /** Column the new task is added to. */
-  readonly status = input<TaskStatus>('todo');
+  readonly status = input<TaskStatus>('toDo');
   readonly closed = output<void>();
 
   /** Closes the dialog. */
