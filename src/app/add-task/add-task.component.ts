@@ -6,7 +6,7 @@ import { TaskStatus } from '../shared/models/task.model';
 import { ContactsService } from '../shared/services/contacts.service';
 import { AddTaskFormComponent } from './add-task-form/add-task-form.component';
 
-const TASK_STATUSES: TaskStatus[] = ['todo', 'inProgress', 'awaitFeedback', 'done'];
+const TASK_STATUSES: TaskStatus[] = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
 
 /**
  * Add Task page from the main menu. The board links here on small screens
@@ -26,7 +26,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
   readonly status = toSignal(
     this.route.queryParamMap.pipe(map((params) => toTaskStatus(params.get('status')))),
-    { initialValue: 'todo' as TaskStatus },
+    { initialValue: 'toDo' as TaskStatus },
   );
 
   async ngOnInit(): Promise<void> {
@@ -47,8 +47,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 /**
  * Turns the status from the address into a valid column.
  * @param value - Status from the query parameter.
- * @returns The column, "todo" if the value is missing or unknown.
+ * @returns The column, "toDo" if the value is missing or unknown.
  */
 function toTaskStatus(value: string | null): TaskStatus {
-  return TASK_STATUSES.find((status) => status === value) ?? 'todo';
+  return TASK_STATUSES.find((status) => status === value) ?? 'toDo';
 }
