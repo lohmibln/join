@@ -3,7 +3,7 @@ import { Task, TaskStatus } from '../shared/models/task.model';
 /** Groups tasks into the four board columns by status. */
 export function groupTasksByStatus(tasks: Task[]): Record<TaskStatus, Task[]> {
   const map: Record<TaskStatus, Task[]> = {
-    todo: [],
+    toDo: [],
     inProgress: [],
     awaitFeedback: [],
     done: [],
