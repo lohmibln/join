@@ -40,7 +40,7 @@ export class AddTaskFormComponent {
   private readonly toastService = inject(ToastService);
 
   /** Board column the new task starts in. */
-  readonly status = input<TaskStatus>('todo');
+  readonly status = input<TaskStatus>('toDo');
   /** In the dialog the left button closes it instead of clearing the form. */
   readonly isDialog = input(false);
   readonly created = output<Task>();
