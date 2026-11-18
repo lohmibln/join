@@ -1,4 +1,5 @@
-export type TaskStatus = 'todo' | 'inProgress' | 'awaitFeedback' | 'done';
+/** Matches the Supabase `tasks_status_check` constraint (`toDo`, not `todo`). */
+export type TaskStatus = 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
 
 export type TaskCategory = 'User Story' | 'Technical Task';
 
