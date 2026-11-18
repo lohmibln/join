@@ -37,6 +37,11 @@ $columnWidth: 440px;
   gap: 32px;
 }
 
+// Category shows its error in the smaller gap of the right column, so it gets extra room.
+.rightColumn .formGroup:has(> .errorText:not(:empty)) {
+  margin-bottom: 8px;
+}
+
 .separator {
   flex: none;
   width: 1px;
@@ -124,7 +129,7 @@ $columnWidth: 440px;
   top: calc(100% + 4px);
   left: 0;
   color: $clrFieldError;
-  font-size: 12px;
+  font-size: $fSTer;
   line-height: 120%;
 
   &:empty {

@@ -70,6 +70,11 @@
     gap: 32px;
   }
 
+  // The 16px error under Category needs more room than the 16px gap.
+  .rightColumn .formGroup:has(> .errorText:not(:empty)) {
+    margin-bottom: 20px;
+  }
+
   .separator {
     display: none;
   }
@@ -171,13 +176,12 @@
   .prioButton,
   .prioButton.active {
     gap: 4px;
-    padding: 0 4px;
-    font-size: 13px;
+    padding: 0 3px;
   }
 
   .prioButton img {
-    width: 16px;
-    height: 12px;
+    width: 14px;
+    height: 11px;
   }
 
   .form:not(.dialogForm) .buttons {
