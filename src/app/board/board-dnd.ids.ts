@@ -8,8 +8,8 @@ export function dropListIdForStatus(status: TaskStatus): string {
 /** Resolves a CDK drop-list id back to a task status. */
 export function statusFromDropListId(listId: string): TaskStatus | null {
   switch (listId) {
-    case 'todoList':
-      return 'todo';
+    case 'toDoList':
+      return 'toDo';
     case 'inProgressList':
       return 'inProgress';
     case 'awaitFeedbackList':
