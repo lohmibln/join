@@ -6,7 +6,7 @@ export interface BoardColumn {
 }
 
 export const BOARD_COLUMNS: BoardColumn[] = [
-  { status: 'todo', title: 'To do' },
+  { status: 'toDo', title: 'To do' },
   { status: 'inProgress', title: 'In progress' },
   { status: 'awaitFeedback', title: 'Await feedback' },
   { status: 'done', title: 'Done' },
