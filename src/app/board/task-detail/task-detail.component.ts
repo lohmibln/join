@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { Task } from '../../shared/models/task.model';
 import { ContactsService } from '../../shared/services/contacts.service';
 import { Contact } from '../../shared/models/contact.model';
@@ -15,6 +15,13 @@ export class TaskDetailComponent {
   @Input({ required: true }) task!: Task;
   @Output() close = new EventEmitter<void>();
   @Output() subtaskToggled = new EventEmitter<number>();
+  @Output() subtaskAdded = new EventEmitter<string>();
+  @Output() subtaskRenamed = new EventEmitter<{ index: number; description: string }>();
+  @Output() subtaskDeleted = new EventEmitter<number>();
+
+  readonly draft = signal('');
+  readonly editIndex = signal<number | null>(null);
+  readonly editText = signal('');
 
   private readonly contactsService = inject(ContactsService);
 
