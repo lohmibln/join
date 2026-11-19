@@ -5,9 +5,15 @@ $clrUrgent: #ff3d00;
 $clrMedium: #ffa800;
 $clrLow: #7ae229;
 
+// Figma: the groups are 24px apart, the error line under a field keeps 16px for itself.
 .editForm {
-  @include setFlex(column, flex-start, stretch, 32px);
+  @include setFlex(column, flex-start, stretch, 24px);
   width: 100%;
+}
+
+.formGroup:has(> .errorText),
+.formGroup:has(> .textarea) {
+  margin-bottom: 16px;
 }
 
 .formGroup {
@@ -32,6 +38,7 @@ $clrLow: #7ae229;
   border-color: $clrFieldBorder;
   background-color: $clrBaseBright;
   line-height: 120%;
+  font-size: $fSDefault;
   color: #000000;
 
   &:hover:not(:focus) {
@@ -43,10 +50,16 @@ $clrLow: #7ae229;
   }
 }
 
+// Figma: the title field has 21px padding on the left and right.
+.input[name='title'] {
+  padding-inline: 21px;
+}
+
 .textarea {
   height: 120px;
   min-height: 48px;
   padding: 18px 16px;
+  font-size: 21px;
   resize: vertical;
 }
 
