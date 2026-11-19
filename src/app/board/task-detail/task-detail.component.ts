@@ -53,6 +53,31 @@ export class TaskDetailComponent {
     }
   }
 
+  /**
+   * Stores the text of the new subtask.
+   * @param event - Input event of the field.
+   */
+  onDraftInput(event: Event): void {
+    this.draft.set((event.target as HTMLInputElement).value);
+  }
+
+  /**
+   * Adds the typed subtask to the task. Empty text is ignored.
+   * @param event - Optional key event, so Enter does not close or submit anything.
+   */
+  addSubtask(event?: Event): void {
+    event?.preventDefault();
+    const text = this.draft().trim();
+    if (!text) return;
+    this.subtaskAdded.emit(text);
+    this.draft.set('');
+  }
+
+  /** Empties the field for a new subtask. */
+  clearDraft(): void {
+    this.draft.set('');
+  }
+
   /** Emits the index of the clicked subtask so the parent can toggle it. */
   onSubtaskToggle(index: number): void {
     this.subtaskToggled.emit(index);
