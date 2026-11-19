@@ -51,6 +51,42 @@
 
       <div class="infoRow">
         <span class="label">Subtasks</span>
+        <div class="newSubtask">
+          <input
+            class="subtaskInput"
+            type="text"
+            name="subtask"
+            placeholder="Add new subtask"
+            autocomplete="off"
+            [value]="draft()"
+            (input)="onDraftInput($event)"
+            (keydown.enter)="addSubtask($event)"
+          />
+          @if (draft()) {
+            <div class="icons">
+              <button
+                class="iconButton cancel"
+                type="button"
+                aria-label="Clear subtask"
+                (click)="clearDraft()"
+              ></button>
+              <span class="divider" aria-hidden="true"></span>
+              <button
+                class="iconButton confirm"
+                type="button"
+                aria-label="Add subtask"
+                (click)="addSubtask()"
+              ></button>
+            </div>
+          } @else {
+            <button
+              class="iconButton plus"
+              type="button"
+              aria-label="Add subtask"
+              (click)="addSubtask()"
+            ></button>
+          }
+        </div>
         <div class="subtasks">
           @for (sub of task.sub_tasks; track $index) {
             <div
