@@ -96,6 +96,26 @@ export class TasksService {
   }
 
   /**
+ * Deletes a task. The list is updated right away and reset if deleting fails.
+ * @param id - Id of the task to delete.
+ * @returns True if the task was deleted.
+ */
+  async deleteTask(id: string): Promise<boolean> {
+    const previous = this.tasks();
+    this.tasks.update((tasks) => tasks.filter((entry) => entry.id !== id));
+    const { data, error } = await supabase.from('tasks').delete().eq('id', id).select('id');
+
+    if (error || !data?.length) {
+      this.tasks.set(previous);
+      this.errorMessage.set('Task could not be deleted. Please try again later.');
+      return false;
+    }
+
+    this.errorMessage.set('');
+    return true;
+  }
+
+  /**
    * Applies a live change from Supabase to the list.
    * @param payload - Change sent by Supabase Realtime.
    */
