@@ -1,5 +1,5 @@
 import { Component, OnInit, input, output, signal } from '@angular/core';
-import { Task } from '../../../shared/models/task.model';
+import { Task, TaskPriority } from '../../../shared/models/task.model';
 import {
     applyEditValues,
     toEditValues,
@@ -15,6 +15,12 @@ import {
     hasTaskErrors,
     validateTaskField,
 } from '../../../shared/utils/task-validation.utils';
+
+interface PrioOption {
+    value: TaskPriority;
+    icon: string;
+    activeIcon: string;
+}
 
 /**
  * Form to edit the main details of an existing task. Shown in the task detail.
@@ -34,6 +40,12 @@ export class TaskEditFormComponent implements OnInit {
     readonly errors = signal(EMPTY_TASK_ERRORS);
     /** Earliest date the picker allows: today, or the old date if that is earlier. */
     minDate = getTodayIsoDate();
+
+    readonly prioOptions: PrioOption[] = [
+        { value: 'Urgent', icon: 'urgent', activeIcon: 'urgent-white' },
+        { value: 'Medium', icon: 'medium', activeIcon: 'medium-white' },
+        { value: 'Low', icon: 'low', activeIcon: 'low-white' },
+    ];
 
     /** Fills the form with the data of the task. */
     ngOnInit(): void {
@@ -76,9 +88,17 @@ export class TaskEditFormComponent implements OnInit {
     }
 
     /**
- * Validates the form and tells the parent about the changed task.
- * @param event - Submit event of the form.
- */
+     * Selects a priority.
+     * @param prio - Clicked priority.
+     */
+    selectPrio(prio: TaskPriority): void {
+        this.values.update((values) => ({ ...values, prio }));
+    }
+
+    /**
+     * Validates the form and tells the parent about the changed task.
+     * @param event - Submit event of the form.
+     */
     submit(event: Event): void {
         event.preventDefault();
         const errors = this.validateAll();
