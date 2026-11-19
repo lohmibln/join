@@ -1,5 +1,5 @@
 import { Task } from '../models/task.model';
-import { TaskFormValues } from './task-validation.utils';
+import { TaskFormValues, validateDueDate } from './task-validation.utils';
 
 /**
  * Turns a task into the values of the edit form.
@@ -34,4 +34,15 @@ export function applyEditValues(task: Task, values: TaskFormValues): Task {
         prio: values.prio,
         assigned_to: values.assignedTo,
     };
+}
+
+/**
+ * Checks the due date of an edited task. A date that was not changed is accepted,
+ * even if it is in the past by now.
+ * @param value - Value of the date input (yyyy-mm-dd).
+ * @param original - Due date the task had before editing.
+ * @returns Error message, or an empty text if the date is fine.
+ */
+export function validateEditedDueDate(value: string, original: string): string {
+    return value && value === original ? '' : validateDueDate(value);
 }
