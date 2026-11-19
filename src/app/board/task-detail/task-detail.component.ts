@@ -9,7 +9,7 @@ import { getContactColor } from '../../shared/utils/contact.utils';
   standalone: true,
   imports: [],
   templateUrl: './task-detail.component.html',
-  styleUrl: './task-detail.component.scss',
+  styleUrls: ['./task-detail.component.scss', './task-detail.actions.scss'],
 })
 export class TaskDetailComponent {
   @Input({ required: true }) task!: Task;
