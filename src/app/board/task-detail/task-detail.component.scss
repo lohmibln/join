@@ -357,4 +357,9 @@
   .infoRow.horizontal {
     gap: 16px;
   }
+
+  // No hover on touch screens, so the icons stay visible.
+  .hoverIcons {
+    visibility: visible;
+  }
 }
