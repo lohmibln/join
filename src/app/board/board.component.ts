@@ -6,7 +6,7 @@ import { ContactsService } from '../shared/services/contacts.service';
 import { TasksService } from '../shared/services/tasks.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
-import { withAddedSubtask, withRenamedSubtask } from './board-subtasks';
+import { withAddedSubtask, withRenamedSubtask, withoutSubtask } from './board-subtasks';
 import { applyTaskStatusChange } from './board-dnd.apply';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
 import { taskFromDropEvent } from './board-dnd.task-from-drop';
@@ -131,6 +131,14 @@ export class BoardComponent implements OnInit, OnDestroy {
     const open = this.selectedTask();
     if (open) {
       this.applyTaskChange(withRenamedSubtask(open, change.index, change.description));
+    }
+  }
+
+  /** Deletes one subtask of the open task. */
+  onSubtaskDelete(index: number): void {
+    const open = this.selectedTask();
+    if (open) {
+      this.applyTaskChange(withoutSubtask(open, index));
     }
   }
 
