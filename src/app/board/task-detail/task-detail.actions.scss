@@ -17,10 +17,39 @@
   font-size: 16px;
   color: $clrHighlight1;
   cursor: pointer;
+  transition: $stdTransition;
 
-  img {
-    width: 24px;
-    height: 24px;
+  &:hover {
+    color: $clrHighlight2;
+  }
+}
+
+// The icon is a background, so it can change to the blue version on hover.
+.actionIcon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background: center / 24px 24px no-repeat;
+  transition: $stdTransition;
+}
+
+.deleteBtn {
+  .actionIcon {
+    background-image: url('/assets/icons/delete.svg');
+  }
+
+  &:hover .actionIcon {
+    background-image: url('/assets/icons/delete-blue.svg');
+  }
+}
+
+.editBtn {
+  .actionIcon {
+    background-image: url('/assets/icons/edit.svg');
+  }
+
+  &:hover .actionIcon {
+    background-image: url('/assets/icons/edit-blue.svg');
   }
 }
 
