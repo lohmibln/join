@@ -114,6 +114,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.toastService.show(deleted ? 'Task deleted' : this.tasksService.errorMessage());
   }
 
+  /** Saves the edited task, keeps it open in the detail and shows a message. */
+  async onTaskEdit(updated: Task): Promise<void> {
+    this.selectedTask.set(updated);
+    const saved = await this.tasksService.updateTask(updated);
+    this.toastService.show(saved ? 'Task updated' : this.tasksService.errorMessage());
+  }
+
   /** Toggles one subtask of the open task and refreshes the board cards. */
   onSubtaskToggle(index: number): void {
     const open = this.selectedTask();
