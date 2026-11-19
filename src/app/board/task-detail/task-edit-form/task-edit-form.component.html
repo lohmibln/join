@@ -27,4 +27,20 @@
       (input)="onInput('description', $event)"
     ></textarea>
   </div>
+  <div class="formGroup">
+    <label class="label" for="editDueDate">Due date<span class="required">*</span></label>
+    <input
+      id="editDueDate"
+      class="input"
+      name="dueDate"
+      type="date"
+      [class.errorInput]="errors().dueDate !== ''"
+      [min]="minDate"
+      [value]="values().dueDate"
+      (input)="onInput('dueDate', $event)"
+      (click)="openDatePicker($event)"
+      (blur)="onBlur('dueDate')"
+    />
+    <span class="errorText" role="alert">{{ errors().dueDate }}</span>
+  </div>
 </form>
