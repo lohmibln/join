@@ -5,49 +5,53 @@
     </button>
 
     <div class="scroll">
-      <span
-        class="category"
-        [class.userStory]="task.category === 'User Story'"
-        [class.technicalTask]="task.category === 'Technical Task'"
-      >
-        {{ task.category }}
-      </span>
-
-      <h1 class="title">{{ task.title }}</h1>
-
-      @if (task.description) {
-        <p class="description">{{ task.description }}</p>
-      }
-
-      <div class="infoRow horizontal">
-        <span class="label">Due date:</span>
-        <span class="value">{{ task.due_date }}</span>
-      </div>
-
-      <div class="infoRow horizontal">
-        <span class="label">Priority:</span>
-        <span class="prio">
-          {{ task.prio }}
-          <img [src]="prioIcon" [alt]="task.prio" />
+      @if (isEditing()) {
+        <app-task-edit-form [task]="task" />
+      } @else {
+        <span
+          class="category"
+          [class.userStory]="task.category === 'User Story'"
+          [class.technicalTask]="task.category === 'Technical Task'"
+        >
+          {{ task.category }}
         </span>
-      </div>
 
-      <div class="infoRow">
-        <span class="label">Assigned To:</span>
-        <div class="assignedList">
-          @for (contact of assignedContacts; track contact.id) {
-            <div class="assignedRow">
-              <span class="avatar" [style.background-color]="avatarColor(contact)">
-                {{ contact.name_shortcut }}
-              </span>
-              <span class="name">{{ contact.full_name }}</span>
-            </div>
-          }
-          @if (assignedContacts.length === 0) {
-            <span class="empty">No contacts assigned</span>
-          }
+        <h1 class="title">{{ task.title }}</h1>
+
+        @if (task.description) {
+          <p class="description">{{ task.description }}</p>
+        }
+
+        <div class="infoRow horizontal">
+          <span class="label">Due date:</span>
+          <span class="value">{{ task.due_date }}</span>
         </div>
-      </div>
+
+        <div class="infoRow horizontal">
+          <span class="label">Priority:</span>
+          <span class="prio">
+            {{ task.prio }}
+            <img [src]="prioIcon" [alt]="task.prio" />
+          </span>
+        </div>
+
+        <div class="infoRow">
+          <span class="label">Assigned To:</span>
+          <div class="assignedList">
+            @for (contact of assignedContacts; track contact.id) {
+              <div class="assignedRow">
+                <span class="avatar" [style.background-color]="avatarColor(contact)">
+                  {{ contact.name_shortcut }}
+                </span>
+                <span class="name">{{ contact.full_name }}</span>
+              </div>
+            }
+            @if (assignedContacts.length === 0) {
+              <span class="empty">No contacts assigned</span>
+            }
+          </div>
+        </div>
+      }
 
       <div class="infoRow">
         <span class="label">Subtasks</span>
@@ -159,12 +163,20 @@
           }
         </div>
       </div>
-      <div class="actions">
-        <button type="button" class="actionBtn" (click)="taskDeleted.emit()">
-          <img src="assets/icons/delete.svg" alt="" />
-          Delete
-        </button>
-      </div>
+
+      @if (!isEditing()) {
+        <div class="actions">
+          <button type="button" class="actionBtn" (click)="taskDeleted.emit()">
+            <img src="assets/icons/delete.svg" alt="" />
+            Delete
+          </button>
+          <span class="actionDivider" aria-hidden="true"></span>
+          <button type="button" class="actionBtn" (click)="startTaskEdit()">
+            <img src="assets/icons/edit.svg" alt="" />
+            Edit
+          </button>
+        </div>
+      }
     </div>
   </div>
 </div>
