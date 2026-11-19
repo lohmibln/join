@@ -15,6 +15,7 @@ import {
     hasTaskErrors,
     validateTaskField,
 } from '../../../shared/utils/task-validation.utils';
+import { AssignedToSelectComponent } from '../../../add-task/assigned-to-select/assigned-to-select.component';
 
 interface PrioOption {
     value: TaskPriority;
@@ -28,6 +29,7 @@ interface PrioOption {
 @Component({
     selector: 'app-task-edit-form',
     standalone: true,
+    imports: [AssignedToSelectComponent],
     templateUrl: './task-edit-form.component.html',
     styleUrl: './task-edit-form.component.scss',
 })
@@ -93,6 +95,14 @@ export class TaskEditFormComponent implements OnInit {
      */
     selectPrio(prio: TaskPriority): void {
         this.values.update((values) => ({ ...values, prio }));
+    }
+
+    /**
+     * Stores the contacts chosen in the assigned-to dropdown.
+     * @param ids - Ids of the selected contacts.
+    */
+    onAssignedChange(ids: string[]): void {
+        this.values.update((values) => ({ ...values, assignedTo: ids }));
     }
 
     /**
