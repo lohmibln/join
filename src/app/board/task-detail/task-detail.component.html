@@ -178,5 +178,12 @@
         </div>
       }
     </div>
+
+    @if (isEditing()) {
+      <button type="submit" form="taskEditForm" class="okBtn">
+        Ok
+        <img src="assets/icons/check-white.svg" alt="" />
+      </button>
+    }
   </div>
 </div>

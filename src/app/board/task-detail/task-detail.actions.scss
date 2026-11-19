@@ -23,3 +23,38 @@
     height: 24px;
   }
 }
+
+// Figma: Ok sits below the scrolling area, right-aligned, 24px apart.
+.okBtn {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 24px;
+  padding: 16px;
+  border: unset;
+  border-radius: 10px;
+  background-color: $clrHighlight1;
+  color: $clrBaseBright;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 120%;
+  cursor: pointer;
+  transition: $stdTransition;
+
+  img {
+    flex: none;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    background-color: $clrHighlight2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active {
+    background-color: $clrHighlight1Darker;
+  }
+}
