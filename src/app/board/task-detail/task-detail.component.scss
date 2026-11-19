@@ -204,6 +204,13 @@
   }
 }
 
+.subtask.editing {
+  padding-left: 16px;
+  border-bottom: 1px solid $clrHighlight2;
+  border-radius: 0;
+  background-color: #fff;
+}
+
 .subtaskMain {
   display: flex;
   align-items: center;
