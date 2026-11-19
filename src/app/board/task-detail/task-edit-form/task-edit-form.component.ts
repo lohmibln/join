@@ -1,12 +1,18 @@
 import { Component, OnInit, input, output, signal } from '@angular/core';
 import { Task } from '../../../shared/models/task.model';
-import { toEditValues, validateEditedDueDate } from '../../../shared/utils/task-edit.utils';
+import {
+    applyEditValues,
+    toEditValues,
+    validateEditedDueDate,
+} from '../../../shared/utils/task-edit.utils';
 import {
     EMPTY_TASK_ERRORS,
+    TaskFormErrors,
     TaskFormValues,
     TaskRequiredField,
     createEmptyTaskValues,
     getTodayIsoDate,
+    hasTaskErrors,
     validateTaskField,
 } from '../../../shared/utils/task-validation.utils';
 
@@ -67,6 +73,26 @@ export class TaskEditFormComponent implements OnInit {
         } catch {
             // Older browsers have no showPicker, there the native behaviour stays.
         }
+    }
+
+    /**
+ * Validates the form and tells the parent about the changed task.
+ * @param event - Submit event of the form.
+ */
+    submit(event: Event): void {
+        event.preventDefault();
+        const errors = this.validateAll();
+        this.errors.set(errors);
+        if (hasTaskErrors(errors)) return;
+        this.saved.emit(applyEditValues(this.task(), this.values()));
+    }
+
+    /**
+     * Checks all required fields. The category is not editable, so it has no check.
+     * @returns Error message per field.
+     */
+    private validateAll(): TaskFormErrors {
+        return { title: this.validate('title'), dueDate: this.validate('dueDate'), category: '' };
     }
 
     /**
