@@ -107,9 +107,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (!open) {
       return;
     }
-    const updated = this.withToggledSubtask(open, index);
-    this.selectedTask.set(updated);
-    void this.tasksService.updateTask(updated);
+    this.applyTaskChange(this.withToggledSubtask(open, index));
   }
 
   /** Shows the changed task in the open detail and saves it. */
