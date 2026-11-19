@@ -78,6 +78,46 @@ export class TaskDetailComponent {
     this.draft.set('');
   }
 
+  /**
+   * Opens a subtask for editing.
+   * @param index - Position of the subtask in the list.
+   */
+  startEdit(index: number): void {
+    this.editIndex.set(index);
+    this.editText.set(this.task.sub_tasks[index].description);
+  }
+
+  /**
+   * Stores the changed text while editing.
+   * @param event - Input event of the edit field.
+   */
+  onEditInput(event: Event): void {
+    this.editText.set((event.target as HTMLInputElement).value);
+  }
+
+  /**
+   * Saves the edited subtask. Empty text deletes it.
+   * @param event - Optional key event, so Enter does not close or submit anything.
+   */
+  saveEdit(event?: Event): void {
+    event?.preventDefault();
+    const index = this.editIndex();
+    if (index === null) return;
+    const text = this.editText().trim();
+    if (!text) return this.deleteSubtask(index);
+    this.subtaskRenamed.emit({ index, description: text });
+    this.editIndex.set(null);
+  }
+
+  /**
+   * Deletes one subtask.
+   * @param index - Position of the subtask in the list.
+   */
+  deleteSubtask(index: number): void {
+    this.subtaskDeleted.emit(index);
+    if (this.editIndex() === index) this.editIndex.set(null);
+  }
+
   /** Emits the index of the clicked subtask so the parent can toggle it. */
   onSubtaskToggle(index: number): void {
     this.subtaskToggled.emit(index);
