@@ -45,6 +45,7 @@
     />
     <span class="errorText" role="alert">{{ errors().dueDate }}</span>
   </div>
+
   <div class="formGroup">
     <span class="label prioLabel" id="editPrioLabel">Priority</span>
     <div class="prioButtons" role="radiogroup" aria-labelledby="editPrioLabel">
@@ -70,5 +71,14 @@
         </button>
       }
     </div>
+  </div>
+
+  <div class="formGroup">
+    <span class="label" id="editAssignedToLabel">Assigned to</span>
+    <app-assigned-to-select
+      aria-labelledby="editAssignedToLabel"
+      [selectedIds]="values().assignedTo"
+      (selectedIdsChange)="onAssignedChange($event)"
+    />
   </div>
 </form>
