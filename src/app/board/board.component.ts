@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Task, TaskStatus } from '../shared/models/task.model';
 import { ContactsService } from '../shared/services/contacts.service';
 import { TasksService } from '../shared/services/tasks.service';
+import { ToastService } from '../shared/services/toast.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
 import { withAddedSubtask, withRenamedSubtask, withoutSubtask } from './board-subtasks';
@@ -50,6 +51,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   private readonly contactsService = inject(ContactsService);
   private readonly tasksService = inject(TasksService);
   private readonly router = inject(Router);
+  private readonly toastService = inject(ToastService);
 
   readonly columns = BOARD_COLUMNS;
   readonly tasks = this.tasksService.tasks;
@@ -99,6 +101,17 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   closeTask(): void {
     this.selectedTask.set(null);
+  }
+
+  /** Deletes the open task, closes the detail and shows a message. */
+  async onTaskDelete(): Promise<void> {
+    const open = this.selectedTask();
+    if (!open) {
+      return;
+    }
+    this.closeTask();
+    const deleted = await this.tasksService.deleteTask(open.id);
+    this.toastService.show(deleted ? 'Task deleted' : this.tasksService.errorMessage());
   }
 
   /** Toggles one subtask of the open task and refreshes the board cards. */
