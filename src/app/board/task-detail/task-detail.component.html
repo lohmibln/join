@@ -89,22 +89,39 @@
         </div>
         <div class="subtasks">
           @for (sub of task.sub_tasks; track $index) {
-            <div
-              class="subtask"
-              role="checkbox"
-              tabindex="0"
-              [attr.aria-checked]="sub.checked"
-              (click)="onSubtaskToggle($index)"
-              (keydown.enter)="onSubtaskToggle($index)"
-            >
-              <img
-                class="check"
-                [src]="
-                  sub.checked ? 'assets/icons/checkbox-checked.svg' : 'assets/icons/checkbox.svg'
-                "
-                [alt]="sub.checked ? 'Done' : 'Open'"
-              />
-              <span [class.done]="sub.checked">{{ sub.description }}</span>
+            <div class="subtask">
+              <div
+                class="subtaskMain"
+                role="checkbox"
+                tabindex="0"
+                [attr.aria-checked]="sub.checked"
+                (click)="onSubtaskToggle($index)"
+                (keydown.enter)="onSubtaskToggle($index)"
+              >
+                <img
+                  class="check"
+                  [src]="
+                    sub.checked ? 'assets/icons/checkbox-checked.svg' : 'assets/icons/checkbox.svg'
+                  "
+                  [alt]="sub.checked ? 'Done' : 'Open'"
+                />
+                <span class="subtaskText" [class.done]="sub.checked">{{ sub.description }}</span>
+              </div>
+              <div class="icons hoverIcons">
+                <button
+                  class="iconButton edit"
+                  type="button"
+                  aria-label="Edit subtask"
+                  (click)="startEdit($index)"
+                ></button>
+                <span class="divider" aria-hidden="true"></span>
+                <button
+                  class="iconButton delete"
+                  type="button"
+                  aria-label="Delete subtask"
+                  (click)="deleteSubtask($index)"
+                ></button>
+              </div>
             </div>
           }
           @if (task.sub_tasks.length === 0) {
