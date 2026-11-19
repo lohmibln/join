@@ -198,6 +198,46 @@
   }
 }
 
+.newSubtask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  background-color: #fff;
+  transition: border-color 125ms ease-in-out;
+
+  &:hover,
+  &:focus-within {
+    border-color: $clrHighlight2;
+  }
+}
+
+.subtaskInput,
+.editInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: unset;
+  border-radius: 0;
+  background-color: transparent;
+  color: $clrBaseDark;
+  font-size: 16px;
+  line-height: 120%;
+
+  &:focus {
+    border: unset;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #686868;
+  }
+}
+
 .empty {
   font-size: 14px;
   color: $clrDisabled;
