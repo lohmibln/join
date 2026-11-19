@@ -116,8 +116,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   /** Saves the edited task, keeps it open in the detail and shows a message. */
   async onTaskEdit(updated: Task): Promise<void> {
+    const previous = this.selectedTask();
     this.selectedTask.set(updated);
     const saved = await this.tasksService.updateTask(updated);
+    if (!saved && previous) this.selectedTask.set(previous);
     this.toastService.show(saved ? 'Task updated' : this.tasksService.errorMessage());
   }
 
