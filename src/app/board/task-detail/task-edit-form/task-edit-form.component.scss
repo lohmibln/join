@@ -1,6 +1,10 @@
 @import '../../../../styles/variables';
 @import '../../../../styles/mixin';
 
+$clrUrgent: #ff3d00;
+$clrMedium: #ffa800;
+$clrLow: #7ae229;
+
 .editForm {
   @include setFlex(column, flex-start, stretch, 32px);
   width: 100%;
@@ -86,5 +90,63 @@
 
   &:empty {
     display: none;
+  }
+}
+
+// Figma: the label of the priority is bold and bluish grey.
+.prioLabel {
+  color: #42526e;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.prioButtons {
+  @include setFlex(row, space-between, center, 16px);
+}
+
+.prioButton {
+  @include setFlex(row, center, center, 8px);
+  flex: 1;
+  min-width: 0;
+  height: 56px;
+  padding: 16px 10px;
+  border: unset;
+  background-color: $clrBaseBright;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  color: #000000;
+  font-size: $fSDefault;
+  line-height: 120%;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: $stdTransition;
+
+  img {
+    flex: none;
+    width: 20px;
+    height: 15px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &.active {
+    color: $clrBaseBright;
+    font-size: 21px;
+    font-weight: 700;
+    box-shadow: none;
+  }
+
+  &.urgent.active {
+    background-color: $clrUrgent;
+  }
+
+  &.medium.active {
+    background-color: $clrMedium;
+  }
+
+  &.low.active {
+    background-color: $clrLow;
   }
 }
