@@ -89,40 +89,70 @@
         </div>
         <div class="subtasks">
           @for (sub of task.sub_tasks; track $index) {
-            <div class="subtask">
-              <div
-                class="subtaskMain"
-                role="checkbox"
-                tabindex="0"
-                [attr.aria-checked]="sub.checked"
-                (click)="onSubtaskToggle($index)"
-                (keydown.enter)="onSubtaskToggle($index)"
-              >
-                <img
-                  class="check"
-                  [src]="
-                    sub.checked ? 'assets/icons/checkbox-checked.svg' : 'assets/icons/checkbox.svg'
-                  "
-                  [alt]="sub.checked ? 'Done' : 'Open'"
-                />
-                <span class="subtaskText" [class.done]="sub.checked">{{ sub.description }}</span>
-              </div>
-              <div class="icons hoverIcons">
-                <button
-                  class="iconButton edit"
-                  type="button"
+            @if (editIndex() === $index) {
+              <div class="subtask editing">
+                <input
+                  class="editInput"
+                  type="text"
                   aria-label="Edit subtask"
-                  (click)="startEdit($index)"
-                ></button>
-                <span class="divider" aria-hidden="true"></span>
-                <button
-                  class="iconButton delete"
-                  type="button"
-                  aria-label="Delete subtask"
-                  (click)="deleteSubtask($index)"
-                ></button>
+                  [value]="editText()"
+                  (input)="onEditInput($event)"
+                  (keydown.enter)="saveEdit($event)"
+                />
+                <div class="icons">
+                  <button
+                    class="iconButton delete"
+                    type="button"
+                    aria-label="Delete subtask"
+                    (click)="deleteSubtask($index)"
+                  ></button>
+                  <span class="divider" aria-hidden="true"></span>
+                  <button
+                    class="iconButton confirm"
+                    type="button"
+                    aria-label="Save subtask"
+                    (click)="saveEdit()"
+                  ></button>
+                </div>
               </div>
-            </div>
+            } @else {
+              <div class="subtask">
+                <div
+                  class="subtaskMain"
+                  role="checkbox"
+                  tabindex="0"
+                  [attr.aria-checked]="sub.checked"
+                  (click)="onSubtaskToggle($index)"
+                  (keydown.enter)="onSubtaskToggle($index)"
+                >
+                  <img
+                    class="check"
+                    [src]="
+                      sub.checked
+                        ? 'assets/icons/checkbox-checked.svg'
+                        : 'assets/icons/checkbox.svg'
+                    "
+                    [alt]="sub.checked ? 'Done' : 'Open'"
+                  />
+                  <span class="subtaskText" [class.done]="sub.checked">{{ sub.description }}</span>
+                </div>
+                <div class="icons hoverIcons">
+                  <button
+                    class="iconButton edit"
+                    type="button"
+                    aria-label="Edit subtask"
+                    (click)="startEdit($index)"
+                  ></button>
+                  <span class="divider" aria-hidden="true"></span>
+                  <button
+                    class="iconButton delete"
+                    type="button"
+                    aria-label="Delete subtask"
+                    (click)="deleteSubtask($index)"
+                  ></button>
+                </div>
+              </div>
+            }
           }
           @if (task.sub_tasks.length === 0) {
             <span class="empty">No subtasks</span>
