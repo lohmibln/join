@@ -216,6 +216,76 @@
   }
 }
 
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  flex: none;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d1d1;
+}
+
+.iconButton {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: unset;
+  border-radius: 50%;
+  background: center / 24px 24px no-repeat;
+  cursor: pointer;
+  transition: background-color 125ms ease-in-out;
+
+  &:hover {
+    background-color: #eeeeee;
+  }
+
+  &.plus {
+    background-image: url('/assets/icons/add.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/add-hover.svg');
+    }
+  }
+
+  &.cancel {
+    background-image: url('/assets/icons/close.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/close-hover.svg');
+    }
+  }
+
+  &.confirm {
+    background-image: url('/assets/icons/check.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/check-hover.svg');
+    }
+  }
+
+  &.edit {
+    background-image: url('/assets/icons/edit.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/edit-hover.svg');
+    }
+  }
+
+  &.delete {
+    background-image: url('/assets/icons/delete.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/delete-hover.svg');
+    }
+  }
+}
+
 .subtaskInput,
 .editInput {
   flex: 1;
