@@ -6,7 +6,7 @@
 
     <div class="scroll">
       @if (isEditing()) {
-        <app-task-edit-form [task]="task" />
+        <app-task-edit-form [task]="task" (saved)="onTaskSaved($event)" />
       } @else {
         <span
           class="category"

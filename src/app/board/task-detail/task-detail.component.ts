@@ -20,6 +20,7 @@ export class TaskDetailComponent {
   @Output() subtaskRenamed = new EventEmitter<{ index: number; description: string }>();
   @Output() subtaskDeleted = new EventEmitter<number>();
   @Output() taskDeleted = new EventEmitter<void>();
+  @Output() taskEdited = new EventEmitter<Task>();
 
   readonly draft = signal('');
   readonly editIndex = signal<number | null>(null);
@@ -129,5 +130,14 @@ export class TaskDetailComponent {
   /** Shows the edit form instead of the task details. */
   startTaskEdit(): void {
     this.isEditing.set(true);
+  }
+
+  /**
+ * Passes the edited task to the parent and shows the details again.
+ * @param task - Task with the edited values.
+ */
+  onTaskSaved(task: Task): void {
+    this.taskEdited.emit(task);
+    this.isEditing.set(false);
   }
 }
