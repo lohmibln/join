@@ -3,11 +3,12 @@ import { Task } from '../../shared/models/task.model';
 import { ContactsService } from '../../shared/services/contacts.service';
 import { Contact } from '../../shared/models/contact.model';
 import { getContactColor } from '../../shared/utils/contact.utils';
+import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
 
 @Component({
   selector: 'app-task-detail',
   standalone: true,
-  imports: [],
+  imports: [TaskEditFormComponent],
   templateUrl: './task-detail.component.html',
   styleUrls: ['./task-detail.component.scss', './task-detail.actions.scss'],
 })
@@ -23,6 +24,7 @@ export class TaskDetailComponent {
   readonly draft = signal('');
   readonly editIndex = signal<number | null>(null);
   readonly editText = signal('');
+  readonly isEditing = signal(false);
 
   private readonly contactsService = inject(ContactsService);
 
@@ -122,5 +124,10 @@ export class TaskDetailComponent {
   /** Emits the index of the clicked subtask so the parent can toggle it. */
   onSubtaskToggle(index: number): void {
     this.subtaskToggled.emit(index);
+  }
+
+  /** Shows the edit form instead of the task details. */
+  startTaskEdit(): void {
+    this.isEditing.set(true);
   }
 }
