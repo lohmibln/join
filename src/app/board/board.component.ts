@@ -6,6 +6,7 @@ import { ContactsService } from '../shared/services/contacts.service';
 import { TasksService } from '../shared/services/tasks.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
+import { withAddedSubtask } from './board-subtasks';
 import { applyTaskStatusChange } from './board-dnd.apply';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
 import { taskFromDropEvent } from './board-dnd.task-from-drop';
@@ -109,6 +110,20 @@ export class BoardComponent implements OnInit, OnDestroy {
     const updated = this.withToggledSubtask(open, index);
     this.selectedTask.set(updated);
     void this.tasksService.updateTask(updated);
+  }
+
+  /** Shows the changed task in the open detail and saves it. */
+  private applyTaskChange(updated: Task): void {
+    this.selectedTask.set(updated);
+    void this.tasksService.updateTask(updated);
+  }
+
+  /** Adds a new subtask to the open task. */
+  onSubtaskAdd(description: string): void {
+    const open = this.selectedTask();
+    if (open) {
+      this.applyTaskChange(withAddedSubtask(open, description));
+    }
   }
 
   /** Returns a copy of the task with the checked state of one subtask flipped. */
