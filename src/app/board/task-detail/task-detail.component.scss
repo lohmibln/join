@@ -174,20 +174,26 @@
 .subtask {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 8px;
   min-height: 32px;
-  padding: 4px 16px;
+  padding: 4px 8px 4px 16px;
   border-radius: 10px;
   font-size: 16px;
   color: #000;
-  cursor: pointer;
   transition: background-color 125ms ease-in-out;
 
-  &:hover {
+  &:hover:not(.editing),
+  &:focus-within:not(.editing) {
     background: #eee;
+
+    .hoverIcons {
+      visibility: visible;
+    }
   }
 
   .check {
+    flex: none;
     width: 18px;
     height: 18px;
   }
@@ -196,6 +202,24 @@
     text-decoration: line-through;
     color: $clrDisabled;
   }
+}
+
+.subtaskMain {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 16px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.subtaskText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.hoverIcons {
+  visibility: hidden;
 }
 
 .newSubtask {
