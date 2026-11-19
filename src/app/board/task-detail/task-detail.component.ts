@@ -18,6 +18,7 @@ export class TaskDetailComponent {
   @Output() subtaskAdded = new EventEmitter<string>();
   @Output() subtaskRenamed = new EventEmitter<{ index: number; description: string }>();
   @Output() subtaskDeleted = new EventEmitter<number>();
+  @Output() taskDeleted = new EventEmitter<void>();
 
   readonly draft = signal('');
   readonly editIndex = signal<number | null>(null);
