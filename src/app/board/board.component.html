@@ -73,7 +73,14 @@
 </section>
 
 @if (selectedTask(); as task) {
-  <app-task-detail [task]="task" (close)="closeTask()" (subtaskToggled)="onSubtaskToggle($event)" />
+  <app-task-detail
+    [task]="task"
+    (close)="closeTask()"
+    (subtaskToggled)="onSubtaskToggle($event)"
+    (subtaskAdded)="onSubtaskAdd($event)"
+    (subtaskRenamed)="onSubtaskRename($event)"
+    (subtaskDeleted)="onSubtaskDelete($event)"
+  />
 }
 
 @if (addTaskStatus(); as status) {

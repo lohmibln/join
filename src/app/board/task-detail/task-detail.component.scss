@@ -174,20 +174,26 @@
 .subtask {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 8px;
   min-height: 32px;
-  padding: 4px 16px;
+  padding: 4px 8px 4px 16px;
   border-radius: 10px;
   font-size: 16px;
   color: #000;
-  cursor: pointer;
   transition: background-color 125ms ease-in-out;
 
-  &:hover {
+  &:hover:not(.editing),
+  &:focus-within:not(.editing) {
     background: #eee;
+
+    .hoverIcons {
+      visibility: visible;
+    }
   }
 
   .check {
+    flex: none;
     width: 18px;
     height: 18px;
   }
@@ -195,6 +201,141 @@
   .done {
     text-decoration: line-through;
     color: $clrDisabled;
+  }
+}
+
+.subtask.editing {
+  padding-left: 16px;
+  border-bottom: 1px solid $clrHighlight2;
+  border-radius: 0;
+  background-color: #fff;
+}
+
+.subtaskMain {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 16px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.subtaskText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.hoverIcons {
+  visibility: hidden;
+}
+
+.newSubtask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  background-color: #fff;
+  transition: border-color 125ms ease-in-out;
+
+  &:hover,
+  &:focus-within {
+    border-color: $clrHighlight2;
+  }
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  flex: none;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d1d1;
+}
+
+.iconButton {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: unset;
+  border-radius: 50%;
+  background: center / 24px 24px no-repeat;
+  cursor: pointer;
+  transition: background-color 125ms ease-in-out;
+
+  &:hover {
+    background-color: #eeeeee;
+  }
+
+  &.plus {
+    background-image: url('/assets/icons/add.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/add-hover.svg');
+    }
+  }
+
+  &.cancel {
+    background-image: url('/assets/icons/close.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/close-hover.svg');
+    }
+  }
+
+  &.confirm {
+    background-image: url('/assets/icons/check.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/check-hover.svg');
+    }
+  }
+
+  &.edit {
+    background-image: url('/assets/icons/edit.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/edit-hover.svg');
+    }
+  }
+
+  &.delete {
+    background-image: url('/assets/icons/delete.svg');
+
+    &:hover {
+      background-image: url('/assets/icons/delete-hover.svg');
+    }
+  }
+}
+
+.subtaskInput,
+.editInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: unset;
+  border-radius: 0;
+  background-color: transparent;
+  color: $clrBaseDark;
+  font-size: 16px;
+  line-height: 120%;
+
+  &:focus {
+    border: unset;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #686868;
   }
 }
 
@@ -215,5 +356,10 @@
 
   .infoRow.horizontal {
     gap: 16px;
+  }
+
+  // No hover on touch screens, so the icons stay visible.
+  .hoverIcons {
+    visibility: visible;
   }
 }
