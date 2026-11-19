@@ -344,6 +344,12 @@
   color: $clrDisabled;
 }
 
+.actionDivider {
+  width: 1px;
+  height: 24px;
+  background: $clrSeparatingLines;
+}
+
 @media (max-width: 768px) {
   .modal {
     padding: 32px 24px;
