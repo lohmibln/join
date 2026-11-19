@@ -64,7 +64,9 @@
               <app-task-card [task]="task" />
             </div>
           } @empty {
-            <p class="emptyColumn">{{ hasNoSearchResults() ? noResultsMessage : emptyColumnMessage }}</p>
+            <p class="emptyColumn">
+              {{ hasNoSearchResults() ? noResultsMessage : emptyColumnMessage }}
+            </p>
           }
         </div>
       </section>
@@ -80,6 +82,7 @@
     (subtaskAdded)="onSubtaskAdd($event)"
     (subtaskRenamed)="onSubtaskRename($event)"
     (subtaskDeleted)="onSubtaskDelete($event)"
+    (taskDeleted)="onTaskDelete()"
   />
 }
 
