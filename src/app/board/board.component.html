@@ -57,10 +57,17 @@
               class="taskItem"
               cdkDrag
               [cdkDragData]="task"
+              [cdkDragDisabled]="isMobileBoard()"
               (cdkDragStarted)="onDragStarted()"
               (cdkDragEnded)="onDragEnded()"
               (click)="onTaskClick(task)"
             >
+              @if (isMobileBoard()) {
+                <app-task-move-menu
+                  [currentStatus]="task.status"
+                  (moved)="onMobileMove(task, $event)"
+                />
+              }
               <app-task-card [task]="task" />
             </div>
           } @empty {
