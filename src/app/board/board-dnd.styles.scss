@@ -2,11 +2,18 @@
 
 .taskItem {
   cursor: grab;
-  touch-action: none;
 
   &:active {
     cursor: grabbing;
   }
+}
+
+.taskItem:not(.cdk-drag-disabled) {
+  touch-action: none;
+}
+
+.taskItem.cdk-drag-disabled {
+  cursor: pointer;
 }
 
 .cdk-drag-preview {
