@@ -1,0 +1,28 @@
+<div class="moveMenuRoot">
+  <button
+    type="button"
+    class="moveMenuBtn"
+    (click)="toggle($event)"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="menu"
+    aria-label="Move task"
+  >
+    <img src="assets/icons/move-task.svg" alt="" />
+  </button>
+
+  @if (isOpen()) {
+    <div class="moveMenu" role="menu" (click)="$event.stopPropagation()">
+      <p class="moveMenuTitle">Move to</p>
+      @for (column of targets; track column.status) {
+        <button
+          type="button"
+          class="moveMenuItem"
+          role="menuitem"
+          (click)="choose($event, column.status)"
+        >
+          {{ column.title }}
+        </button>
+      }
+    </div>
+  }
+</div>
