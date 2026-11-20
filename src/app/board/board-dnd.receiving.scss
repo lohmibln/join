@@ -1,8 +1,10 @@
 @import '../../styles/variables';
 
-/* Highlight a column while another card is dragged over it. */
+/* Dashed drop target while a task is dragged over a column. */
 .taskList.cdk-drop-list-receiving {
-  outline: 1px dashed $clrHighlight2;
-  outline-offset: 4px;
-  border-radius: 12px;
+  min-height: 120px;
+  border: 2px dashed $clrHighlight2;
+  border-radius: 16px;
+  background: rgba(41, 171, 226, 0.08);
+  outline: none;
 }
