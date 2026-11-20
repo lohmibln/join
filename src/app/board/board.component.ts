@@ -1,5 +1,13 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Task, TaskStatus } from '../shared/models/task.model';
 import { ContactsService } from '../shared/services/contacts.service';
@@ -20,8 +28,10 @@ import {
   BOARD_SEARCH_PLACEHOLDER,
 } from './board-search.messages';
 import { readSearchInputValue } from './board-search.read-input';
+import { isBoardMobileViewport } from './board-viewport';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
+import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component';
 
 @Component({
   selector: 'app-board',
@@ -29,6 +39,7 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
   imports: [
     TaskCardComponent,
     TaskDetailComponent,
+    TaskMoveMenuComponent,
     AddTaskDialogComponent,
     CdkDropListGroup,
     CdkDropList,
@@ -41,6 +52,7 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
     './board-dnd.styles.scss',
     './board-dnd.mobile.scss',
     './board-dnd.receiving.scss',
+    './board-dnd.preview-rotate.scss',
     './board-search.bar.scss',
     './board-search.no-results.scss',
     './board-search.responsive.scss',
@@ -58,6 +70,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly selectedTask = signal<Task | null>(null);
   readonly addTaskStatus = signal<TaskStatus | null>(null);
   readonly searchQuery = signal('');
+  readonly isMobileBoard = signal(isBoardMobileViewport());
 
   readonly searchPlaceholder = BOARD_SEARCH_PLACEHOLDER;
   readonly noResultsMessage = BOARD_SEARCH_NO_RESULTS;
@@ -81,6 +94,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly dropListIdForStatus = dropListIdForStatus;
 
   async ngOnInit(): Promise<void> {
+    this.isMobileBoard.set(isBoardMobileViewport());
     await Promise.all([this.contactsService.loadContacts(), this.tasksService.loadTasks()]);
     this.contactsService.startRealtime();
     this.tasksService.startRealtime();
@@ -89,6 +103,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.contactsService.stopRealtime();
     this.tasksService.stopRealtime();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.isMobileBoard.set(isBoardMobileViewport());
   }
 
   onSearchInput(event: Event): void {
@@ -207,7 +226,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handles CDK drag-and-drop between board columns (desktop + mobile).
+   * Handles CDK drag-and-drop between board columns (desktop).
    * Same-column drops are ignored until task order is persisted.
    */
   onDrop(event: CdkDragDrop<Task[]>): void {
@@ -222,6 +241,20 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     const newStatus = statusFromDropListId(event.container.id);
     if (!newStatus || task.status === newStatus) {
+      return;
+    }
+
+    this.moveTaskToStatus(task, newStatus);
+  }
+
+  /** Moves a task via the mobile move menu (no touch drag on Safari). */
+  onMobileMove(task: Task, newStatus: TaskStatus): void {
+    this.moveTaskToStatus(task, newStatus);
+  }
+
+  /** Updates the task status locally and persists it. */
+  private moveTaskToStatus(task: Task, newStatus: TaskStatus): void {
+    if (task.status === newStatus) {
       return;
     }
 
