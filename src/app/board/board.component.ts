@@ -57,6 +57,7 @@ import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component
     './board-search.no-results.scss',
     './board-search.responsive.scss',
     './board-add-task.button.scss',
+    './board.mobile.scss',
   ],
 })
 export class BoardComponent implements OnInit, OnDestroy {

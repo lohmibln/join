@@ -33,7 +33,8 @@
 // On small screens only the "+" is shown, so the button fits next to the search field.
 @media (max-width: 1023px) {
   .addTaskHeaderButton {
-    width: 48px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     font-size: 0;
   }
