@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
+  min-width: 0;
   padding: 16px;
   background: $clrBaseBright;
   border-radius: 24px;
@@ -20,7 +21,11 @@
 .category {
   display: inline-block;
   align-self: flex-start;
+  max-width: 100%;
   padding: 4px 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border-radius: 8px;
   color: $clrBaseBright;
   font-size: 16px;
@@ -42,6 +47,12 @@
   font-weight: 700;
   color: $clrHighlight1;
   line-height: 120%;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .description {
@@ -50,6 +61,7 @@
   font-weight: 400;
   color: #a8a8a8;
   line-height: 120%;
+  overflow-wrap: anywhere;
   overflow: hidden;
   display: -webkit-box;
   line-clamp: 2;
@@ -61,11 +73,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
   margin-top: 4px;
 }
 
 .progressTrack {
-  flex: 0 0 110px;
+  flex: 1 1 60px;
+  min-width: 24px;
+  max-width: 110px;
   height: 8px;
   border-radius: 8px;
   background: #f4f4f4;
@@ -98,6 +114,7 @@
 .assignees {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .avatar {
@@ -106,6 +123,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
+  flex-shrink: 0;
   margin-left: -8px;
   border: 1px solid $clrBaseBright;
   border-radius: 50%;

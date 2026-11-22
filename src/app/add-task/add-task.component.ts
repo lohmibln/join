@@ -29,11 +29,13 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     { initialValue: 'toDo' as TaskStatus },
   );
 
+  /** Loads contacts and starts realtime updates. */
   async ngOnInit(): Promise<void> {
     await this.contactsService.loadContacts();
     this.contactsService.startRealtime();
   }
 
+  /** Stops realtime updates. */
   ngOnDestroy(): void {
     this.contactsService.stopRealtime();
   }

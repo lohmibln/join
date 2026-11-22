@@ -93,6 +93,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   readonly dropListIdForStatus = dropListIdForStatus;
 
+  /** Loads contacts and tasks and starts realtime updates. */
   async ngOnInit(): Promise<void> {
     this.isMobileBoard.set(isBoardMobileViewport());
     await Promise.all([this.contactsService.loadContacts(), this.tasksService.loadTasks()]);
@@ -100,24 +101,29 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.tasksService.startRealtime();
   }
 
+  /** Stops realtime updates. */
   ngOnDestroy(): void {
     this.contactsService.stopRealtime();
     this.tasksService.stopRealtime();
   }
 
+  /** Updates the mobile flag when the window is resized. */
   @HostListener('window:resize')
   onWindowResize(): void {
     this.isMobileBoard.set(isBoardMobileViewport());
   }
 
+  /** Stores the current search input value. */
   onSearchInput(event: Event): void {
     this.searchQuery.set(readSearchInputValue(event));
   }
 
+  /** Opens the detail overlay for a task. */
   openTask(task: Task): void {
     this.selectedTask.set(task);
   }
 
+  /** Closes the detail overlay. */
   closeTask(): void {
     this.selectedTask.set(null);
   }
@@ -207,10 +213,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.addTaskStatus.set(null);
   }
 
+  /** Marks the start of a drag so the click is ignored. */
   onDragStarted(): void {
     this.isDragging = true;
   }
 
+  /** Resets the drag flag after the drop click has passed. */
   onDragEnded(): void {
     // Delay so the click from pointer-up after a drag is ignored.
     setTimeout(() => {
@@ -218,6 +226,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
+  /** Opens the task detail unless a drag just ended. */
   onTaskClick(task: Task): void {
     if (this.isDragging) {
       return;
@@ -233,18 +242,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (event.previousContainer === event.container) {
       return;
     }
-
     const task = taskFromDropEvent(event);
-    if (!task) {
-      return;
-    }
-
     const newStatus = statusFromDropListId(event.container.id);
-    if (!newStatus || task.status === newStatus) {
-      return;
+    if (task && newStatus) {
+      this.moveTaskToStatus(task, newStatus);
     }
-
-    this.moveTaskToStatus(task, newStatus);
   }
 
   /** Moves a task via the mobile move menu (no touch drag on Safari). */

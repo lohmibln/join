@@ -52,6 +52,7 @@ export class TaskCardComponent {
     return `${done} of ${total} subtasks completed`;
   }
 
+  /** Icon path for the task priority. */
   get prioIcon(): string {
     switch (this.task.prio) {
       case 'Urgent':
@@ -63,6 +64,7 @@ export class TaskCardComponent {
     }
   }
 
+  /** Background color for a contact avatar. */
   avatarColor(contact: Contact): string {
     return getContactColor(contact.name_shortcut_color_code);
   }

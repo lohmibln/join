@@ -29,6 +29,7 @@ export class TaskDetailComponent {
 
   private readonly contactsService = inject(ContactsService);
 
+  /** Returns contacts assigned to the task (by id). */
   get assignedContacts(): Contact[] {
     const all = this.contactsService.contacts();
     return this.task.assigned_to
@@ -36,6 +37,7 @@ export class TaskDetailComponent {
       .filter((c): c is Contact => !!c);
   }
 
+  /** Icon path for the task priority. */
   get prioIcon(): string {
     switch (this.task.prio) {
       case 'Urgent':
@@ -47,10 +49,12 @@ export class TaskDetailComponent {
     }
   }
 
+  /** Background color for a contact avatar. */
   avatarColor(contact: Contact): string {
     return getContactColor(contact.name_shortcut_color_code);
   }
 
+  /** Closes the detail when the backdrop itself is clicked. */
   onBackdropClick(event: MouseEvent): void {
     if (event.target === event.currentTarget) {
       this.close.emit();
@@ -133,9 +137,9 @@ export class TaskDetailComponent {
   }
 
   /**
- * Passes the edited task to the parent and shows the details again.
- * @param task - Task with the edited values.
- */
+   * Passes the edited task to the parent and shows the details again.
+   * @param task - Task with the edited values.
+   */
   onTaskSaved(task: Task): void {
     this.taskEdited.emit(task);
     this.isEditing.set(false);

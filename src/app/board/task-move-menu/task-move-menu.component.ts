@@ -16,21 +16,25 @@ export class TaskMoveMenuComponent {
 
   readonly isOpen = signal(false);
 
+  /** Columns the task can be moved to. */
   get targets(): BoardColumn[] {
     return moveTargetsForStatus(this.currentStatus());
   }
 
+  /** Opens or closes the menu. */
   toggle(event: Event): void {
     event.stopPropagation();
     this.isOpen.update((open) => !open);
   }
 
+  /** Closes the menu and reports the chosen status. */
   choose(event: Event, status: TaskStatus): void {
     event.stopPropagation();
     this.isOpen.set(false);
     this.moved.emit(status);
   }
 
+  /** Closes the menu on any click outside. */
   @HostListener('document:click')
   onDocumentClick(): void {
     this.isOpen.set(false);
