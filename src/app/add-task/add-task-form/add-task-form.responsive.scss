@@ -134,10 +134,11 @@
   .form:not(.dialogForm) .buttons {
     position: fixed;
     right: 0;
-    bottom: 88px;
+    bottom: 80px;
     left: 0;
     z-index: 20;
     gap: 32px;
+    height: 80px;
     padding: 12px 16px;
     background-color: $clrBackground;
   }
@@ -159,8 +160,20 @@
     padding: 0 6px;
   }
 
+}
+
+// Clear and Create Task fit into the fixed bar down to 320px (428px keeps the Figma size).
+@media (max-width: 400px) {
   .form:not(.dialogForm) .buttons {
-    gap: 16px;
+    gap: 12px;
+
+    .secondaryButton,
+    .primaryButton {
+      min-width: 0;
+      padding: 16px 12px;
+      font-size: $fSTer;
+      white-space: nowrap;
+    }
   }
 }
 
@@ -178,18 +191,5 @@
   .prioButton img {
     width: 14px;
     height: 11px;
-  }
-
-  .form:not(.dialogForm) .buttons {
-    gap: 8px;
-  }
-
-  .secondaryButton,
-  .primaryButton {
-    flex: 1;
-    min-width: 0;
-    padding: 16px 8px;
-    font-size: $fSTer;
-    white-space: nowrap;
   }
 }
