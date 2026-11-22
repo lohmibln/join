@@ -134,11 +134,11 @@
     margin-top: 0;
   }
 
-  // On the page the buttons stay fixed above the mobile menu.
+  // On the page the buttons stay fixed above the mobile menu (Figma 371:3494: 8px gap).
   .form:not(.dialogForm) .buttons {
     position: fixed;
     right: 0;
-    bottom: 80px;
+    bottom: 88px;
     left: 0;
     z-index: 20;
     gap: 32px;
