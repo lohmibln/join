@@ -14,7 +14,7 @@
   background-color: $clrBaseBright;
   border: 1px solid #a8a8a8;
   border-radius: 10px;
-  transition: border-color 0.3s ease-in-out;
+  transition: border-color 125ms ease-in-out;
 
   &:focus-within {
     border-color: $clrHighlight2;
@@ -23,7 +23,7 @@
 
 .searchInput {
   width: 80%;
-  border: none;
+  border: unset;
   border-radius: 10px 0 0 10px;
   outline: none;
   padding: 8px 12px;

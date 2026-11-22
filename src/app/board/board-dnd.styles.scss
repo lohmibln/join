@@ -30,9 +30,9 @@
 }
 
 .taskList.cdk-drop-list-dragging .taskItem:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
 }
