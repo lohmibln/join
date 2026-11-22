@@ -4,7 +4,7 @@
       <img src="assets/icons/close.svg" alt="" />
     </button>
 
-    <div class="scroll">
+    <div class="scroll" #scrollBox>
       @if (isEditing()) {
         <app-task-edit-form [task]="task" (saved)="onTaskSaved($event)" />
       } @else {
@@ -24,7 +24,7 @@
 
         <div class="infoRow horizontal">
           <span class="label">Due date:</span>
-          <span class="value">{{ task.due_date }}</span>
+          <span class="value">{{ dueDateLabel }}</span>
         </div>
 
         <div class="infoRow horizontal">

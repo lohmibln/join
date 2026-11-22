@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, inject, signal, viewChild } from '@angular/core';
 import { Task } from '../../shared/models/task.model';
 import { ContactsService } from '../../shared/services/contacts.service';
 import { Contact } from '../../shared/models/contact.model';
@@ -32,6 +32,13 @@ export class TaskDetailComponent {
   readonly isEditing = signal(false);
 
   private readonly contactsService = inject(ContactsService);
+  private readonly scrollBox = viewChild<ElementRef<HTMLElement>>('scrollBox');
+
+  /** Due date as dd/mm/yyyy (the stored ISO value stays unchanged). */
+  get dueDateLabel(): string {
+    const [year, month, day] = this.task.due_date.split('-');
+    return year && month && day ? `${day}/${month}/${year}` : this.task.due_date;
+  }
 
   /** Returns contacts assigned to the task (by id). */
   get assignedContacts(): Contact[] {
@@ -138,6 +145,12 @@ export class TaskDetailComponent {
   /** Shows the edit form instead of the task details. */
   startTaskEdit(): void {
     this.isEditing.set(true);
+    this.resetScroll();
+  }
+
+  /** Scrolls the overlay content back to the top. */
+  private resetScroll(): void {
+    this.scrollBox()?.nativeElement.scrollTo({ top: 0 });
   }
 
   /**
@@ -147,5 +160,6 @@ export class TaskDetailComponent {
   onTaskSaved(task: Task): void {
     this.taskEdited.emit(task);
     this.isEditing.set(false);
+    this.resetScroll();
   }
 }
