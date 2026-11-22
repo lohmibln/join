@@ -72,7 +72,7 @@
             </div>
           } @empty {
             <p class="emptyColumn">
-              {{ hasNoSearchResults() ? noResultsMessage : emptyColumnMessage }}
+              {{ hasNoSearchResults() ? noResultsMessage : emptyColumnMessage + ' ' + column.title }}
             </p>
           }
         </div>
