@@ -10,7 +10,11 @@ import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component
   standalone: true,
   imports: [TaskEditFormComponent],
   templateUrl: './task-detail.component.html',
-  styleUrls: ['./task-detail.component.scss', './task-detail.actions.scss'],
+  styleUrls: [
+    './task-detail.component.scss',
+    './task-detail.actions.scss',
+    './task-detail.mobile.scss',
+  ],
 })
 export class TaskDetailComponent {
   @Input({ required: true }) task!: Task;
