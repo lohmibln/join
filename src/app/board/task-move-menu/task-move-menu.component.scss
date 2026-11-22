@@ -1,10 +1,10 @@
 @import '../../../styles/variables';
 
-// Figma 294678:8877: the button sits 26px below the top edge of the card, flush with its right edge.
+// Figma: the button sits at x=212, y=42 in the 252px card (42px from the top, 16px from the right).
 .moveMenuRoot {
   position: absolute;
-  top: 26px;
-  right: 0;
+  top: 42px;
+  right: 16px;
   z-index: 2;
 }
 

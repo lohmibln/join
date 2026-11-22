@@ -55,6 +55,13 @@
   -webkit-box-orient: vertical;
 }
 
+/* Keep long titles clear of the move menu button (top 42px, right 16px) on mobile. */
+@media (max-width: 1023px) {
+  .title {
+    padding-right: 28px;
+  }
+}
+
 .description {
   margin: 0;
   font-size: 16px;
