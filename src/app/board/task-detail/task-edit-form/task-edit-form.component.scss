@@ -106,13 +106,6 @@ $clrLow: #7ae229;
   }
 }
 
-// Figma: the label of the priority is bold and bluish grey.
-.prioLabel {
-  color: #42526e;
-  font-size: 19px;
-  font-weight: 700;
-}
-
 .prioButtons {
   @include setFlex(row, space-between, center, 16px);
 }
