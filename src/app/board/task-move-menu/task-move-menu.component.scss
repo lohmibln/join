@@ -1,9 +1,10 @@
 @import '../../../styles/variables';
 
+// Figma 294678:8877: the button sits 26px below the top edge of the card, flush with its right edge.
 .moveMenuRoot {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 26px;
+  right: 0;
   z-index: 2;
 }
 
@@ -11,19 +12,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 26px;
   padding: 0;
-  border: none;
-  border-radius: 8px;
+  border: unset;
+  border-radius: 6px;
   background: $clrBaseBright;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   transition: $stdTransition;
 
   img {
-    width: 20px;
-    height: 22px;
+    width: 24px;
+    height: 26px;
   }
 
   &:hover {
@@ -31,40 +31,65 @@
   }
 }
 
+// Figma 294678:9855: 106px wide, opens over the top of the card ("Move to" and one row per column).
 .moveMenu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: -26px;
   right: 0;
-  min-width: 160px;
-  padding: 8px;
+  min-width: 106px;
+  padding: 6px 8px 12px;
   background: $clrBaseBright;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
 }
 
 .moveMenuTitle {
-  margin: 0 0 6px;
-  padding: 4px 8px;
-  font-size: 12px;
+  height: 25px;
+  margin: 0 0 14px;
+  padding: 3px 9px;
+  font-size: $fSTer;
   font-weight: 700;
-  color: #a8a8a8;
-  text-transform: uppercase;
+  line-height: 20px;
+  color: $clrHighlight1;
+  white-space: nowrap;
 }
 
 .moveMenuItem {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
-  padding: 10px 12px;
-  border: none;
+  height: 28px;
+  padding: 0 8px 0 5px;
+  border: unset;
   border-radius: 8px;
   background: transparent;
   text-align: left;
-  font-size: 16px;
+  font-size: $fSTer;
+  line-height: 20px;
   color: $clrHighlight1;
+  white-space: nowrap;
   cursor: pointer;
   transition: $stdTransition;
 
+  // Hover: blue text, a little bolder (text-shadow keeps the width the same).
   &:hover {
-    background: #f0f0f0;
+    color: $clrHighlight2;
+    text-shadow: 0 0 0.6px currentColor;
+  }
+}
+
+// The arrow is a mask, so it takes the text color on hover.
+.moveMenuIcon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  mask: url('/assets/icons/arrow-downward.svg') center / 20px 20px no-repeat;
+  -webkit-mask: url('/assets/icons/arrow-downward.svg') center / 20px 20px no-repeat;
+
+  &.up {
+    mask-image: url('/assets/icons/arrow-upward.svg');
+    -webkit-mask-image: url('/assets/icons/arrow-upward.svg');
   }
 }

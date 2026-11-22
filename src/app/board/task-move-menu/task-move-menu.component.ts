@@ -1,6 +1,6 @@
 import { Component, HostListener, input, output, signal } from '@angular/core';
 import { TaskStatus } from '../../shared/models/task.model';
-import { BoardColumn } from '../board-columns';
+import { BOARD_COLUMNS, BoardColumn } from '../board-columns';
 import { moveTargetsForStatus } from '../board-move-targets';
 
 @Component({
@@ -19,6 +19,12 @@ export class TaskMoveMenuComponent {
   /** Columns the task can be moved to. */
   get targets(): BoardColumn[] {
     return moveTargetsForStatus(this.currentStatus());
+  }
+
+  /** True for columns left of the task's column, they get an upward arrow. */
+  isEarlier(status: TaskStatus): boolean {
+    const order = BOARD_COLUMNS.map((column) => column.status);
+    return order.indexOf(status) < order.indexOf(this.currentStatus());
   }
 
   /** Opens or closes the menu. */

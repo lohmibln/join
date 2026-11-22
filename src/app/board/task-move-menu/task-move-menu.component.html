@@ -20,6 +20,11 @@
           role="menuitem"
           (click)="choose($event, column.status)"
         >
+          <span
+            class="moveMenuIcon"
+            [class.up]="isEarlier(column.status)"
+            aria-hidden="true"
+          ></span>
           {{ column.title }}
         </button>
       }
