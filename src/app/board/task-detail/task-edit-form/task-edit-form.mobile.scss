@@ -1,0 +1,33 @@
+@import '../../../../styles/variables';
+
+// Phone: the three priority buttons have to fit into the 396px wide overlay down to 320px.
+@media (max-width: 599px) {
+  .prioButtons {
+    gap: 8px;
+  }
+
+  .prioButton {
+    gap: 4px;
+    padding: 0 6px;
+    font-size: $fSTer;
+
+    &.active {
+      font-size: $fSTer;
+    }
+
+    img {
+      width: 16px;
+    }
+  }
+}
+
+@media (max-width: 359px) {
+  .prioButton {
+    padding: 0 4px;
+    font-size: 14px;
+
+    &.active {
+      font-size: 14px;
+    }
+  }
+}
