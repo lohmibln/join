@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { RealtimeChannel, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { NewTask, Task } from '../models/task.model';
-import { sortTasksByPosition } from '../utils/task-order.utils';
+import { changedTasks, sortTasksByPosition, withPositions } from '../utils/task-order.utils';
 import { supabase } from './supabase.client';
 
 @Injectable({
@@ -122,12 +122,28 @@ export class TasksService {
   }
 
   /**
-   * Replaces the order of the local list, e.g. after a card was dropped between two others.
-   * The order is only kept on this device until the tasks are loaded again.
-   * @param tasks - The same tasks in their new order.
+   * Shows a new order of the tasks right away and saves what changed. Tasks get
+   * their place as position, if Supabase has that column. Otherwise only a changed
+   * status is saved and the order stays on this device.
+   * @param ordered - All tasks in the order they should have.
+   * @returns True if everything was saved.
    */
-  reorderLocal(tasks: Task[]): void {
-    this.tasks.set(tasks);
+  async saveOrder(ordered: Task[]): Promise<boolean> {
+    const previous = this.tasks();
+    const next = this.orderSupported ? withPositions(ordered) : ordered;
+    this.tasks.set(next);
+    const results = await Promise.all(
+      changedTasks(previous, next).map(({ id, ...fields }) =>
+        supabase.from('tasks').update(fields).eq('id', id),
+      ),
+    );
+
+    if (results.some((result) => result.error)) {
+      this.tasks.set(previous);
+      this.errorMessage.set('Task could not be updated. Please try again later.');
+      return false;
+    }
+    return true;
   }
 
   /**
