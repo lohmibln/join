@@ -15,4 +15,14 @@ values
       {"description": "Recommend a recipe by time of day", "checked": false},
       {"description": "Write tests for the recommendation", "checked": false}
     ]'::jsonb
+  ),
+  (
+    'HTML Base Template Creation',
+    'Create a reusable HTML base template with header, navigation and footer.',
+    'Technical Task', 'awaitFeedback', 'Low', current_date + 3,
+    array(select id from public.contacts where full_name in ('Tim Fuchs', 'Lena Schulz')),
+    '[
+      {"description": "Define the page structure", "checked": true},
+      {"description": "Add header and footer partials", "checked": true}
+    ]'::jsonb
   );
