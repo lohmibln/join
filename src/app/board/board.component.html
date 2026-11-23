@@ -57,7 +57,7 @@
               class="taskItem"
               cdkDrag
               [cdkDragData]="task"
-              [cdkDragDisabled]="isMobileBoard()"
+              [cdkDragStartDelay]="dragStartDelay"
               (cdkDragStarted)="onDragStarted()"
               (cdkDragEnded)="onDragEnded()"
               (click)="onTaskClick(task)"
