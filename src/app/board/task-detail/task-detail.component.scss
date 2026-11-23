@@ -143,6 +143,7 @@
   flex-direction: column;
   gap: 12px;
   max-height: 150px;
+  overflow-y: auto;
 }
 
 .assignedRow {
