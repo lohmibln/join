@@ -262,15 +262,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** Puts the task at its place in the column and saves a changed status. */
+  /** Puts the task at its place in the column and saves the new order. */
   private moveTaskToStatus(
     task: Task,
     newStatus: TaskStatus,
     index = Number.MAX_SAFE_INTEGER,
   ): void {
-    if (task.status !== newStatus) {
-      void this.tasksService.updateTask({ ...task, status: newStatus });
-    }
-    this.tasksService.reorderLocal(moveTaskInList(this.tasks(), task.id, newStatus, index));
+    void this.tasksService.saveOrder(moveTaskInList(this.tasks(), task.id, newStatus, index));
   }
 }
