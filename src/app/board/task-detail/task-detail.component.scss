@@ -174,10 +174,12 @@
   color: $clrBaseDark;
 }
 
+// Three rows (32px each, 8px gap) are visible, more subtasks scroll.
 .subtasks {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 112px;
 }
 
 .subtask {
