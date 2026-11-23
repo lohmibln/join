@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { RealtimeChannel, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { NewTask, Task } from '../models/task.model';
+import { sortTasksByPosition } from '../utils/task-order.utils';
 import { supabase } from './supabase.client';
 
 @Injectable({
@@ -11,6 +12,9 @@ export class TasksService {
   readonly errorMessage = signal('');
 
   private realtimeChannel: RealtimeChannel | null = null;
+
+  /** True once Supabase delivers a position for the tasks, so the order can be saved. */
+  private orderSupported = false;
 
   /**
    * Loads all tasks from Supabase.
@@ -24,7 +28,9 @@ export class TasksService {
     }
 
     this.errorMessage.set('');
-    this.tasks.set((data ?? []) as Task[]);
+    const rows = (data ?? []) as Task[];
+    this.orderSupported = rows.length > 0 && 'position' in rows[0];
+    this.tasks.set(sortTasksByPosition(rows));
   }
 
   /**
