@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { RealtimeChannel, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { NewTask, Task } from '../models/task.model';
+import { changedTasks, sortTasksByPosition, withPositions } from '../utils/task-order.utils';
 import { supabase } from './supabase.client';
 
 @Injectable({
@@ -11,6 +12,9 @@ export class TasksService {
   readonly errorMessage = signal('');
 
   private realtimeChannel: RealtimeChannel | null = null;
+
+  /** True once Supabase delivers a position for the tasks, so the order can be saved. */
+  private orderSupported = false;
 
   /**
    * Loads all tasks from Supabase.
@@ -24,7 +28,9 @@ export class TasksService {
     }
 
     this.errorMessage.set('');
-    this.tasks.set((data ?? []) as Task[]);
+    const rows = (data ?? []) as Task[];
+    this.orderSupported = rows.length > 0 && 'position' in rows[0];
+    this.tasks.set(sortTasksByPosition(rows));
   }
 
   /**
@@ -116,12 +122,28 @@ export class TasksService {
   }
 
   /**
-   * Replaces the order of the local list, e.g. after a card was dropped between two others.
-   * The order is only kept on this device until the tasks are loaded again.
-   * @param tasks - The same tasks in their new order.
+   * Shows a new order of the tasks right away and saves what changed. Tasks get
+   * their place as position, if Supabase has that column. Otherwise only a changed
+   * status is saved and the order stays on this device.
+   * @param ordered - All tasks in the order they should have.
+   * @returns True if everything was saved.
    */
-  reorderLocal(tasks: Task[]): void {
-    this.tasks.set(tasks);
+  async saveOrder(ordered: Task[]): Promise<boolean> {
+    const previous = this.tasks();
+    const next = this.orderSupported ? withPositions(ordered) : ordered;
+    this.tasks.set(next);
+    const results = await Promise.all(
+      changedTasks(previous, next).map(({ id, ...fields }) =>
+        supabase.from('tasks').update(fields).eq('id', id),
+      ),
+    );
+
+    if (results.some((result) => result.error)) {
+      this.tasks.set(previous);
+      this.errorMessage.set('Task could not be updated. Please try again later.');
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -147,12 +169,9 @@ export class TasksService {
   private upsertLocal(task: Task): void {
     this.tasks.update((tasks) => {
       const index = tasks.findIndex((entry) => entry.id === task.id);
-      if (index === -1) {
-        return [...tasks, task];
-      }
-      const next = [...tasks];
-      next[index] = task;
-      return next;
+      const next =
+        index === -1 ? [...tasks, task] : tasks.map((entry, i) => (i === index ? task : entry));
+      return this.orderSupported ? sortTasksByPosition(next) : next;
     });
   }
 }

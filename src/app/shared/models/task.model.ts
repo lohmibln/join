@@ -20,6 +20,8 @@ export interface Task {
   due_date: string;
   assigned_to: string[];
   sub_tasks: SubTask[];
+  /** Saved place on the board. Missing until the column exists in Supabase. */
+  position?: number | null;
 }
 
 export type NewTask = Omit<Task, 'id'>;
