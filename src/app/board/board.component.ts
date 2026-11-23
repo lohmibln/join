@@ -17,6 +17,7 @@ import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.compon
 import { BOARD_COLUMNS } from './board-columns';
 import { withAddedSubtask, withRenamedSubtask, withoutSubtask } from './board-subtasks';
 import { applyTaskStatusChange } from './board-dnd.apply';
+import { BOARD_DRAG_START_DELAY } from './board-dnd.delay';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
 import { taskFromDropEvent } from './board-dnd.task-from-drop';
 import { filterTasksBySearch, isBoardSearchActive } from './board-search.filter';
@@ -73,6 +74,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly addTaskStatus = signal<TaskStatus | null>(null);
   readonly searchQuery = signal('');
   readonly isMobileBoard = signal(isBoardMobileViewport());
+  readonly dragStartDelay = BOARD_DRAG_START_DELAY;
 
   readonly searchPlaceholder = BOARD_SEARCH_PLACEHOLDER;
   readonly noResultsMessage = BOARD_SEARCH_NO_RESULTS;
@@ -237,7 +239,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handles CDK drag-and-drop between board columns (desktop).
+   * Handles CDK drag-and-drop between board columns (desktop + mobile).
    * Same-column drops are ignored until task order is persisted.
    */
   onDrop(event: CdkDragDrop<Task[]>): void {
@@ -251,7 +253,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** Moves a task via the mobile move menu (no touch drag on Safari). */
+  /** Moves a task via the mobile move menu (fallback beside long-press drag). */
   onMobileMove(task: Task, newStatus: TaskStatus): void {
     this.moveTaskToStatus(task, newStatus);
   }
