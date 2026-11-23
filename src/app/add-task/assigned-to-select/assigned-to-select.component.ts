@@ -3,7 +3,7 @@ import { Contact } from '../../shared/models/contact.model';
 import { ContactsService } from '../../shared/services/contacts.service';
 import { getContactColor } from '../../shared/utils/contact.utils';
 
-const MAX_VISIBLE_AVATARS = 5;
+const MAX_VISIBLE_AVATARS = 3;
 
 /**
  * Dropdown to assign contacts to a task. It can be filtered by typing
