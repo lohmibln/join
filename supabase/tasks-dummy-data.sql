@@ -64,3 +64,6 @@ values
       {"description": "Update the Trello board", "checked": true}
     ]'::jsonb
   );
+
+-- Optional: remove the old test entries first (adjust the titles to your own tests).
+-- delete from public.tasks where title ilike 'test%';
