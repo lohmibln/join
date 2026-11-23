@@ -52,4 +52,15 @@ values
     'User Story', 'toDo', 'Medium', current_date + 10,
     array(select id from public.contacts where full_name in ('Sophia Gruber', 'Lukas Meier')),
     '[]'::jsonb
+  ),
+  (
+    'Prepare the sprint review',
+    'Collect the finished features, update the board and test them in all browsers.',
+    'Technical Task', 'inProgress', 'Low', current_date + 4,
+    array(select id from public.contacts where full_name = 'Paula Keller'),
+    '[
+      {"description": "Test the app in Chrome and Firefox", "checked": false},
+      {"description": "Check the layout down to 320px", "checked": false},
+      {"description": "Update the Trello board", "checked": true}
+    ]'::jsonb
   );
