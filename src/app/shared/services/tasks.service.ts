@@ -116,6 +116,15 @@ export class TasksService {
   }
 
   /**
+   * Replaces the order of the local list, e.g. after a card was dropped between two others.
+   * The order is only kept on this device until the tasks are loaded again.
+   * @param tasks - The same tasks in their new order.
+   */
+  reorderLocal(tasks: Task[]): void {
+    this.tasks.set(tasks);
+  }
+
+  /**
    * Applies a live change from Supabase to the list.
    * @param payload - Change sent by Supabase Realtime.
    */
