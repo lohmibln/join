@@ -257,7 +257,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   /** Moves a task via the mobile move menu (fallback beside long-press drag). */
   onMobileMove(task: Task, newStatus: TaskStatus): void {
-    this.moveTaskToStatus(task, newStatus);
+    if (task.status !== newStatus) {
+      this.moveTaskToStatus(task, newStatus);
+    }
   }
 
   /** Puts the task at its place in the column and saves a changed status. */
