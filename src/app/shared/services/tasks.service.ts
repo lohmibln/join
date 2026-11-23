@@ -153,12 +153,9 @@ export class TasksService {
   private upsertLocal(task: Task): void {
     this.tasks.update((tasks) => {
       const index = tasks.findIndex((entry) => entry.id === task.id);
-      if (index === -1) {
-        return [...tasks, task];
-      }
-      const next = [...tasks];
-      next[index] = task;
-      return next;
+      const next =
+        index === -1 ? [...tasks, task] : tasks.map((entry, i) => (i === index ? task : entry));
+      return this.orderSupported ? sortTasksByPosition(next) : next;
     });
   }
 }
