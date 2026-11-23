@@ -35,4 +35,14 @@ values
       {"description": "Agree on naming conventions", "checked": true},
       {"description": "Set up variables and mixins", "checked": true}
     ]'::jsonb
+  ),
+  (
+    'Contact Form & Imprint',
+    'Create a contact form and an imprint page that match the design.',
+    'User Story', 'toDo', 'Urgent', current_date + 7,
+    array(select id from public.contacts where full_name in ('Olivia Lehmann', 'Herbert Vogel')),
+    '[
+      {"description": "Build the contact form with validation", "checked": false},
+      {"description": "Write the imprint text", "checked": false}
+    ]'::jsonb
   );
