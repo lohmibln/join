@@ -43,7 +43,7 @@
                 <span class="avatar" [style.background-color]="avatarColor(contact)">
                   {{ contact.name_shortcut }}
                 </span>
-                <span class="name">{{ contact.full_name }}</span>
+                <span class="name" [title]="contact.full_name">{{ contact.full_name }}</span>
               </div>
             }
             @if (assignedContacts.length === 0) {

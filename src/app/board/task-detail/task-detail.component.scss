@@ -165,7 +165,9 @@
   font-size: 12px;
 }
 
+// Long names end with "..." so the overlay never scrolls sideways.
 .name {
+  flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
