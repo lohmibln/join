@@ -25,4 +25,14 @@ values
       {"description": "Define the page structure", "checked": true},
       {"description": "Add header and footer partials", "checked": true}
     ]'::jsonb
+  ),
+  (
+    'CSS Architecture Planning',
+    'Define the CSS naming conventions and the folder structure for the styles.',
+    'Technical Task', 'done', 'Urgent', current_date + 1,
+    array(select id from public.contacts where full_name in ('Nico Braun', 'Bärbel Schmidt', 'Hannes Traubel')),
+    '[
+      {"description": "Agree on naming conventions", "checked": true},
+      {"description": "Set up variables and mixins", "checked": true}
+    ]'::jsonb
   );
