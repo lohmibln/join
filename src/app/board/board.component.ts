@@ -243,14 +243,16 @@ export class BoardComponent implements OnInit, OnDestroy {
    * Same-column drops are ignored until task order is persisted.
    */
   onDrop(event: CdkDragDrop<Task[]>): void {
-    if (event.previousContainer === event.container) {
-      return;
-    }
     const task = taskFromDropEvent(event);
     const newStatus = statusFromDropListId(event.container.id);
     if (task && newStatus) {
-      this.moveTaskToStatus(task, newStatus);
+      this.moveTaskToStatus(task, newStatus, this.dropIndex(event));
     }
+  }
+
+  /** Position of a drop in its column. A search filters the list, so the card is appended then. */
+  private dropIndex(event: CdkDragDrop<Task[]>): number {
+    return this.isSearchActive() ? Number.MAX_SAFE_INTEGER : event.currentIndex;
   }
 
   /** Moves a task via the mobile move menu (fallback beside long-press drag). */
