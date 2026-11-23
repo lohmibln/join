@@ -107,9 +107,12 @@
   }
 }
 
+// Three rows (32px each, 2px gap) are visible, more subtasks scroll.
 .list {
   @include setFlex(column, flex-start, stretch, 2px);
+  max-height: 100px;
   margin-top: 4px;
+  overflow-y: auto;
   list-style: none;
 }
 

@@ -16,7 +16,7 @@ import { ToastService } from '../shared/services/toast.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
 import { withAddedSubtask, withRenamedSubtask, withoutSubtask } from './board-subtasks';
-import { applyTaskStatusChange } from './board-dnd.apply';
+import { moveTaskInList } from './board-dnd.apply';
 import { BOARD_DRAG_START_DELAY } from './board-dnd.delay';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
 import { taskFromDropEvent } from './board-dnd.task-from-drop';
@@ -243,30 +243,34 @@ export class BoardComponent implements OnInit, OnDestroy {
    * Same-column drops are ignored until task order is persisted.
    */
   onDrop(event: CdkDragDrop<Task[]>): void {
-    if (event.previousContainer === event.container) {
-      return;
-    }
     const task = taskFromDropEvent(event);
     const newStatus = statusFromDropListId(event.container.id);
     if (task && newStatus) {
-      this.moveTaskToStatus(task, newStatus);
+      this.moveTaskToStatus(task, newStatus, this.dropIndex(event));
     }
+  }
+
+  /** Position of a drop in its column. A search filters the list, so the card is appended then. */
+  private dropIndex(event: CdkDragDrop<Task[]>): number {
+    return this.isSearchActive() ? Number.MAX_SAFE_INTEGER : event.currentIndex;
   }
 
   /** Moves a task via the mobile move menu (fallback beside long-press drag). */
   onMobileMove(task: Task, newStatus: TaskStatus): void {
-    this.moveTaskToStatus(task, newStatus);
+    if (task.status !== newStatus) {
+      this.moveTaskToStatus(task, newStatus);
+    }
   }
 
-  /** Updates the task status locally and persists it. */
-  private moveTaskToStatus(task: Task, newStatus: TaskStatus): void {
-    if (task.status === newStatus) {
-      return;
+  /** Puts the task at its place in the column and saves a changed status. */
+  private moveTaskToStatus(
+    task: Task,
+    newStatus: TaskStatus,
+    index = Number.MAX_SAFE_INTEGER,
+  ): void {
+    if (task.status !== newStatus) {
+      void this.tasksService.updateTask({ ...task, status: newStatus });
     }
-
-    const moved = applyTaskStatusChange(this.tasks(), task.id, newStatus).find(
-      (entry) => entry.id === task.id,
-    );
-    if (moved) void this.tasksService.updateTask(moved);
+    this.tasksService.reorderLocal(moveTaskInList(this.tasks(), task.id, newStatus, index));
   }
 }
