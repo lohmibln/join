@@ -16,6 +16,7 @@ import {
   validateTaskField,
 } from '../../../shared/utils/task-validation.utils';
 import { AssignedToSelectComponent } from '../../../add-task/assigned-to-select/assigned-to-select.component';
+import { SubtasksInputComponent } from '../../../add-task/subtasks-input/subtasks-input.component';
 
 interface PrioOption {
   value: TaskPriority;
@@ -29,7 +30,7 @@ interface PrioOption {
 @Component({
   selector: 'app-task-edit-form',
   standalone: true,
-  imports: [AssignedToSelectComponent],
+  imports: [AssignedToSelectComponent, SubtasksInputComponent],
   templateUrl: './task-edit-form.component.html',
   styleUrls: ['./task-edit-form.component.scss', './task-edit-form.mobile.scss'],
 })
@@ -103,6 +104,14 @@ export class TaskEditFormComponent implements OnInit {
    */
   onAssignedChange(ids: string[]): void {
     this.values.update((values) => ({ ...values, assignedTo: ids }));
+  }
+
+  /**
+   * Stores the subtasks after one was added, renamed or deleted.
+   * @param subtasks - Texts of all subtasks.
+   */
+  onSubtasksChange(subtasks: string[]): void {
+    this.values.update((values) => ({ ...values, subtasks }));
   }
 
   /**

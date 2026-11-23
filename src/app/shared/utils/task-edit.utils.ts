@@ -1,4 +1,4 @@
-import { Task } from '../models/task.model';
+import { SubTask, Task } from '../models/task.model';
 import { TaskFormValues, validateDueDate } from './task-validation.utils';
 
 /**
@@ -20,7 +20,7 @@ export function toEditValues(task: Task): TaskFormValues {
 
 /**
  * Copies the edited values into a copy of the task.
- * Category and subtasks stay as they are, subtasks are saved in the task detail.
+ * The category stays as it is, subtasks keep their checked state.
  * @param task - Current task.
  * @param values - Valid form values.
  * @returns The changed copy of the task.
@@ -33,7 +33,28 @@ export function applyEditValues(task: Task, values: TaskFormValues): Task {
         due_date: values.dueDate,
         prio: values.prio,
         assigned_to: values.assignedTo,
+        sub_tasks: mergeSubtaskTexts(task.sub_tasks, values.subtasks),
     };
+}
+
+/**
+ * Turns the edited subtask texts back into subtasks. The list only changes by one
+ * step at a time (add at the end, rename or delete one), so the checked state
+ * of the other subtasks is kept.
+ * @param before - Subtasks of the task before editing.
+ * @param texts - Subtask texts after editing.
+ * @returns Subtasks with their checked state.
+ */
+export function mergeSubtaskTexts(before: SubTask[], texts: string[]): SubTask[] {
+    if (texts.length > before.length) {
+        const added = texts.slice(before.length).map((description) => ({ description, checked: false }));
+        return [...before, ...added];
+    }
+    if (texts.length < before.length) {
+        const removed = before.findIndex((sub, i) => sub.description !== texts[i]);
+        return mergeSubtaskTexts(before.filter((_, i) => i !== removed), texts);
+    }
+    return before.map((sub, i) => ({ ...sub, description: texts[i] }));
 }
 
 /**

@@ -81,4 +81,13 @@
       (selectedIdsChange)="onAssignedChange($event)"
     />
   </div>
+
+  <div class="formGroup">
+    <span class="label" id="editSubtasksLabel">Subtasks</span>
+    <app-subtasks-input
+      aria-labelledby="editSubtasksLabel"
+      [subtasks]="values().subtasks"
+      (subtasksChange)="onSubtasksChange($event)"
+    />
+  </div>
 </form>

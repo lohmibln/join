@@ -15,7 +15,6 @@ import { TasksService } from '../shared/services/tasks.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
-import { withAddedSubtask, withRenamedSubtask, withoutSubtask } from './board-subtasks';
 import { moveTaskInList } from './board-dnd.apply';
 import { BOARD_DRAG_START_DELAY } from './board-dnd.delay';
 import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
@@ -165,30 +164,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   private applyTaskChange(updated: Task): void {
     this.selectedTask.set(updated);
     void this.tasksService.updateTask(updated);
-  }
-
-  /** Adds a new subtask to the open task. */
-  onSubtaskAdd(description: string): void {
-    const open = this.selectedTask();
-    if (open) {
-      this.applyTaskChange(withAddedSubtask(open, description));
-    }
-  }
-
-  /** Changes the text of one subtask of the open task. */
-  onSubtaskRename(change: { index: number; description: string }): void {
-    const open = this.selectedTask();
-    if (open) {
-      this.applyTaskChange(withRenamedSubtask(open, change.index, change.description));
-    }
-  }
-
-  /** Deletes one subtask of the open task. */
-  onSubtaskDelete(index: number): void {
-    const open = this.selectedTask();
-    if (open) {
-      this.applyTaskChange(withoutSubtask(open, index));
-    }
   }
 
   /** Returns a copy of the task with the checked state of one subtask flipped. */
