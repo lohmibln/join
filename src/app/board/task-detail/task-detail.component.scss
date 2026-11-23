@@ -137,10 +137,12 @@
   }
 }
 
+// Three rows (42px each, 12px gap) are visible, more names scroll.
 .assignedList {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: 150px;
 }
 
 .assignedRow {
