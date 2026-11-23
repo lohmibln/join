@@ -138,7 +138,9 @@
                     "
                     [alt]="sub.checked ? 'Done' : 'Open'"
                   />
-                  <span class="subtaskText" [class.done]="sub.checked">{{ sub.description }}</span>
+                  <span class="subtaskText" [class.done]="sub.checked" [title]="sub.description">{{
+                    sub.description
+                  }}</span>
                 </div>
                 <div class="icons hoverIcons">
                   <button
