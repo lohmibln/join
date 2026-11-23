@@ -54,7 +54,6 @@ import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component
     './board-dnd.receiving.scss',
     './board-dnd.preview-rotate.scss',
     './board-search.bar.scss',
-    './board-search.no-results.scss',
     './board-search.responsive.scss',
     './board-add-task.button.scss',
     './board-columns.scroll.scss',

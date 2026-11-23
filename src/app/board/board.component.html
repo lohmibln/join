@@ -24,10 +24,6 @@
     </div>
   </div>
 
-  @if (hasNoSearchResults()) {
-    <p class="noSearchResults" role="status">{{ noResultsMessage }}</p>
-  }
-
   <div class="columns" cdkDropListGroup>
     @for (column of columns; track column.status) {
       <section class="column">
