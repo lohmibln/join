@@ -19,3 +19,18 @@ export function sortTasksByPosition(tasks: Task[]): Task[] {
 export function withPositions(tasks: Task[]): Task[] {
   return tasks.map((task, index) => ({ ...task, position: index }));
 }
+
+/**
+ * Finds the tasks that are new or have another status or position than before.
+ * Only these have to be saved.
+ * @param before - Tasks before the change.
+ * @param after - Tasks after the change.
+ * @returns The tasks of `after` that differ.
+ */
+export function changedTasks(before: Task[], after: Task[]): Task[] {
+  const old = new Map(before.map((task) => [task.id, task]));
+  return after.filter((task) => {
+    const prev = old.get(task.id);
+    return !prev || prev.position !== task.position || prev.status !== task.status;
+  });
+}
