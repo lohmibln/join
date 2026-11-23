@@ -45,4 +45,11 @@ values
       {"description": "Build the contact form with validation", "checked": false},
       {"description": "Write the imprint text", "checked": false}
     ]'::jsonb
+  ),
+  (
+    'Daily Kochwelt Recipe',
+    'Show a new recipe every day and let users save their favourites.',
+    'User Story', 'toDo', 'Medium', current_date + 10,
+    array(select id from public.contacts where full_name in ('Sophia Gruber', 'Lukas Meier')),
+    '[]'::jsonb
   );
