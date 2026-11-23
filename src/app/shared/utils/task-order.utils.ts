@@ -10,3 +10,12 @@ export function sortTasksByPosition(tasks: Task[]): Task[] {
   const place = (task: Task): number => task.position ?? Number.MAX_SAFE_INTEGER;
   return [...tasks].sort((a, b) => place(a) - place(b));
 }
+
+/**
+ * Numbers the tasks in their current order, so that order can be saved.
+ * @param tasks - Tasks in the order they should keep.
+ * @returns Copies of the tasks with their place as position.
+ */
+export function withPositions(tasks: Task[]): Task[] {
+  return tasks.map((task, index) => ({ ...task, position: index }));
+}
