@@ -150,8 +150,9 @@
   font-size: $fSTer;
 }
 
+// Same look as the "+N" bubble on the board cards.
 .more {
-  background-color: $clrHighlight1;
+  background-color: $clrBaseGray;
 }
 
 // Small laptops: same smaller text as the other fields of the form.
