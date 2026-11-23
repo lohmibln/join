@@ -8,12 +8,21 @@
   }
 }
 
-.taskItem:not(.cdk-drag-disabled) {
-  touch-action: none;
+/* Desktop: block browser gestures so drag wins immediately. */
+@media (min-width: 1024px) {
+  .taskItem {
+    touch-action: none;
+  }
 }
 
-.taskItem.cdk-drag-disabled {
-  cursor: pointer;
+/*
+ * Mobile: allow pan so sideways card scroll still works.
+ * CDK only starts a drag after cdkDragStartDelay on touch.
+ */
+@media (max-width: 1023px) {
+  .taskItem {
+    touch-action: pan-x pan-y;
+  }
 }
 
 .cdk-drag-preview {
