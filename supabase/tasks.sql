@@ -11,6 +11,7 @@ create table if not exists public.tasks (
   prio text not null check (prio in ('Urgent', 'Medium', 'Low')),
   category text not null check (category in ('Technical Task', 'User Story')),
   sub_tasks jsonb not null default '[]'::jsonb,
+  position integer,
   created_at timestamptz not null default now()
 );
 
