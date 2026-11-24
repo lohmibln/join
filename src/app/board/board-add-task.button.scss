@@ -3,7 +3,7 @@
 
 // "Add task" button next to the search field, it opens the same form as the column "+".
 .addTaskHeaderButton {
-  @include setFlex(row, center, center, 4px);
+  @include setFlex(row, center, center, 8px);
   flex: none;
   width: 160px;
   height: 48px;
@@ -15,10 +15,11 @@
   font-weight: 700;
   line-height: 120%;
 
+  // The "+" is about as high as the text next to it.
   img {
     flex: none;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
   }
 
   &:hover {
@@ -37,6 +38,15 @@
     width: 40px;
     height: 40px;
     padding: 0;
-    font-size: 0;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  // Only the "+" is left, so it sits in the middle of the button.
+  .addTaskLabel {
+    display: none;
   }
 }
