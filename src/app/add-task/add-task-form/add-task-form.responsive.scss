@@ -15,7 +15,7 @@
   }
 }
 
-// Small laptops (1024px up to ~1200px): still two columns, like on desktop,
+// Narrow desktops: still two columns, like on desktop,
 // only with smaller gaps and text. The fields are stacked only on mobile.
 @container addTaskForm (max-width: 899px) {
   .columns {
@@ -50,7 +50,7 @@
 
 // ---------- Mobile (same breakpoint as the mobile header and menu) ----------
 
-@media (max-width: 1023px) {
+@media (max-width: 1279px) {
   .form {
     gap: 16px;
     max-width: none;

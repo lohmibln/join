@@ -20,22 +20,15 @@
 }
 
 // Smaller laptops: less side space, so both columns keep enough room.
-@media (min-width: 1024px) and (max-width: 1439px) {
+@media (min-width: 1280px) and (max-width: 1439px) {
   .addTask {
     padding-right: 48px;
     padding-left: 48px;
   }
 }
 
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .addTask {
-    padding-right: 32px;
-    padding-left: 32px;
-  }
-}
-
 // Mobile: 48px below the header, 47px headline, buttons fixed above the menu.
-@media (max-width: 1023px) {
+@media (max-width: 1279px) {
   .addTask {
     min-height: calc(100dvh - 160px);
     padding: 48px 16px 176px;
