@@ -36,6 +36,10 @@
 .cdk-drag-placeholder {
   border: 2px dotted #a8a8a8;
   border-radius: 24px;
+
+  > * {
+    visibility: hidden;
+  }
 }
 
 .taskList.cdk-drop-list-dragging .taskItem:not(.cdk-drag-placeholder) {
