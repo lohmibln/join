@@ -89,11 +89,13 @@ App: [http://localhost:4200](http://localhost:4200)
 
 ### Environment
 
-Configure Supabase in:
+The Supabase settings are not in the repository. Copy the example and fill in the values:
 
-`src/environments/environment.ts`
+```bash
+cp src/environments/environment.example.ts src/environments/environment.ts
+```
 
-Use the shared **project URL** and **publishable key**. Never commit the secret/service-role key.
+Use the shared **project URL** and **publishable key** from the team. The `src/environments` folder is in `.gitignore`, so the file stays on your computer. Never commit a key.
 
 ### Supabase SQL (new project)
 

@@ -44,6 +44,10 @@ __screenshots__/
 .env.*
 !.env.example
 
+# Supabase URL and key stay local, only the example is shared
+/src/environments/*
+!/src/environments/environment.example.ts
+
 # System files
 .DS_Store
 Thumbs.db
