@@ -16,3 +16,11 @@ export const BOARD_COLUMNS: BoardColumn[] = [
 export function moveTargetsForStatus(current: TaskStatus): BoardColumn[] {
   return BOARD_COLUMNS.filter((column) => column.status !== current);
 }
+
+/** Below this width the board uses the mobile layout: bottom navigation, stacked rows, move menu and long-press drag. */
+export const BOARD_MOBILE_MAX_WIDTH = 1279;
+
+/** True when the board should use the mobile layout. */
+export function isBoardMobileViewport(width = window.innerWidth): boolean {
+  return width <= BOARD_MOBILE_MAX_WIDTH;
+}

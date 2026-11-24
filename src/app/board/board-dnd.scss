@@ -11,7 +11,7 @@
 }
 
 /* Desktop: block browser gestures so drag wins immediately. */
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .taskItem {
     touch-action: none;
   }
@@ -21,7 +21,7 @@
  * Mobile: allow pan so sideways card scroll still works.
  * CDK only starts a drag after cdkDragStartDelay on touch.
  */
-@media (max-width: 1023px) {
+@media (max-width: 1279px) {
   .taskItem {
     touch-action: pan-x pan-y;
   }
@@ -49,7 +49,7 @@
 }
 
 /* Larger drop targets when columns stack on mobile. */
-@media (max-width: 1023px) {
+@media (max-width: 1279px) {
   .taskList {
     min-height: 120px;
     padding-bottom: 8px;

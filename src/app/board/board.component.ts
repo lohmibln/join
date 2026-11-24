@@ -14,7 +14,7 @@ import { ContactsService } from '../shared/services/contacts.service';
 import { TasksService } from '../shared/services/tasks.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
-import { BOARD_COLUMNS } from './board-columns';
+import { BOARD_COLUMNS, isBoardMobileViewport } from './board-columns';
 import {
   BOARD_DRAG_START_DELAY,
   dropListIdForStatus,
@@ -32,7 +32,6 @@ import {
   isBoardSearchActive,
   readSearchInputValue,
 } from './board-search';
-import { isBoardMobileViewport, isBoardRowLayout } from './board-viewport';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component';
@@ -52,11 +51,8 @@ import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component
   templateUrl: './board.component.html',
   styleUrls: [
     './board.component.scss',
-    './board.responsive.scss',
     './board-dnd.scss',
     './board-search.scss',
-    './board-add-task.button.scss',
-    './board-columns.scroll.scss',
     './board.mobile.scss',
   ],
 })
@@ -72,7 +68,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly addTaskStatus = signal<TaskStatus | null>(null);
   readonly searchQuery = signal('');
   readonly isMobileBoard = signal(isBoardMobileViewport());
-  readonly isRowLayout = signal(isBoardRowLayout());
   readonly dragStartDelay = BOARD_DRAG_START_DELAY;
 
   readonly searchPlaceholder = BOARD_SEARCH_PLACEHOLDER;
@@ -110,11 +105,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.tasksService.stopRealtime();
   }
 
-  /** Updates the layout flags when the window is resized. */
+  /** Updates the mobile flag when the window is resized. */
   @HostListener('window:resize')
   onWindowResize(): void {
     this.isMobileBoard.set(isBoardMobileViewport());
-    this.isRowLayout.set(isBoardRowLayout());
   }
 
   /** Stores the current search input value. */
@@ -181,7 +175,7 @@ export class BoardComponent implements OnInit, OnDestroy {
    * @param status - Column the new task is added to.
    */
   onAddTask(status: TaskStatus): void {
-    if (window.matchMedia('(max-width: 1023px)').matches) {
+    if (isBoardMobileViewport()) {
       void this.router.navigate(['/addTask'], { queryParams: { status } });
       return;
     }

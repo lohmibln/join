@@ -1,16 +1,11 @@
 @import '../../styles/variables';
+@import '../../styles/mixin';
 
+// Figma: the same space on every desktop width, so the title does not jump while resizing.
 .board {
   min-height: calc(100dvh - 96px);
-  padding: 48px 40px 64px;
+  padding: 74px 64px 64px;
   background: $clrBackground;
-}
-
-// Wide desktop (Figma): 64px at the sides, the title sits lower.
-@media (min-width: 1440px) {
-  .board {
-    padding: 74px 64px 64px;
-  }
 }
 
 .boardHeader {
@@ -104,4 +99,48 @@
   color: #a8a8a8;
   font-size: 16px;
   text-align: center;
+}
+
+// "Add task" button next to the search field, it opens the same form as the column "+".
+.addTaskHeaderButton {
+  @include setFlex(row, center, center, 8px);
+  flex: none;
+  width: 160px;
+  height: 48px;
+  padding: 8px 16px;
+  border: unset;
+  background-color: $clrHighlight1;
+  color: $clrBaseBright;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 120%;
+
+  // The "+" is about as high as the text next to it.
+  img {
+    flex: none;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background-color: $clrHighlight2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active {
+    background-color: $clrHighlight1Darker;
+  }
+}
+
+/* Long columns scroll inside the column instead of stretching the whole page. */
+@media (min-width: 1280px) {
+  .taskList {
+    max-height: max(360px, calc(100dvh - 320px));
+    margin: -4px;
+    padding: 4px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
 }

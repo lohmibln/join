@@ -1,7 +1,46 @@
 @import '../../styles/variables';
 
+/* Below 1280px the shell switches to the bottom navigation and the board to the mobile layout. */
+@media (max-width: 1279px) {
+  .board {
+    min-height: calc(100dvh - 160px);
+    padding: 48px 16px 24px;
+
+    h1 {
+      font-size: 47px;
+    }
+  }
+
+  .columns {
+    margin-top: 24px;
+  }
+
+  .taskList {
+    min-height: 100px;
+  }
+}
+
+// On small screens only the "+" is shown, so the button fits next to the search field.
+@media (max-width: 1279px) {
+  .addTaskHeaderButton {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  // Only the "+" is left, so it sits in the middle of the button.
+  .addTaskLabel {
+    display: none;
+  }
+}
+
 /* Phone header (Figma 332:1228): title and "+" in one row, search field below in full width. */
-@media (max-width: 1023px) {
+@media (max-width: 1279px) {
   .boardHeader {
     display: grid;
     grid-template-columns: 1fr auto;
