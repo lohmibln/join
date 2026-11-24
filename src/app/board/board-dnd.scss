@@ -81,6 +81,11 @@
     background-color 125ms ease-in-out;
 }
 
+/* The drop box replaces the "No tasks" hint in the column under the card. */
+.taskList.cdk-drop-list-dragging .emptyColumn {
+  display: none;
+}
+
 /* Every column a task can be dropped into stays blue, also the one under the card. */
 .taskList.cdk-drop-list-receiving,
 .taskList.cdk-drop-list-dragging {
