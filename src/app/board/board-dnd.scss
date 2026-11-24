@@ -27,17 +27,19 @@
   }
 }
 
+// The preview itself stays invisible, only the tilted card inside is seen.
 .cdk-drag-preview {
   box-sizing: border-box;
-  border-radius: 24px;
-  box-shadow:
-    0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
+// Where the card will land: an empty box with a dotted border, like in Figma.
 .cdk-drag-placeholder {
-  opacity: 0;
+  border: 2px dotted #a8a8a8;
+  border-radius: 24px;
+
+  > * {
+    visibility: hidden;
+  }
 }
 
 .taskList.cdk-drop-list-dragging .taskItem:not(.cdk-drag-placeholder) {
@@ -79,6 +81,11 @@
     background-color 125ms ease-in-out;
 }
 
+/* The drop box replaces the "No tasks" hint in the column under the card. */
+.taskList.cdk-drop-list-dragging .emptyColumn {
+  display: none;
+}
+
 /* Every column a task can be dropped into stays blue, also the one under the card. */
 .taskList.cdk-drop-list-receiving,
 .taskList.cdk-drop-list-dragging {
@@ -91,6 +98,9 @@
 .cdk-drag-preview {
   app-task-card,
   .taskCard {
+    display: block;
+    border-radius: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transform: rotate(5deg);
   }
 }
