@@ -50,9 +50,12 @@
   }
 }
 
+// 4px room on the other sides, so the shadows of the buttons in the edit form are not cut off.
 .scroll {
+  overflow-x: hidden;
   overflow-y: auto;
-  padding-right: 8px;
+  margin: -4px 0 -4px -4px;
+  padding: 4px 8px 4px 4px;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -87,13 +90,17 @@
   font-weight: 700;
   color: $clrBaseDark;
   line-height: 120%;
+  overflow-wrap: anywhere;
 }
 
+// Long texts break into more lines instead of scrolling sideways.
 .description {
   margin: 0 0 24px;
   font-size: 16px;
   color: $clrBaseDark;
   line-height: 140%;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 .infoRow {
@@ -216,9 +223,7 @@
 
 .subtaskText {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .empty {
