@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, ElementRef, effect, input, output, signal, viewChild } from '@angular/core';
 
 /**
  * Input to add subtasks and a list to edit or delete them.
@@ -16,6 +16,11 @@ export class SubtasksInputComponent {
   readonly draft = signal('');
   readonly editIndex = signal<number | null>(null);
   readonly editText = signal('');
+  readonly editInput = viewChild<ElementRef<HTMLInputElement>>('editInput');
+
+  constructor() {
+    effect(() => this.editInput()?.nativeElement.focus());
+  }
 
   /**
    * Stores the text of the new subtask.
@@ -45,8 +50,10 @@ export class SubtasksInputComponent {
   /**
    * Removes one subtask.
    * @param index - Position of the subtask in the list.
+   * @param event - Optional click event, so the row does not open for editing.
    */
-  remove(index: number): void {
+  remove(index: number, event?: Event): void {
+    event?.stopPropagation();
     this.subtasksChange.emit(this.subtasks().filter((_, i) => i !== index));
     if (this.editIndex() === index) this.editIndex.set(null);
   }
@@ -56,6 +63,7 @@ export class SubtasksInputComponent {
    * @param index - Position of the subtask in the list.
    */
   startEdit(index: number): void {
+    if (this.editIndex() === index) return;
     this.editIndex.set(index);
     this.editText.set(this.subtasks()[index]);
   }

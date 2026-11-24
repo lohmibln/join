@@ -26,6 +26,7 @@
       @if (editIndex() === $index) {
         <li class="item editing">
           <input
+            #editInput
             class="editInput"
             type="text"
             aria-label="Edit subtask"
@@ -40,12 +41,12 @@
           </div>
         </li>
       } @else {
-        <li class="item" (dblclick)="startEdit($index)">
+        <li class="item" (click)="startEdit($index)">
           <span class="text">{{ subtask }}</span>
           <div class="icons hoverIcons">
             <button class="iconButton edit" type="button" aria-label="Edit subtask" (click)="startEdit($index)"></button>
             <span class="divider" aria-hidden="true"></span>
-            <button class="iconButton delete" type="button" aria-label="Delete subtask" (click)="remove($index)"></button>
+            <button class="iconButton delete" type="button" aria-label="Delete subtask" (click)="remove($index, $event)"></button>
           </div>
         </li>
       }
