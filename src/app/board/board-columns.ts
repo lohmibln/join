@@ -11,3 +11,8 @@ export const BOARD_COLUMNS: BoardColumn[] = [
   { status: 'awaitFeedback', title: 'Await feedback' },
   { status: 'done', title: 'Done' },
 ];
+
+/** Columns a task can be moved to (excludes its current status). */
+export function moveTargetsForStatus(current: TaskStatus): BoardColumn[] {
+  return BOARD_COLUMNS.filter((column) => column.status !== current);
+}

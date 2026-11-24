@@ -1,17 +1,37 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Task, TaskStatus } from '../shared/models/task.model';
 
+/** CDK drop-list id for a board column status. */
+export function dropListIdForStatus(status: TaskStatus): string {
+  return `${status}List`;
+}
+
+/** Resolves a CDK drop-list id back to a task status. */
+export function statusFromDropListId(listId: string): TaskStatus | null {
+  switch (listId) {
+    case 'toDoList':
+      return 'toDo';
+    case 'inProgressList':
+      return 'inProgress';
+    case 'awaitFeedbackList':
+      return 'awaitFeedback';
+    case 'doneList':
+      return 'done';
+    default:
+      return null;
+  }
+}
+
 /**
- * Returns a new task list with the given task moved to `newStatus`.
- * Used after a cross-column CDK drag-and-drop.
+ * CDK drag start delay. Touch waits ~0.3s so sideways card scroll
+ * on mobile does not immediately grab a task; mouse stays instant.
  */
-export function applyTaskStatusChange(
-  tasks: Task[],
-  taskId: string,
-  newStatus: TaskStatus,
-): Task[] {
-  return tasks.map((task) =>
-    task.id === taskId ? { ...task, status: newStatus } : task,
-  );
+export const BOARD_DRAG_START_DELAY = { touch: 300, mouse: 0 } as const;
+
+/** Reads the dragged task from a CDK drop event (`cdkDragData`). */
+export function taskFromDropEvent(event: CdkDragDrop<Task[]>): Task | null {
+  const task = event.item.data as Task | undefined;
+  return task?.id ? task : null;
 }
 
 /**

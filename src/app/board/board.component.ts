@@ -15,19 +15,23 @@ import { TasksService } from '../shared/services/tasks.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
 import { BOARD_COLUMNS } from './board-columns';
-import { moveTaskInList } from './board-dnd.apply';
-import { BOARD_DRAG_START_DELAY } from './board-dnd.delay';
-import { dropListIdForStatus, statusFromDropListId } from './board-dnd.ids';
-import { taskFromDropEvent } from './board-dnd.task-from-drop';
-import { filterTasksBySearch, isBoardSearchActive } from './board-search.filter';
-import { groupTasksByStatus } from './board-search.group';
-import { hasNoBoardSearchResults } from './board-search.has-no-results';
+import {
+  BOARD_DRAG_START_DELAY,
+  dropListIdForStatus,
+  moveTaskInList,
+  statusFromDropListId,
+  taskFromDropEvent,
+} from './board-dnd';
 import {
   BOARD_SEARCH_EMPTY_COLUMN,
   BOARD_SEARCH_NO_RESULTS,
   BOARD_SEARCH_PLACEHOLDER,
-} from './board-search.messages';
-import { readSearchInputValue } from './board-search.read-input';
+  filterTasksBySearch,
+  groupTasksByStatus,
+  hasNoBoardSearchResults,
+  isBoardSearchActive,
+  readSearchInputValue,
+} from './board-search';
 import { isBoardMobileViewport, isBoardRowLayout } from './board-viewport';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
@@ -49,12 +53,8 @@ import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component
   styleUrls: [
     './board.component.scss',
     './board.responsive.scss',
-    './board-dnd.styles.scss',
-    './board-dnd.mobile.scss',
-    './board-dnd.receiving.scss',
-    './board-dnd.preview-rotate.scss',
-    './board-search.bar.scss',
-    './board-search.responsive.scss',
+    './board-dnd.scss',
+    './board-search.scss',
     './board-add-task.button.scss',
     './board-columns.scroll.scss',
     './board.mobile.scss',

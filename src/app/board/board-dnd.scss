@@ -1,0 +1,96 @@
+@import '../../styles/variables';
+
+/* CDK drag-and-drop visuals (aligned with the Join reference board). */
+
+.taskItem {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+/* Desktop: block browser gestures so drag wins immediately. */
+@media (min-width: 1024px) {
+  .taskItem {
+    touch-action: none;
+  }
+}
+
+/*
+ * Mobile: allow pan so sideways card scroll still works.
+ * CDK only starts a drag after cdkDragStartDelay on touch.
+ */
+@media (max-width: 1023px) {
+  .taskItem {
+    touch-action: pan-x pan-y;
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 24px;
+  box-shadow:
+    0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.taskList.cdk-drop-list-dragging .taskItem:not(.cdk-drag-placeholder) {
+  transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-animating {
+  transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Larger drop targets when columns stack on mobile. */
+@media (max-width: 1023px) {
+  .taskList {
+    min-height: 120px;
+    padding-bottom: 8px;
+  }
+
+  .taskItem {
+    width: 100%;
+  }
+
+  .emptyColumn {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/*
+ * The dashed border is always there, only its color changes while a task is dragged.
+ * So the columns keep their size and nothing moves when the highlight appears.
+ */
+.taskList {
+  border: 2px dashed transparent;
+  border-radius: 16px;
+  transition:
+    border-color 125ms ease-in-out,
+    background-color 125ms ease-in-out;
+}
+
+/* Every column a task can be dropped into stays blue, also the one under the card. */
+.taskList.cdk-drop-list-receiving,
+.taskList.cdk-drop-list-dragging {
+  border-color: $clrHighlight2;
+  background: rgba(41, 171, 226, 0.08);
+  outline: none;
+}
+
+/* Slight tilt while a card is dragged (visual “moving” feedback). */
+.cdk-drag-preview {
+  app-task-card,
+  .taskCard {
+    transform: rotate(5deg);
+  }
+}

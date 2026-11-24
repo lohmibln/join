@@ -1,7 +1,0 @@
-/* Slight tilt while a card is dragged (visual “moving” feedback). */
-.cdk-drag-preview {
-  app-task-card,
-  .taskCard {
-    transform: rotate(5deg);
-  }
-}

@@ -56,3 +56,17 @@
   height: 24px;
   pointer-events: none;
 }
+
+@media (max-width: 1023px) {
+  .searchBar {
+    width: 100%;
+    max-width: 396px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 599px) {
+  .searchBar {
+    max-width: none;
+  }
+}

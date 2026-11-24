@@ -1,7 +1,6 @@
 import { Component, HostListener, input, output, signal } from '@angular/core';
 import { TaskStatus } from '../../shared/models/task.model';
-import { BOARD_COLUMNS, BoardColumn } from '../board-columns';
-import { moveTargetsForStatus } from '../board-move-targets';
+import { BOARD_COLUMNS, BoardColumn, moveTargetsForStatus } from '../board-columns';
 
 @Component({
   selector: 'app-task-move-menu',
