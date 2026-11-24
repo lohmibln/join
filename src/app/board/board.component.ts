@@ -28,7 +28,7 @@ import {
   BOARD_SEARCH_PLACEHOLDER,
 } from './board-search.messages';
 import { readSearchInputValue } from './board-search.read-input';
-import { isBoardMobileViewport } from './board-viewport';
+import { isBoardMobileViewport, isBoardRowLayout } from './board-viewport';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component';
@@ -72,6 +72,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   readonly addTaskStatus = signal<TaskStatus | null>(null);
   readonly searchQuery = signal('');
   readonly isMobileBoard = signal(isBoardMobileViewport());
+  readonly isRowLayout = signal(isBoardRowLayout());
   readonly dragStartDelay = BOARD_DRAG_START_DELAY;
 
   readonly searchPlaceholder = BOARD_SEARCH_PLACEHOLDER;
@@ -109,10 +110,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.tasksService.stopRealtime();
   }
 
-  /** Updates the mobile flag when the window is resized. */
+  /** Updates the layout flags when the window is resized. */
   @HostListener('window:resize')
   onWindowResize(): void {
     this.isMobileBoard.set(isBoardMobileViewport());
+    this.isRowLayout.set(isBoardRowLayout());
   }
 
   /** Stores the current search input value. */

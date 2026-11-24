@@ -46,6 +46,7 @@
           cdkDropList
           [id]="dropListIdForStatus(column.status)"
           [cdkDropListData]="tasksByStatus()[column.status]"
+          [cdkDropListOrientation]="isRowLayout() ? 'horizontal' : 'vertical'"
           (cdkDropListDropped)="onDrop($event)"
         >
           @for (task of tasksByStatus()[column.status]; track task.id) {
