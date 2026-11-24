@@ -33,8 +33,10 @@
 }
 
 // Where the card will land: an empty box with a dotted border, like in Figma.
+// The outline is drawn inside the box, so it keeps the exact size of the card.
 .cdk-drag-placeholder {
-  border: 2px dotted #a8a8a8;
+  outline: 2px dotted #a8a8a8;
+  outline-offset: -2px;
   border-radius: 24px;
 
   > * {

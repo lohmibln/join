@@ -210,7 +210,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   /**
    * Handles CDK drag-and-drop between board columns (desktop + mobile).
-   * Same-column drops are ignored until task order is persisted.
+   * Works between columns and inside one column, the new order is saved.
    */
   onDrop(event: CdkDragDrop<Task[]>): void {
     const task = taskFromDropEvent(event);
