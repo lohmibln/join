@@ -23,10 +23,10 @@ export function statusFromDropListId(listId: string): TaskStatus | null {
 }
 
 /**
- * CDK drag start delay. Touch waits ~0.3s so sideways card scroll
+ * CDK drag start delay. Touch waits ~0.15s so sideways card scroll
  * on mobile does not immediately grab a task; mouse stays instant.
  */
-export const BOARD_DRAG_START_DELAY = { touch: 300, mouse: 0 } as const;
+export const BOARD_DRAG_START_DELAY = { touch: 150, mouse: 0 } as const;
 
 /** Reads the dragged task from a CDK drop event (`cdkDragData`). */
 export function taskFromDropEvent(event: CdkDragDrop<Task[]>): Task | null {
