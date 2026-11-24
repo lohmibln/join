@@ -30,8 +30,8 @@
   }
 }
 
-/* Phone columns: stacked, each row of cards scrolls sideways (Figma 332:1228). */
-@media (max-width: 599px) {
+/* Below a wide desktop: columns stacked, each row of cards scrolls sideways (Figma 332:1228). */
+@media (max-width: 1279px) {
   .columns {
     display: flex;
     flex-direction: column;
@@ -40,6 +40,7 @@
 
   .column {
     width: 100%;
+    max-width: none;
   }
 
   .columnHeader {
@@ -62,9 +63,20 @@
     overflow-y: hidden;
   }
 
+  // All cards of a row get the height of the highest one.
+  .taskList {
+    align-items: stretch;
+  }
+
   .taskItem {
+    display: flex;
     flex: none;
     width: 252px;
+
+    app-task-card {
+      display: flex;
+      flex: 1;
+    }
   }
 
   .emptyColumn {
@@ -75,7 +87,7 @@
 }
 
 /* Room below a card, so the open move menu is not cut off by the scrolling row. */
-@media (max-width: 599px) {
+@media (max-width: 1279px) {
   .taskList:has(.taskItem) {
     min-height: 176px;
   }

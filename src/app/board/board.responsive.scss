@@ -1,18 +1,5 @@
 @import '../../styles/variables';
 
-/* Narrower than a wide desktop: two columns per row, so the cards stay readable. */
-@media (max-width: 1279px) {
-  .columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-  }
-
-  .column {
-    max-width: none;
-  }
-}
-
 /* Tablet and phone: the shell switches to the bottom navigation. */
 @media (max-width: 1023px) {
   .board {

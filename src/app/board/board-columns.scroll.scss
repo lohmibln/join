@@ -1,5 +1,5 @@
 /* Long columns scroll inside the column instead of stretching the whole page. */
-@media (min-width: 600px) {
+@media (min-width: 1280px) {
   .taskList {
     max-height: max(360px, calc(100dvh - 320px));
     margin: -4px;
