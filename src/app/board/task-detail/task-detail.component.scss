@@ -54,7 +54,8 @@
 .scroll {
   overflow-x: hidden;
   overflow-y: auto;
-  margin: -4px 0 -4px -4px;
+  // Starts below the close button, so the scrollbar never runs under it.
+  margin: 12px 0 -4px -4px;
   padding: 4px 8px 4px 4px;
 
   &::-webkit-scrollbar {
@@ -249,5 +250,9 @@
 
   .infoRow.horizontal {
     gap: 16px;
+  }
+
+  .scroll {
+    margin-top: 28px;
   }
 }
