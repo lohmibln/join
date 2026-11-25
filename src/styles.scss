@@ -52,6 +52,11 @@ html {
   height: 100%;
 }
 
+// Lock the page scroll while any dialog (.overlay) is open.
+html:has(.overlay) {
+  overflow: hidden;
+}
+
 .contentLimit {
   width: 100%;
   min-width: 300px;
