@@ -36,12 +36,16 @@
   line-height: 120%;
 }
 
+// Sticky: stays at the top while the dialog scrolls (negative margins keep the old position).
 .closeButton {
-  position: absolute;
-  top: 64px;
-  right: 40px;
+  position: sticky;
+  top: 24px;
+  z-index: 2;
+  align-self: flex-end;
+  flex: none;
   width: 32px;
   height: 32px;
+  margin: 0 -26px -32px 0;
   padding: 0;
   border: unset;
   border-radius: 50%;
@@ -63,7 +67,6 @@
   }
 
   .closeButton {
-    top: 32px;
-    right: 32px;
+    margin-right: 0;
   }
 }

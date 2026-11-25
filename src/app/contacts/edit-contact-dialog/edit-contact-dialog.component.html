@@ -1,5 +1,7 @@
 <div class="overlay" (click)="onOverlayClick($event)">
   <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="editContactTitle">
+    <button class="closeButton" type="button" aria-label="Close dialog" (click)="close()"></button>
+
     <div class="brand">
       <img class="logo" src="assets/img/logo-white.svg" alt="Join logo" />
       <div class="brandText">
@@ -10,13 +12,7 @@
       </div>
     </div>
 
-    <button class="closeButton" type="button" aria-label="Close dialog" (click)="close()"></button>
-
-    <div
-      class="avatar avatarInitials"
-      [style.background-color]="avatarColor()"
-      aria-hidden="true"
-    >
+    <div class="avatar avatarInitials" [style.background-color]="avatarColor()" aria-hidden="true">
       {{ avatarShortcut() }}
     </div>
 
@@ -80,7 +76,12 @@
       </div>
 
       <div class="buttons">
-        <button class="secondaryButton" type="button" [disabled]="isSaving()" (click)="deleteRequested.emit()">
+        <button
+          class="secondaryButton"
+          type="button"
+          [disabled]="isSaving()"
+          (click)="deleteRequested.emit()"
+        >
           Delete
           <span class="cancelIcon"></span>
         </button>

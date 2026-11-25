@@ -46,10 +46,16 @@
     font-size: $fSDefault;
   }
 
+  // Sticky: stays at the top while the dialog content scrolls.
+  // The negative bottom margin keeps the brand panel at the top edge.
   .closeButton {
+    position: sticky;
     top: 24px;
-    right: 16px;
+    z-index: 2;
+    display: block;
+    margin: 24px 16px -56px auto;
     left: auto;
+    right: auto;
     background-image: url('/assets/icons/close-white.svg');
 
     &:hover {
