@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
+import { buildNewContact } from '../utils/contact.utils';
 import { NavbarService } from './navbar.service';
 import { supabase } from './supabase.client';
 
@@ -53,8 +54,35 @@ export class AuthenticationService {
       return false;
     }
 
+    if (data.user && !(await this.createContactForUser(data.user.id, fullName, email))) {
+      return false;
+    }
+
     this.resetAuthError();
     this.currentLoggedInUser = data.user;
+    return true;
+  }
+
+  /**
+   * Adds the new account to the contacts table (same id as the auth user).
+   * @param userId - Auth user id used as contact id.
+   * @param fullName - Display name from signup.
+   * @param email - Email from signup.
+   * @returns True if the contact was saved.
+   */
+  private async createContactForUser(
+    userId: string,
+    fullName: string,
+    email: string,
+  ): Promise<boolean> {
+    const contact = { id: userId, ...buildNewContact(fullName, email, '') };
+    const { error } = await supabase.from('contacts').insert(contact);
+
+    if (error) {
+      this.setAuthError(error);
+      return false;
+    }
+
     return true;
   }
 
