@@ -85,15 +85,10 @@ export class AuthenticationService {
 
   /**
    * Logs the current user or guest out and opens the login page.
+   * Personal data stays inaccessible until the next login.
    */
   async logout() {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      this.setAuthError(error);
-      return;
-    }
-
+    await supabase.auth.signOut();
     localStorage.removeItem(GUEST_STORAGE_KEY);
     this.isUserLoggedIn = false;
     this.currentLoggedInUser = null;
