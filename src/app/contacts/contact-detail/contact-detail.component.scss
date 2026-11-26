@@ -1,5 +1,5 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixin';
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixin' as *;
 
 .header {
   @include setFlex(row, flex-start, center, 51px);

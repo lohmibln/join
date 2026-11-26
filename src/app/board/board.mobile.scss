@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@use '../../styles/variables' as *;
 
 /* Below 1280px the shell switches to the bottom navigation and the board to the mobile layout. */
 @media (max-width: 1279px) {

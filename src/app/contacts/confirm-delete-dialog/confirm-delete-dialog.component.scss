@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as *;
 
 // Overlay, dialog size, brand panel, close button and button looks come from the
 // add contact dialog styles. Only what is different here is set below.

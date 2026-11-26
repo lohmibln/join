@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as *;
 
 // Figma: the button sits at x=212, y=42 in the 252px card (42px from the top, 16px from the right).
 .moveMenuRoot {

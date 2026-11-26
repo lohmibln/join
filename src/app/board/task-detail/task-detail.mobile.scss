@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as *;
 
 // Figma 75925:19271 / 75925:19196: the overlay is 396px wide on a 428px phone, 16px to the screen edge.
 @media (max-width: 599px) {

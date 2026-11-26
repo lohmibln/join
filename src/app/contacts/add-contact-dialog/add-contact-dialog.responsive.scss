@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as *;
 
 // Windows lower than the 592px desktop dialog: scroll so the buttons stay reachable.
 @media (min-width: 1260px) and (max-height: 623px) {

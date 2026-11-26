@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@use '../../styles/variables' as *;
 
 // Sidebar and list leave little room for the detail area at these widths.
 @media (max-width: 1240px) {
