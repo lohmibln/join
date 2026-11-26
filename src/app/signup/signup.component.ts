@@ -96,7 +96,7 @@ export class SignupComponent implements OnInit {
 
 
   /**
-   * Shows the success toast and opens login after a short delay.
+   * Shows the success toast, then opens the dashboard (Summary).
    */
   async confirmCreation(): Promise<void> {
     if (this.authenticationService.errorOccoursIn() != null) {
@@ -105,7 +105,7 @@ export class SignupComponent implements OnInit {
     this.isPWDifferent = false;
     this.displayConfirmation = true;
     setTimeout(async () => {
-      await this.authenticationService.logout();
+      await this.authenticationService.login(this.newUser.email, this.newUser.pw);
     }, 1025);
   }
 }
