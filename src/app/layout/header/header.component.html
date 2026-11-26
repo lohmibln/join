@@ -8,8 +8,26 @@
     <a class="help" routerLink="/help">
       <img src="assets/icons/help.svg" alt="Help" />
     </a>
-    <button class="userBadge" type="button" (click)="authenticationService.logout()">
+
+    <button
+      class="userBadge"
+      type="button"
+      (click)="toggleMenu($event)"
+      [attr.aria-expanded]="menuOpen()"
+      aria-haspopup="menu"
+      aria-label="User menu"
+    >
       {{ initials }}
     </button>
   </div>
+
+  @if (menuOpen()) {
+    <div class="menuBackdrop" (click)="closeMenu()"></div>
+    <nav class="userMenu" role="menu">
+      <a class="userMenuHelp" routerLink="/help" role="menuitem" (click)="closeMenu()">Help</a>
+      <a routerLink="/legalNotice" role="menuitem" (click)="closeMenu()">Legal Notice</a>
+      <a routerLink="/privacyPolicy" role="menuitem" (click)="closeMenu()">Privacy Policy</a>
+      <button type="button" role="menuitem" (click)="logout()">Log out</button>
+    </nav>
+  }
 </header>

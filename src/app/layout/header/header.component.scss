@@ -48,8 +48,69 @@
   color: #29445c;
   font-size: $fSSec;
   font-weight: 700;
+  cursor: pointer;
 
   &:hover {
     background-color: #eef0f3;
+  }
+}
+
+.menuBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  background: transparent;
+}
+
+.userMenu {
+  position: absolute;
+  top: 88px;
+  right: 24px;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  padding: 8px 0;
+  background-color: $clrHighlight1;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+
+  > a,
+  > button {
+    display: block;
+    width: 100%;
+    padding: 12px 24px;
+    border: unset;
+    border-radius: 0;
+    background: transparent;
+    color: #cdcdcd;
+    text-align: left;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 125ms ease-in-out;
+
+    &:hover {
+      background-color: #2a3d59;
+      color: $clrBaseBright;
+    }
+  }
+}
+
+.userMenuHelp {
+  display: none;
+}
+
+@media (max-width: 1279px) {
+  .userMenu {
+    top: 72px;
+    right: 16px;
+  }
+
+  .userMenuHelp {
+    display: block;
   }
 }

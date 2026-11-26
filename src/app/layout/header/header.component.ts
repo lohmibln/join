@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 import { getInitials } from '../../shared/utils/contact.utils';
@@ -11,7 +11,8 @@ import { getInitials } from '../../shared/utils/contact.utils';
   styleUrls: ['./header.component.scss', './header.responsive.scss'],
 })
 export class HeaderComponent {
-  authenticationService = inject(AuthenticationService);
+  readonly authenticationService = inject(AuthenticationService);
+  readonly menuOpen = signal(false);
 
   /**
    * Gets the initials for the user badge.
@@ -20,5 +21,22 @@ export class HeaderComponent {
   get initials(): string {
     const fullName = this.authenticationService.currentLoggedInUser?.user_metadata?.['full_name'];
     return fullName ? getInitials(fullName) : 'G';
+  }
+
+  /** Opens or closes the user menu. */
+  toggleMenu(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.update((open) => !open);
+  }
+
+  /** Closes the user menu. */
+  closeMenu(): void {
+    this.menuOpen.set(false);
+  }
+
+  /** Logs out and closes the menu. */
+  logout(): void {
+    this.closeMenu();
+    void this.authenticationService.logout();
   }
 }
