@@ -36,6 +36,11 @@
     font-style: normal;
   }
 
+  ul {
+    @include setFlex(column, flex-start, stretch, 8px);
+    padding-left: 24px;
+  }
+
   section {
     @include setFlex(column, flex-start, stretch, 16px);
   }
