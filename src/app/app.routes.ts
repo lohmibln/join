@@ -6,6 +6,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { HelpComponent } from './help/help.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { LoginComponent } from './login/login.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { SignupComponent } from './signup/signup.component';
 import { SuccessComponent } from './success/success.component';
 
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'contacts', component: ContactsComponent, canActivate: [authGuard] },
   { path: 'help', component: HelpComponent, canActivate: [authGuard] },
   { path: 'legalNotice', component: LegalNoticeComponent },
+  { path: 'privacyPolicy', component: PrivacyPolicyComponent },
   { path: '**', redirectTo: '' },
 ];
