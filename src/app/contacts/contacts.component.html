@@ -3,6 +3,7 @@
     [class.hiddenOnMobile]="selectedContact()"
     [groups]="groups()"
     [selectedId]="selectedContact()?.id ?? null"
+    [currentUserId]="currentUserId"
     [errorMessage]="contactsService.errorMessage()"
     (selectContact)="selectedContact.set($event)"
     (addContact)="isAddContactDialogOpen.set(true)"
