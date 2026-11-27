@@ -32,7 +32,7 @@
   padding: 0 0 0 56px;
   border-radius: 0;
   color: #cdcdcd;
-  font-size: $fSSec;
+  font-size: $fSTer;
   font-family: $font-family-base;
 
   &:link,
@@ -71,7 +71,8 @@
       color: #a8a8a8;
     }
 
-    &:hover {
+    &:hover,
+    &.active {
       color: $clrHighlight2;
     }
   }

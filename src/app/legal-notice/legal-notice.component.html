@@ -1,0 +1,98 @@
+<article class="infoPage">
+  <div class="infoPageHead">
+    <h1>Legal Notice</h1>
+    <app-back-button />
+  </div>
+
+  <div class="infoPageText">
+    <section>
+      <h2>Imprint</h2>
+      <p>Information according to § 5 DDG (German Digital Services Act)</p>
+      <address>
+        @for (name of imprint.names; track name) {
+          {{ name }}<br />
+        }
+        {{ imprint.street }}<br />
+        {{ imprint.city }}
+      </address>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>
+        Email: <a [href]="'mailto:' + imprint.email">{{ imprint.email }}</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>Acceptance of terms</h2>
+      <p>
+        By accessing and using <span class="brand">Join</span> (Product), you acknowledge and agree
+        to the following terms and conditions, and any policies, guidelines, or amendments thereto
+        that may be presented to you from time to time. We may update these terms at any time
+        without notice.
+      </p>
+    </section>
+
+    <section>
+      <h2>Scope and ownership of the product</h2>
+      <p>
+        <span class="brand">Join</span> has been developed as part of a student group project in a
+        web development bootcamp at the Developer Akademie GmbH. It has an educational purpose and
+        is not intended for extensive personal or business usage. As such, we cannot guarantee
+        consistent availability, reliability, accuracy, or any other aspect of quality regarding
+        this Product.
+      </p>
+      <p>
+        The design of <span class="brand">Join</span> is owned by the Developer Akademie GmbH.
+        Unauthorized use, reproduction, modification, distribution, or replication of the design is
+        strictly prohibited.
+      </p>
+    </section>
+
+    <section>
+      <h2>Proprietary rights</h2>
+      <p>
+        Aside from the design owned by the Developer Akademie GmbH, we, the listed students, retain
+        all proprietary rights in <span class="brand">Join</span>, including any associated
+        copyrighted material, trademarks, and other proprietary information.
+      </p>
+    </section>
+
+    <section>
+      <h2>Use of the product</h2>
+      <p>
+        <span class="brand">Join</span> is intended to be used for lawful purposes only, in
+        accordance with all applicable laws and regulations. Any use of the Product for illegal
+        activities, or to harass, harm, threaten, or intimidate another person, is strictly
+        prohibited. You are solely responsible for your interactions with other users.
+      </p>
+    </section>
+
+    <section>
+      <h2>Disclaimer of warranties and limitation of liability</h2>
+      <p>
+        <span class="brand">Join</span> is provided "as is" without warranty of any kind, whether
+        express or implied, including but not limited to the implied warranties of merchantability,
+        fitness for a particular purpose, and non-infringement. In no event will we, the listed
+        students, or the Developer Akademie, be liable for any direct, indirect, incidental,
+        special, consequential or exemplary damages arising out of the use of the Product.
+      </p>
+    </section>
+
+    <section>
+      <h2>Indemnity</h2>
+      <p>
+        You agree to indemnify, defend and hold harmless us, the listed students, the Developer
+        Akademie, and our affiliates, partners, officers, directors, agents, and employees, from and
+        against any claim, demand, loss, damage, cost, or liability arising out of your use of the
+        Product and your breach of these terms.
+      </p>
+      <p>
+        For any questions or notices, please contact us at
+        <a [href]="'mailto:' + imprint.email">{{ imprint.email }}</a
+        >.
+      </p>
+    </section>
+  </div>
+</article>

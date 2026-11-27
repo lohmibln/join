@@ -4,20 +4,23 @@
   </div>
 
   <div class="menu">
-    @for (item of menuItems; track item.path) {
-      <a
-        class="menuLink"
-        [routerLink]="item.path"
-        routerLinkActive="active"
-      >
-        <img [src]="item.icon" [alt]="item.label" />
-        <span>{{ item.label }}</span>
+    @if (authenticationService.isUserLoggedIn) {
+      @for (item of menuItems; track item.path) {
+        <a class="menuLink" [routerLink]="item.path" routerLinkActive="active">
+          <img [src]="item.icon" alt="" />
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    } @else {
+      <a class="menuLink" routerLink="/">
+        <img src="assets/icons/login.svg" alt="" />
+        <span>Log In</span>
       </a>
     }
   </div>
 
   <div class="legal">
-    <a routerLink="/privacyPolicy">Privacy Policy</a>
-    <a routerLink="/legalNotice">Legal notice</a>
+    <a routerLink="/privacyPolicy" routerLinkActive="active">Privacy Policy</a>
+    <a routerLink="/legalNotice" routerLinkActive="active">Legal notice</a>
   </div>
 </nav>

@@ -1,28 +1,30 @@
 <header class="header">
   <span class="title">Kanban Project Management Tool</span>
-  <a class="mobileLogo" routerLink="/success">
+  <a class="mobileLogo" [routerLink]="authenticationService.isUserLoggedIn ? '/success' : '/'">
     <img src="assets/img/logo-dark.svg" alt="Join logo" />
   </a>
 
-  <div class="actions">
-    @if (!isHelpPage) {
-      <a class="help" routerLink="/help" aria-label="Help">
-        <img class="helpIcon" src="assets/icons/help.svg" alt="" />
-        <img class="helpIconHover" src="assets/icons/help-hover.svg" alt="" />
-      </a>
-    }
+  @if (authenticationService.isUserLoggedIn) {
+    <div class="actions">
+      @if (!isHelpPage) {
+        <a class="help" routerLink="/help" aria-label="Help">
+          <img class="helpIcon" src="assets/icons/help.svg" alt="" />
+          <img class="helpIconHover" src="assets/icons/help-hover.svg" alt="" />
+        </a>
+      }
 
-    <button
-      class="userBadge"
-      type="button"
-      (click)="toggleMenu($event)"
-      [attr.aria-expanded]="menuOpen()"
-      aria-haspopup="menu"
-      aria-label="User menu"
-    >
-      {{ initials }}
-    </button>
-  </div>
+      <button
+        class="userBadge"
+        type="button"
+        (click)="toggleMenu($event)"
+        [attr.aria-expanded]="menuOpen()"
+        aria-haspopup="menu"
+        aria-label="User menu"
+      >
+        {{ initials }}
+      </button>
+    </div>
+  }
 
   @if (menuOpen()) {
     <div class="menuBackdrop" (click)="closeMenu()"></div>
