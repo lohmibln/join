@@ -11,6 +11,7 @@ import { getContactColor } from '../../shared/utils/contact.utils';
 export class ContactListComponent {
   groups = input.required<ContactGroup[]>();
   selectedId = input<string | null>(null);
+  currentUserId = input<string | null>(null);
   errorMessage = input('');
 
   selectContact = output<Contact>();

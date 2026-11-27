@@ -11,6 +11,7 @@ import { getContactColor } from '../../shared/utils/contact.utils';
 })
 export class ContactDetailComponent {
   contact = input.required<Contact>();
+  isOwnContact = input(false);
 
   editContact = output<void>();
   deleteContact = output<void>();

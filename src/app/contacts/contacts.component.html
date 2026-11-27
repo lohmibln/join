@@ -3,6 +3,7 @@
     [class.hiddenOnMobile]="selectedContact()"
     [groups]="groups()"
     [selectedId]="selectedContact()?.id ?? null"
+    [currentUserId]="currentUserId"
     [errorMessage]="contactsService.errorMessage()"
     (selectContact)="selectedContact.set($event)"
     (addContact)="isAddContactDialogOpen.set(true)"
@@ -25,6 +26,7 @@
     @if (selectedContact(); as contact) {
       <app-contact-detail
         [contact]="contact"
+        [isOwnContact]="contact.id === currentUserId"
         (editContact)="openEditContact()"
         (deleteContact)="openDeleteConfirm()"
       />

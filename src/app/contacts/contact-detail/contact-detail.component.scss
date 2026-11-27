@@ -32,6 +32,10 @@
   }
 }
 
+.you {
+  color: $clrDisabled;
+}
+
 // 120px circle plus its 3px ring, the Figma gap of 54px is measured from the circle.
 .avatar {
   @include setFlex();

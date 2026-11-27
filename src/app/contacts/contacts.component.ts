@@ -8,6 +8,7 @@ import { AddContactDialogComponent } from './add-contact-dialog/add-contact-dial
 import { EditContactDialogComponent } from './edit-contact-dialog/edit-contact-dialog.component';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
 import { ToastService } from '../shared/services/toast.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-contacts',
@@ -25,6 +26,7 @@ import { ToastService } from '../shared/services/toast.service';
 export class ContactsComponent implements OnInit, OnDestroy {
   contactsService = inject(ContactsService);
   private readonly toastService = inject(ToastService);
+  private readonly authenticationService = inject(AuthenticationService);
 
   readonly selectedContact = signal<Contact | null>(null);
   readonly isAddContactDialogOpen = signal(false);
@@ -32,6 +34,11 @@ export class ContactsComponent implements OnInit, OnDestroy {
   readonly isDeleteConfirmOpen = signal(false);
   readonly isDeleting = signal(false);
   readonly groups = computed(() => groupContactsByLetter(this.contactsService.contacts()));
+
+  /** Id of the logged in user. Their own contact has the same id. */
+  get currentUserId(): string | null {
+    return this.authenticationService.currentLoggedInUser?.id ?? null;
+  }
 
   constructor() {
     // Keep the open detail in sync when Realtime (or local save) updates the list.

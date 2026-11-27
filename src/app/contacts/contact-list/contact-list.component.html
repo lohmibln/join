@@ -19,7 +19,12 @@
           {{ contact.name_shortcut }}
         </span>
         <span class="info">
-          <span class="name">{{ contact.full_name }}</span>
+          <span class="name"
+            >{{ contact.full_name }}
+            @if (contact.id === currentUserId()) {
+              <span class="you">(You)</span>
+            }
+          </span>
           <span class="email">{{ contact.email }}</span>
         </span>
       </button>
