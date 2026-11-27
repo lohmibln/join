@@ -63,3 +63,14 @@
 .brand {
   color: $clrPrimaryHover;
 }
+
+// Below 1280px the shell uses the mobile layout, so the text needs smaller margins.
+@media (max-width: 1279px) {
+  .infoPage {
+    padding: 32px 16px;
+  }
+
+  .infoPageHead h1 {
+    font-size: 47px;
+  }
+}
