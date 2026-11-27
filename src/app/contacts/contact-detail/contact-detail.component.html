@@ -1,7 +1,12 @@
 <div class="header">
   <span class="avatar" [style.background-color]="color()">{{ contact().name_shortcut }}</span>
   <div class="info">
-    <h2 class="name">{{ contact().full_name }}</h2>
+    <h2 class="name">
+      {{ contact().full_name }}
+      @if (isOwnContact()) {
+        <span class="you">(You)</span>
+      }
+    </h2>
     <div class="actions" [class.open]="isMenuOpen()">
       <button class="actionButton editButton" type="button" (click)="editContact.emit()">
         <span class="actionIcon"></span>
