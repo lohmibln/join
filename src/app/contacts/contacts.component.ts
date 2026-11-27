@@ -1,7 +1,6 @@
 import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Contact } from '../shared/models/contact.model';
 import { ContactsService } from '../shared/services/contacts.service';
-import { NavbarService } from '../shared/services/navbar.service';
 import { groupContactsByLetter } from '../shared/utils/contact.utils';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
@@ -25,7 +24,6 @@ import { ToastService } from '../shared/services/toast.service';
 })
 export class ContactsComponent implements OnInit, OnDestroy {
   contactsService = inject(ContactsService);
-  private readonly navbarService = inject(NavbarService);
   private readonly toastService = inject(ToastService);
 
   readonly selectedContact = signal<Contact | null>(null);
@@ -44,7 +42,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
    * Loads the contacts and starts the live updates.
    */
   ngOnInit(): void {
-    this.navbarService.setSelection('contacts');
     void this.contactsService.loadContacts();
     this.contactsService.startRealtime();
   }

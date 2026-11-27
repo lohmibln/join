@@ -18,7 +18,7 @@
       <div class="horizontalSeperator"></div>
 
       <form id="signUpForm" class="signUpForm" (ngSubmit)="onSubmit(signUpForm)" #signUpForm="ngForm">
-        @if (authenticationService.errorOccoursIn() === 'global') {
+        @if (authenticationService.errorField() === 'global') {
           <div class="serverError">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#CCDAF5">
               <path
@@ -68,7 +68,7 @@
               required
               pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
               [class.errorInput]="
-                (!email.valid && email.touched) || authenticationService.errorOccoursIn() === 'email'
+                (!email.valid && email.touched) || authenticationService.errorField() === 'email'
               "
             />
             <div class="inputIconContainer">
@@ -78,7 +78,7 @@
           <div class="errorMessageContainer">
             @if (!email.valid && email.touched) {
               <p class="errorMessage">Please enter a valid Email</p>
-            } @else if (authenticationService.errorOccoursIn() === 'email') {
+            } @else if (authenticationService.errorField() === 'email') {
               <p class="errorMessage">{{ authenticationService.errorMessageForFailedRequest() }}</p>
             }
           </div>
@@ -98,7 +98,7 @@
               [class.errorInput]="
                 (!pw.valid && pw.touched) ||
                 (isPWDifferent && pwConfirm.touched && pw.touched) ||
-                authenticationService.errorOccoursIn() === 'pw'
+                authenticationService.errorField() === 'pw'
               "
             />
             <div
@@ -120,7 +120,7 @@
               <p class="errorMessage">Please enter a valid Password</p>
             } @else if (isPWDifferent && pwConfirm.touched && pw.touched) {
               <p class="errorMessage">Your passwords don't match. Please try again.</p>
-            } @else if (authenticationService.errorOccoursIn() === 'pw') {
+            } @else if (authenticationService.errorField() === 'pw') {
               <p class="errorMessage">{{ authenticationService.errorMessageForFailedRequest() }}</p>
             }
           </div>
@@ -140,7 +140,7 @@
               [class.errorInput]="
                 (!pwConfirm.valid && pwConfirm.touched) ||
                 (isPWDifferent && pwConfirm.touched && pw.touched) ||
-                authenticationService.errorOccoursIn() === 'pw'
+                authenticationService.errorField() === 'pw'
               "
             />
             <div
@@ -162,7 +162,7 @@
               <p class="errorMessage">Please enter a valid Password</p>
             } @else if (isPWDifferent && pwConfirm.touched && pw.touched) {
               <p class="errorMessage">Your passwords don't match. Please try again.</p>
-            } @else if (authenticationService.errorOccoursIn() === 'pw') {
+            } @else if (authenticationService.errorField() === 'pw') {
               <p class="errorMessage">{{ authenticationService.errorMessageForFailedRequest() }}</p>
             }
           </div>

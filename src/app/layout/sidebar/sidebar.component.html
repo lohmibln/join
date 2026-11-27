@@ -9,7 +9,6 @@
         class="menuLink"
         [routerLink]="item.path"
         routerLinkActive="active"
-        (click)="navbarService.setSelection(item.name)"
       >
         <img [src]="item.icon" [alt]="item.label" />
         <span>{{ item.label }}</span>

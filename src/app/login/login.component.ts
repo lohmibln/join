@@ -3,7 +3,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
-import { NavbarService } from '../shared/services/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +14,6 @@ import { NavbarService } from '../shared/services/navbar.service';
 export class LoginComponent implements OnInit {
   router = inject(Router);
   authenticationService = inject(AuthenticationService);
-  navbarService = inject(NavbarService);
 
   email = '';
   password = '';
@@ -29,10 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Marks the page as login view and clears old errors.
+   * Clears old errors when the login page opens.
    */
   ngOnInit(): void {
-    this.authenticationService.isLoginSignUpView = true;
     this.authenticationService.resetAuthError();
   }
 
@@ -43,7 +40,6 @@ export class LoginComponent implements OnInit {
     await this.authenticationService.checkLogin();
     if (this.authenticationService.isUserLoggedIn) {
       await this.router.navigate(['/success']);
-      this.navbarService.setSelection('success');
     }
   }
 
@@ -51,11 +47,11 @@ export class LoginComponent implements OnInit {
    * Plays the logo animation on the first visit only.
    */
   checkFirstVisit() {
-    if (!this.authenticationService.isLoginAnnimationPlayedOnce) {
+    if (!this.authenticationService.isLoginAnimationPlayedOnce) {
       this.showAnimation.set(true);
       setTimeout(() => {
         this.showAnimation.set(false);
-        this.authenticationService.isLoginAnnimationPlayedOnce = true;
+        this.authenticationService.isLoginAnimationPlayedOnce = true;
       }, 2000);
     }
   }

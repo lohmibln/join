@@ -30,7 +30,7 @@
     </div>
 
     <div class="inputAndErrorContainer">
-      @if (authenticationService.errorOccoursIn() == 'global') {
+      @if (authenticationService.errorField() == 'global') {
         <div class="serverError">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +72,8 @@
                 [ngClass]="{
                   errorInput:
                     (!loginEmail.valid && loginEmail.touched) ||
-                    authenticationService.errorOccoursIn() == 'email' ||
-                    authenticationService.errorOccoursIn() == 'email-pw',
+                    authenticationService.errorField() == 'email' ||
+                    authenticationService.errorField() == 'email-pw',
                 }"
                 pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
               />
@@ -86,11 +86,11 @@
             <div class="errorMessageContainer">
               @if (!loginEmail.valid && loginEmail.touched) {
                 <p class="errorMessage">Please enter a valid Email</p>
-              } @else if (authenticationService.errorOccoursIn() == 'email') {
+              } @else if (authenticationService.errorField() == 'email') {
                 <p class="errorMessage">
                   {{ authenticationService.errorMessageForFailedRequest() }}
                 </p>
-              } @else if (authenticationService.errorOccoursIn() == 'email-pw') {
+              } @else if (authenticationService.errorField() == 'email-pw') {
                 <p class="errorMessage">
                   {{ authenticationService.errorMessageForFailedRequest() }}
                 </p>
@@ -112,8 +112,8 @@
                 [ngClass]="{
                   errorInput:
                     (!pw.valid && pw.touched) ||
-                    authenticationService.errorOccoursIn() == 'pw' ||
-                    authenticationService.errorOccoursIn() == 'email-pw',
+                    authenticationService.errorField() == 'pw' ||
+                    authenticationService.errorField() == 'email-pw',
                 }"
               />
               <div
@@ -145,11 +145,11 @@
             <div class="errorMessageContainer">
               @if (!pw.valid && pw.touched) {
                 <p class="errorMessage">Please enter a valid Password</p>
-              } @else if (authenticationService.errorOccoursIn() == 'pw') {
+              } @else if (authenticationService.errorField() == 'pw') {
                 <p class="errorMessage">
                   {{ authenticationService.errorMessageForFailedRequest() }}
                 </p>
-              } @else if (authenticationService.errorOccoursIn() == 'email-pw') {
+              } @else if (authenticationService.errorField() == 'email-pw') {
                 <p class="errorMessage">
                   {{ authenticationService.errorMessageForFailedRequest() }}
                 </p>

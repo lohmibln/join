@@ -30,10 +30,9 @@ export class SignupComponent implements OnInit {
 
 
   /**
-   * Marks the page as signup view and clears old auth errors.
+   * Clears old auth errors when the signup page opens.
    */
   ngOnInit(): void {
-    this.authenticationService.isLoginSignUpView = true;
     this.authenticationService.resetAuthError();
   }
 
@@ -99,7 +98,7 @@ export class SignupComponent implements OnInit {
    * Shows the success toast, then logs out and opens the login page.
    */
   async confirmCreation(): Promise<void> {
-    if (this.authenticationService.errorOccoursIn() != null) {
+    if (this.authenticationService.errorField() != null) {
       return;
     }
     this.isPWDifferent = false;

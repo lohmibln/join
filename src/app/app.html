@@ -1,13 +1,10 @@
-@if (!authenticationService.isLoginSignUpView) {
+@if (showShell()) {
   <app-sidebar />
   <app-header />
 }
 
 <div class="mainArea">
-  <div
-    class="mainAreaContent contentLimit"
-    [class.withShell]="!authenticationService.isLoginSignUpView"
-  >
+  <div class="mainAreaContent contentLimit" [class.withShell]="showShell()">
     <div class="flex1">
       <router-outlet />
     </div>

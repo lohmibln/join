@@ -2,17 +2,10 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
 import { buildNewContact } from '../utils/contact.utils';
-import { NavbarService } from './navbar.service';
 import { supabase } from './supabase.client';
 
 export type AuthErrorField =
-  | 'fullname'
-  | 'email'
-  | 'pw'
-  | 'pwConfirm'
-  | 'email-pw'
-  | 'global'
-  | null;
+  'fullname' | 'email' | 'pw' | 'pwConfirm' | 'email-pw' | 'global' | null;
 
 type AuthErrorDetails = { message?: string; code?: string; status?: number };
 
@@ -23,20 +16,13 @@ const GUEST_STORAGE_KEY = 'joinGuestLogin';
 })
 export class AuthenticationService {
   private readonly router = inject(Router);
-  private readonly navbarService = inject(NavbarService);
 
-  isLoginSignUpView = true;
-  isLoginAnnimationPlayedOnce = false;
+  isLoginAnimationPlayedOnce = false;
   isUserLoggedIn = false;
   currentLoggedInUser: User | null = null;
 
-  GUESTUSER = {
-    email: 'guest@user.de',
-    pw: '123456',
-  };
-
   readonly errorMessageForFailedRequest = signal('');
-  readonly errorOccoursIn = signal<AuthErrorField>(null);
+  readonly errorField = signal<AuthErrorField>(null);
 
   /**
    * Creates a new user account.
@@ -120,7 +106,6 @@ export class AuthenticationService {
     localStorage.removeItem(GUEST_STORAGE_KEY);
     this.isUserLoggedIn = false;
     this.currentLoggedInUser = null;
-    this.isLoginSignUpView = true;
     this.resetAuthError();
     await this.router.navigate(['/']);
   }
@@ -161,13 +146,8 @@ export class AuthenticationService {
    * Removes the current auth error.
    */
   resetAuthError() {
-    this.errorOccoursIn.set(null);
+    this.errorField.set(null);
     this.errorMessageForFailedRequest.set('');
-  }
-
-  /** Kept for templates copied from the original project. */
-  resetFirebaseError() {
-    this.resetAuthError();
   }
 
   /**
@@ -177,7 +157,7 @@ export class AuthenticationService {
   private handleFailedLogin(error: AuthErrorDetails | null): void {
     this.isUserLoggedIn = false;
     this.currentLoggedInUser = null;
-    this.setAuthError(error ?? { message: 'Invalid login credentials', status: 400 });
+    this.setAuthError(error ?? { code: 'invalid_credentials' });
   }
 
   /**
@@ -187,9 +167,7 @@ export class AuthenticationService {
   private async finishLogin(user: User | null): Promise<void> {
     this.isUserLoggedIn = true;
     this.currentLoggedInUser = user;
-    this.isLoginSignUpView = false;
     this.resetAuthError();
-    this.navbarService.setSelection('success');
     await this.router.navigate(['/success']);
   }
 
@@ -203,8 +181,7 @@ export class AuthenticationService {
     return (
       (error.code ?? '').toLowerCase().includes('invalid_credentials') ||
       message.includes('invalid login credentials') ||
-      message.includes('invalid email or password') ||
-      error.status === 400
+      message.includes('invalid email or password')
     );
   }
 
@@ -214,7 +191,7 @@ export class AuthenticationService {
    * @param message - Text of the error.
    */
   private showAuthError(field: AuthErrorField, message: string): void {
-    this.errorOccoursIn.set(field);
+    this.errorField.set(field);
     this.errorMessageForFailedRequest.set(message);
   }
 }
