@@ -26,6 +26,7 @@
     @if (selectedContact(); as contact) {
       <app-contact-detail
         [contact]="contact"
+        [isOwnContact]="contact.id === currentUserId"
         (editContact)="openEditContact()"
         (deleteContact)="openDeleteConfirm()"
       />
