@@ -9,7 +9,7 @@ import { AuthenticationService } from './shared/services/authentication.service'
   selector: 'app-root',
   imports: [RouterOutlet, SidebarComponent, HeaderComponent, ToastComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
 })
 export class App implements OnInit {
   private readonly router = inject(Router);

@@ -13,7 +13,7 @@ import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component
   styleUrls: [
     './task-detail.component.scss',
     './task-detail.actions.scss',
-    './task-detail.mobile.scss',
+    './task-detail.responsive.scss',
   ],
 })
 export class TaskDetailComponent {

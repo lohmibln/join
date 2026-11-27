@@ -32,7 +32,7 @@ interface PrioOption {
   standalone: true,
   imports: [AssignedToSelectComponent, SubtasksInputComponent],
   templateUrl: './task-edit-form.component.html',
-  styleUrls: ['./task-edit-form.component.scss', './task-edit-form.mobile.scss'],
+  styleUrls: ['./task-edit-form.component.scss', './task-edit-form.responsive.scss'],
 })
 export class TaskEditFormComponent implements OnInit {
   /** Task that is edited. */

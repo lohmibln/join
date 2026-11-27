@@ -14,24 +14,23 @@ import { ContactsService } from '../shared/services/contacts.service';
 import { TasksService } from '../shared/services/tasks.service';
 import { ToastService } from '../shared/services/toast.service';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
-import { BOARD_COLUMNS, isBoardMobileViewport } from './board-columns';
 import {
+  BOARD_COLUMNS,
   BOARD_DRAG_START_DELAY,
-  dropListIdForStatus,
-  moveTaskInList,
-  statusFromDropListId,
-  taskFromDropEvent,
-} from './board-dnd';
-import {
   BOARD_SEARCH_EMPTY_COLUMN,
   BOARD_SEARCH_NO_RESULTS,
   BOARD_SEARCH_PLACEHOLDER,
+  dropListIdForStatus,
   filterTasksBySearch,
   groupTasksByStatus,
   hasNoBoardSearchResults,
+  isBoardMobileViewport,
   isBoardSearchActive,
+  moveTaskInList,
   readSearchInputValue,
-} from './board-search';
+  statusFromDropListId,
+  taskFromDropEvent,
+} from './board.utils';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component';
@@ -53,7 +52,7 @@ import { TaskMoveMenuComponent } from './task-move-menu/task-move-menu.component
     './board.component.scss',
     './board-dnd.scss',
     './board-search.scss',
-    './board.mobile.scss',
+    './board.responsive.scss',
   ],
 })
 export class BoardComponent implements OnInit, OnDestroy {
@@ -79,9 +78,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   readonly isSearchActive = computed(() => isBoardSearchActive(this.searchQuery()));
 
-  readonly visibleTasks = computed(() =>
-    filterTasksBySearch(this.tasks(), this.searchQuery()),
-  );
+  readonly visibleTasks = computed(() => filterTasksBySearch(this.tasks(), this.searchQuery()));
 
   readonly tasksByStatus = computed(() => groupTasksByStatus(this.visibleTasks()));
 
