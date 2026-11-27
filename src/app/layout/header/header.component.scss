@@ -35,6 +35,15 @@
     width: 24px;
     height: 24px;
   }
+
+  .helpIconHover,
+  &:hover .helpIcon {
+    display: none;
+  }
+
+  &:hover .helpIconHover {
+    display: block;
+  }
 }
 
 .userBadge {

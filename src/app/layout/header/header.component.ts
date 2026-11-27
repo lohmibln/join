@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 import { getInitials } from '../../shared/utils/contact.utils';
 
@@ -12,7 +12,16 @@ import { getInitials } from '../../shared/utils/contact.utils';
 })
 export class HeaderComponent {
   readonly authenticationService = inject(AuthenticationService);
+  private readonly router = inject(Router);
   readonly menuOpen = signal(false);
+
+  /**
+   * Checks whether the help page is open, where the help button is hidden.
+   * @returns True on the help page.
+   */
+  get isHelpPage(): boolean {
+    return this.router.url.startsWith('/help');
+  }
 
   /**
    * Gets the initials for the user badge.

@@ -1,0 +1,24 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+
+  li {
+    position: relative;
+    padding-left: 62px;
+    counter-increment: step;
+
+    &::before {
+      content: counter(step) '.';
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 27px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+  }
+}

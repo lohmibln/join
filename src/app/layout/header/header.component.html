@@ -5,9 +5,12 @@
   </a>
 
   <div class="actions">
-    <a class="help" routerLink="/help">
-      <img src="assets/icons/help.svg" alt="Help" />
-    </a>
+    @if (!isHelpPage) {
+      <a class="help" routerLink="/help" aria-label="Help">
+        <img class="helpIcon" src="assets/icons/help.svg" alt="" />
+        <img class="helpIconHover" src="assets/icons/help-hover.svg" alt="" />
+      </a>
+    }
 
     <button
       class="userBadge"

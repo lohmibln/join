@@ -1,0 +1,60 @@
+@use './variables' as *;
+@use './mixin' as *;
+
+// Shared layout of the text pages (Help, Legal Notice, Privacy Policy).
+.infoPage {
+  max-width: 1208px;
+  padding: 116px 96px 64px;
+  color: #000000;
+}
+
+.infoPageHead {
+  @include setFlex(row, space-between, center, 16px);
+  margin-bottom: 24px;
+
+  h1 {
+    line-height: 1.2;
+  }
+}
+
+.infoPageText {
+  @include setFlex(column, flex-start, stretch, 24px);
+  font-size: $fSTer;
+  line-height: 1.2;
+
+  h2 {
+    font-size: 27px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: $fSDefault;
+    line-height: 1.2;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  section {
+    @include setFlex(column, flex-start, stretch, 16px);
+  }
+
+  a {
+    padding: 0;
+    font-size: inherit;
+
+    &:link,
+    &:visited {
+      color: $clrPrimaryHover;
+    }
+
+    &:hover {
+      color: $clrHighlight2;
+    }
+  }
+}
+
+.brand {
+  color: $clrPrimaryHover;
+}
