@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Logs in as guest.
+   * Logs in as an anonymous guest.
    */
   async loginAsGuest() {
     this.authenticationService.resetAuthError();

@@ -9,8 +9,6 @@ export type AuthErrorField =
 
 type AuthErrorDetails = { message?: string; code?: string; status?: number };
 
-const GUEST_STORAGE_KEY = 'joinGuestLogin';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -86,15 +84,26 @@ export class AuthenticationService {
       return false;
     }
 
-    localStorage.removeItem(GUEST_STORAGE_KEY);
     await this.finishLogin(data.user);
     return true;
   }
 
-  /** Guest bypass — no Supabase auth required. */
-  async loginAsGuest(): Promise<void> {
-    localStorage.setItem(GUEST_STORAGE_KEY, 'true');
-    await this.finishLogin(null);
+  /**
+   * Logs in as an anonymous Supabase user (same data access as registered users).
+   * @returns True if the guest login worked.
+   */
+  async loginAsGuest(): Promise<boolean> {
+    const { data, error } = await supabase.auth.signInAnonymously({
+      options: { data: { full_name: 'Guest' } },
+    });
+
+    if (error || !data.session || !data.user) {
+      this.setAuthError(error ?? { message: 'Guest login failed. Please try again later.' });
+      return false;
+    }
+
+    await this.finishLogin(data.user);
+    return true;
   }
 
   /**
@@ -103,7 +112,6 @@ export class AuthenticationService {
    */
   async logout() {
     await supabase.auth.signOut();
-    localStorage.removeItem(GUEST_STORAGE_KEY);
     this.isUserLoggedIn = false;
     this.currentLoggedInUser = null;
     this.resetAuthError();
@@ -112,14 +120,14 @@ export class AuthenticationService {
 
   /**
    * Restores the login state after a page load.
-   * @returns True if a user or guest is logged in.
+   * @returns True if a Supabase session exists.
    */
   async checkLogin(): Promise<boolean> {
     const { data } = await supabase.auth.getSession();
     const user = data.session?.user ?? null;
 
     this.currentLoggedInUser = user;
-    this.isUserLoggedIn = !!user || localStorage.getItem(GUEST_STORAGE_KEY) === 'true';
+    this.isUserLoggedIn = !!user;
     return this.isUserLoggedIn;
   }
 
@@ -162,9 +170,9 @@ export class AuthenticationService {
 
   /**
    * Stores the login state and opens the start page.
-   * @param user - Logged in user, or null for a guest.
+   * @param user - Logged in user (registered or anonymous guest).
    */
-  private async finishLogin(user: User | null): Promise<void> {
+  private async finishLogin(user: User): Promise<void> {
     this.isUserLoggedIn = true;
     this.currentLoggedInUser = user;
     this.resetAuthError();
