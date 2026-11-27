@@ -15,7 +15,7 @@ create table if not exists public.contacts (
 
 alter table public.contacts enable row level security;
 
--- Demo policies: allow the app (anon key) to read/write contacts
+-- Guests use signInAnonymously and count as authenticated.
 drop policy if exists "contacts_select_all" on public.contacts;
 drop policy if exists "contacts_insert_all" on public.contacts;
 drop policy if exists "contacts_update_all" on public.contacts;
@@ -23,21 +23,21 @@ drop policy if exists "contacts_delete_all" on public.contacts;
 
 create policy "contacts_select_all"
   on public.contacts for select
-  to anon, authenticated
+  to authenticated
   using (true);
 
 create policy "contacts_insert_all"
   on public.contacts for insert
-  to anon, authenticated
+  to authenticated
   with check (true);
 
 create policy "contacts_update_all"
   on public.contacts for update
-  to anon, authenticated
+  to authenticated
   using (true)
   with check (true);
 
 create policy "contacts_delete_all"
   on public.contacts for delete
-  to anon, authenticated
+  to authenticated
   using (true);

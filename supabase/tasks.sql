@@ -22,23 +22,24 @@ drop policy if exists "tasks_insert_all" on public.tasks;
 drop policy if exists "tasks_update_all" on public.tasks;
 drop policy if exists "tasks_delete_all" on public.tasks;
 
+-- Guests use signInAnonymously and count as authenticated.
 create policy "tasks_select_all"
   on public.tasks for select
-  to anon, authenticated
+  to authenticated
   using (true);
 
 create policy "tasks_insert_all"
   on public.tasks for insert
-  to anon, authenticated
+  to authenticated
   with check (true);
 
 create policy "tasks_update_all"
   on public.tasks for update
-  to anon, authenticated
+  to authenticated
   using (true)
   with check (true);
 
 create policy "tasks_delete_all"
   on public.tasks for delete
-  to anon, authenticated
+  to authenticated
   using (true);
