@@ -1,0 +1,113 @@
+@if (showGreetingScreen()) {
+  <div class="greetingScreen">
+    <p class="greetingScreenText">{{ greeting }}{{ userName ? ',' : '!' }}</p>
+    @if (userName) {
+      <p class="greetingScreenName">{{ userName }}</p>
+    }
+  </div>
+}
+
+<section class="summary">
+  <div class="summaryHeadline">
+    <h1>Join 360</h1>
+    <span class="headlineLine"></span>
+    <p>Key Metrics at a Glance</p>
+  </div>
+
+  <div class="summaryContent">
+    <div class="summaryCards">
+      <div class="cardRow">
+        <a class="card cardHalf" routerLink="/board">
+          <picture class="cardIcon">
+            <source media="(max-width: 1279px)" srcset="assets/icons/summary/pencil-mobile.svg" />
+            <img src="assets/icons/summary/pencil.svg" alt="" />
+          </picture>
+          <picture class="cardIconHover">
+            <source
+              media="(max-width: 1279px)"
+              srcset="assets/icons/summary/pencil-mobile-hover.svg"
+            />
+            <img src="assets/icons/summary/pencil-hover.svg" alt="" />
+          </picture>
+          <div class="cardText">
+            <span class="cardCount">{{ counts().toDo }}</span>
+            <span class="cardLabel">To-do</span>
+          </div>
+        </a>
+
+        <a class="card cardHalf" routerLink="/board">
+          <picture class="cardIcon">
+            <source media="(max-width: 1279px)" srcset="assets/icons/summary/check-mobile.svg" />
+            <img src="assets/icons/summary/check.svg" alt="" />
+          </picture>
+          <picture class="cardIconHover">
+            <source
+              media="(max-width: 1279px)"
+              srcset="assets/icons/summary/check-mobile-hover.svg"
+            />
+            <img src="assets/icons/summary/check-hover.svg" alt="" />
+          </picture>
+          <div class="cardText">
+            <span class="cardCount">{{ counts().done }}</span>
+            <span class="cardLabel">Done</span>
+          </div>
+        </a>
+      </div>
+
+      <a class="card cardUrgent" routerLink="/board">
+        <div class="urgentCount">
+          <picture class="cardIcon">
+            <source media="(max-width: 1279px)" srcset="assets/icons/summary/urgent-mobile.svg" />
+            <img src="assets/icons/summary/urgent.svg" alt="" />
+          </picture>
+          <picture class="cardIconHover">
+            <source
+              media="(max-width: 1279px)"
+              srcset="assets/icons/summary/urgent-mobile-hover.svg"
+            />
+            <img src="assets/icons/summary/urgent.svg" alt="" />
+          </picture>
+          <div class="cardText">
+            <span class="cardCount">{{ urgent().count }}</span>
+            <span class="cardLabelSmall">Urgent</span>
+          </div>
+        </div>
+
+        <span class="urgentDivider"></span>
+
+        <div class="urgentDeadline">
+          @if (deadlineText(); as deadline) {
+            <span class="deadlineDate">{{ deadline }}</span>
+            <span class="deadlineLabel">Upcoming Deadline</span>
+          } @else {
+            <span class="deadlineLabel">No upcoming deadline</span>
+          }
+        </div>
+      </a>
+
+      <div class="cardRow">
+        <a class="card cardSquare" routerLink="/board">
+          <span class="cardCount">{{ counts().total }}</span>
+          <span class="cardLabel">Tasks in Board</span>
+        </a>
+
+        <a class="card cardSquare" routerLink="/board">
+          <span class="cardCount">{{ counts().inProgress }}</span>
+          <span class="cardLabel">Tasks in Progress</span>
+        </a>
+
+        <a class="card cardSquare" routerLink="/board">
+          <span class="cardCount">{{ counts().awaitFeedback }}</span>
+          <span class="cardLabel">Awaiting Feedback</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="greeting">
+      <p class="greetingText">{{ greeting }}{{ userName ? ',' : '!' }}</p>
+      @if (userName) {
+        <p class="greetingName">{{ userName }}</p>
+      }
+    </div>
+  </div>
+</section>

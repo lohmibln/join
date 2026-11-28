@@ -16,6 +16,7 @@ export class AuthenticationService {
   private readonly router = inject(Router);
 
   isLoginAnimationPlayedOnce = false;
+  isGreetingShown = false;
   isUserLoggedIn = false;
   currentLoggedInUser: User | null = null;
 
@@ -174,6 +175,7 @@ export class AuthenticationService {
    */
   private async finishLogin(user: User): Promise<void> {
     this.isUserLoggedIn = true;
+    this.isGreetingShown = false;
     this.currentLoggedInUser = user;
     this.resetAuthError();
     await this.router.navigate(['/success']);

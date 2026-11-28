@@ -1,0 +1,224 @@
+@use '../../styles/variables' as *;
+
+// Figma: 110px below the header, 96px from the left edge.
+.summary {
+  min-height: calc(100dvh - 96px);
+  padding: 110px 96px 64px;
+  background: $clrBackground;
+}
+
+.summaryHeadline {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  h1 {
+    margin: 0;
+    font-size: $fsH1;
+    font-weight: $fwH1;
+    line-height: 120%;
+    color: #000;
+  }
+
+  p {
+    margin: 0;
+    font-size: 27px;
+    line-height: 120%;
+    color: $clrHighlight1;
+  }
+}
+
+.headlineLine {
+  width: 0;
+  height: 59px;
+  border-left: 3px solid $clrHighlight2;
+}
+
+.summaryContent {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  margin-top: 56px;
+}
+
+.summaryCards {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 560px;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  display: flex;
+  box-sizing: border-box;
+  height: 168px;
+  border-radius: 30px;
+  background: $clrBaseBright;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  color: $clrHighlight1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: $stdTransition;
+}
+
+.cardHalf {
+  width: 264px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.cardSquare {
+  width: 168px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  text-align: center;
+}
+
+.cardUrgent {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 61px;
+  padding: 28px 48px;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardCount {
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 120%;
+  color: #000;
+}
+
+.cardLabel {
+  font-size: $fSDefault;
+  line-height: 120%;
+}
+
+.cardLabelSmall {
+  font-size: $fSTer;
+  line-height: 120%;
+}
+
+.urgentCount {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.urgentDivider {
+  width: 0;
+  height: 102px;
+  border-left: 2px solid $clrSeparatingLines;
+}
+
+.urgentDeadline {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.deadlineDate {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+.deadlineLabel {
+  font-size: $fSTer;
+  line-height: 120%;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.greetingText {
+  margin: 0;
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 120%;
+  color: $clrHighlight1;
+}
+
+.greetingName {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 120%;
+  color: $clrPrimaryHover;
+}
+
+picture img {
+  display: block;
+}
+
+// The hover icons stay hidden until the card is hovered.
+.cardIconHover {
+  display: none;
+}
+
+// Hover (Figma "Property 1=Hover"): dark card, white text, slightly bigger.
+// Negative margins keep the neighbours from moving while the card grows.
+.card:hover:not(:active) {
+  background: $clrHighlight1;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  .cardCount,
+  .cardLabel,
+  .cardLabelSmall,
+  .deadlineDate,
+  .deadlineLabel {
+    color: $clrBaseBright;
+  }
+
+  .cardIcon {
+    display: none;
+  }
+
+  .cardIconHover {
+    display: block;
+  }
+}
+
+.cardSquare:hover:not(:active) {
+  width: 184px;
+  height: 184px;
+  margin: -8px;
+}
+
+.cardHalf:hover:not(:active) {
+  width: 282.5px;
+  height: 184px;
+  margin: -8px -9.25px;
+}
+
+.cardUrgent:hover:not(:active) {
+  width: calc(100% + 16px);
+  height: 184px;
+  margin: -8px;
+}
+
+// Click (Figma "Property 1=Click"): back to normal size, stronger shadow.
+.card:active {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cardHalf:active {
+  background: #f9f9f9;
+}
