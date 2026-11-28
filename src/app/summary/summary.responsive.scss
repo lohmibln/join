@@ -1,0 +1,187 @@
+@use '../../styles/variables' as *;
+
+// Stays fully visible for most of the time, then fades out (2s, see GREETING_DURATION_MS).
+@keyframes greetingFade {
+  0%,
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+// Same breakpoint as the board: below 1280px the mobile layout is used.
+@media (max-width: 1279px) {
+  // Page layout (Figma mobile Summary): 48px below the header, 16px at the sides.
+  .summary {
+    min-height: calc(100dvh - 160px);
+    padding: 48px 16px 24px;
+  }
+
+  // Headline: title, subtitle, then the blue line underneath (horizontal).
+  .summaryHeadline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    h1 {
+      order: 1;
+      font-size: 47px;
+    }
+
+    p {
+      order: 2;
+      font-size: $fSDefault;
+    }
+  }
+
+  .headlineLine {
+    order: 3;
+    width: 90px;
+    height: 0;
+    margin-top: 8px;
+    border-left: none;
+    border-top: 3px solid $clrHighlight2;
+  }
+
+  .summaryContent {
+    display: block;
+    margin-top: 40px;
+  }
+
+  // On mobile the greeting is shown on its own screen after login.
+  .greeting {
+    display: none;
+  }
+
+  .summaryCards {
+    width: 100%;
+    max-width: 396px;
+    gap: 18px;
+  }
+
+  .cardRow {
+    gap: 24px;
+    justify-content: flex-start;
+  }
+
+  // Figma spaces the first row 30px from the urgent card, the last row 18px.
+  .cardRow:first-child {
+    margin-bottom: 12px;
+  }
+
+  .card {
+    height: 110px;
+    border-radius: 20px;
+  }
+
+  // Cards share the row and shrink on narrow screens (down to 320px).
+  .cardHalf {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 186px;
+    gap: 10px;
+  }
+
+  .cardSquare {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 116px;
+    height: 116px;
+  }
+
+  .cardUrgent {
+    width: 100%;
+    max-width: 396px;
+    padding: 28px 0;
+    gap: 20px;
+  }
+
+  .cardCount {
+    font-size: 47px;
+  }
+
+  .cardLabel {
+    font-size: $fSTer;
+  }
+
+  // Narrow label so "Tasks in Board" and "Awaiting Feedback" wrap to two lines.
+  .cardSquare .cardLabel {
+    max-width: 75px;
+  }
+
+  .cardRow .cardSquare:nth-child(2) .cardLabel {
+    font-size: 14px;
+  }
+
+  .urgentDivider {
+    height: 68px;
+  }
+
+  .urgentDeadline {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .deadlineDate {
+    font-size: $fSTer;
+  }
+
+  // Hover: a little bigger. Negative margins keep the neighbours in place.
+  .cardHalf:hover:not(:active) {
+    width: auto;
+    max-width: 194px;
+    height: 120px;
+    margin: -5px -4px;
+  }
+
+  .cardSquare:hover:not(:active) {
+    width: auto;
+    max-width: 124px;
+    height: 124px;
+    margin: -4px;
+  }
+
+  .cardUrgent:hover:not(:active) {
+    width: 100%;
+    height: 120px;
+    margin: -5px 0;
+  }
+
+  // Greeting screen between header and bottom menu (both 80px high).
+  .greetingScreen {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    bottom: 80px;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 0 16px;
+    background: $clrBackground;
+    text-align: center;
+    overflow-wrap: anywhere;
+    animation: greetingFade 2000ms ease-in forwards;
+  }
+
+  .greetingScreenText {
+    margin: 0;
+    font-size: 36px;
+    line-height: 120%;
+    color: $clrHighlight1;
+  }
+
+  .greetingScreenName {
+    margin: 0;
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 120%;
+    color: $clrPrimaryHover;
+  }
+}
