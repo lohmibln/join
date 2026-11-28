@@ -3,7 +3,7 @@
 // Figma: 110px below the header, 96px from the left edge.
 .summary {
   min-height: calc(100dvh - 96px);
-  padding: 110px 96px 64px;
+  padding: 110px 0 64px 96px;
   background: $clrBackground;
 }
 
